@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Thermometer, Cog, Zap, LayoutDashboard, ClipboardList, BadgeCheck } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
@@ -38,10 +39,10 @@ const disciplines = [
 export function MuhendislikAltyapisi() {
   return (
     <section
-      className="py-24 bg-white"
+      className="py-24 bg-white relative overflow-hidden"
       aria-label="Mühendislik altyapısı ve disiplinler"
     >
-      <div className="section-container">
+      <div className="section-container relative z-10">
         <FadeInOnScroll className="mb-14">
           <SectionHeading
             eyebrow="MÜHENDİSLİK ALTYAPISI"
@@ -70,6 +71,21 @@ export function MuhendislikAltyapisi() {
             );
           })}
         </div>
+
+        {/* Small accent strip — 9.png */}
+        <FadeInOnScroll delay={200} className="mt-16">
+          <div className="relative h-48 rounded-2xl overflow-hidden">
+            <Image
+              src="/projeler-muhendislik/9.png"
+              alt=""
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-[#071B34]/20" />
+          </div>
+        </FadeInOnScroll>
+
       </div>
     </section>
   );

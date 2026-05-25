@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { CheckCircle2 } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
+import Image from 'next/image';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
@@ -67,36 +66,62 @@ const steps = [
   },
 ];
 
+const galleryImages = [
+  '/projeler-muhendislik/5.png',
+  '/projeler-muhendislik/7.png',
+  '/projeler-muhendislik/8.png',
+  '/projeler-muhendislik/10.png',
+];
+
 export default function ProjeMuhendislikPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
-        <div className="section-container relative z-10">
-          <h1 className="text-white max-w-2xl">Konseptten Uygulamaya Tam Süreç Yönetimi</h1>
-          <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
-            İhtiyaç analizinden devreye almaya, 8 adımda eksiksiz mağaza projesi teslimi.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-8">
-            <Button variant="primary" size="md" href="/iletisim?form=teklif">
-              Projenizi Başlatın
-            </Button>
-            <Button
-              variant="secondary"
-              size="md"
-              href="/iletisim?form=danismanlik"
-              className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
-            >
-              Mühendislik Danışmanlığı
-            </Button>
-          </div>
+      {/* ── Hero ──────────────────────────────────────────── */}
+      <section className="pt-32 pb-20 bg-[#071B34] relative overflow-hidden min-h-[520px] flex items-end">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/projeler-muhendislik/1.png"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071B34]/95 via-[#071B34]/75 to-[#071B34]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/80 via-transparent to-[#071B34]/50" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.06]" aria-hidden="true" />
+
+        <div className="section-container relative z-10 pb-4">
+          <FadeInOnScroll>
+            <p className="eyebrow text-[#11B5FF] mb-4">PROJE & MÜHENDİSLİK</p>
+            <h1 className="text-white max-w-2xl">Konseptten Uygulamaya Tam Süreç Yönetimi</h1>
+            <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
+              İhtiyaç analizinden devreye almaya, 8 adımda eksiksiz mağaza projesi teslimi.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-8">
+              <Button variant="primary" size="md" href="/iletisim?form=teklif">
+                Projenizi Başlatın
+              </Button>
+              <Button
+                variant="secondary"
+                size="md"
+                href="/iletisim?form=danismanlik"
+                className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
+              >
+                Mühendislik Danışmanlığı
+              </Button>
+            </div>
+          </FadeInOnScroll>
         </div>
       </section>
 
       <AnahtarTeslimHero />
       <TekPaydasFark />
 
-      <section className="py-20">
+      {/* ── 8-Adım Proje Süreci ───────────────────────────── */}
+      <section className="py-24 bg-white">
         <div className="section-container">
           <FadeInOnScroll>
             <SectionHeading
@@ -125,28 +150,62 @@ export default function ProjeMuhendislikPage() {
         </div>
       </section>
 
+      {/* ── Sahadan Kareler ───────────────────────────────── */}
+      <section className="py-24 bg-[#071B34] relative overflow-hidden">
+        <div className="absolute inset-0 blueprint-grid opacity-[0.04]" aria-hidden="true" />
+        <div className="section-container relative z-10">
+          <FadeInOnScroll className="mb-12 text-center">
+            <p className="eyebrow text-[#11B5FF] mb-3">TAMAMLANAN PROJELERDEN</p>
+            <h2 className="text-white">Sahadan Kareler</h2>
+            <p className="text-[#E9EEF3]/60 mt-3 max-w-lg mx-auto leading-relaxed">
+              Farklı sektör ve ölçeklerde hayata geçirdiğimiz mağaza projelerinden görüntüler.
+            </p>
+          </FadeInOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {galleryImages.map((src, i) => (
+              <FadeInOnScroll key={src} delay={i * 80}>
+                <div className="rounded-2xl overflow-hidden group">
+                  <Image
+                    src={src}
+                    alt={`Proje görseli ${i + 1}`}
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                  />
+                </div>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <MuhendislikAltyapisi />
       <MuhendislikKapasiteMetrikleri />
 
-      <section className="py-16 bg-[#071B34]">
-        <div className="section-container text-center">
-          <h2 className="text-white mb-4">Projenizi Başlatalım</h2>
-          <p className="text-[#E9EEF3]/65 max-w-lg mx-auto mb-8">
-            Mağaza projenizin boyutu ne olursa olsun, mühendislik ekibimiz sizin için en uygun çözümü planlar.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" href="/iletisim?form=teklif">
-              Teklif Al
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              href="/iletisim?form=danismanlik"
-              className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
-            >
-              Danışmanlık Talep Et
-            </Button>
-          </div>
+      {/* ── CTA ───────────────────────────────────────────── */}
+      <section className="py-20 bg-[#071B34] relative overflow-hidden">
+        <div className="section-container relative z-10 text-center">
+          <FadeInOnScroll>
+            <h2 className="text-white mb-4">Projenizi Başlatalım</h2>
+            <p className="text-[#E9EEF3]/65 max-w-lg mx-auto mb-8">
+              Mağaza projenizin boyutu ne olursa olsun, mühendislik ekibimiz sizin için en uygun çözümü planlar.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="primary" size="lg" href="/iletisim?form=teklif">
+                Teklif Al
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                href="/iletisim?form=danismanlik"
+                className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
+              >
+                Danışmanlık Talep Et
+              </Button>
+            </div>
+          </FadeInOnScroll>
         </div>
       </section>
     </>
