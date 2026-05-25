@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { DynIcon } from '@/lib/icons';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
@@ -57,9 +58,14 @@ const topics = [
 export default function SurdurulebilirlikPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
-        <div className="section-container relative z-10">
+      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden min-h-[420px] flex items-end">
+        <div className="absolute inset-0">
+          <Image src="/projeler-muhendislik/13.png" alt="" fill className="object-cover object-center" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071B34]/95 via-[#071B34]/75 to-[#071B34]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/70 via-transparent to-[#071B34]/50" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
+        <div className="section-container relative z-10 pb-4">
           <h1 className="text-white">Verimli ve Sorumlu Mağaza Sistemleri</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
             Nokta Dizayn, enerji verimliliğini yalnızca teknik bir gereklilik değil, iş ortaklarına ve çevreye karşı bir sorumluluk olarak benimsiyor.
@@ -105,18 +111,24 @@ export default function SurdurulebilirlikPage() {
       <section className="py-16 bg-white">
         <div className="section-container">
           <FadeInOnScroll>
-            <div className="rounded-2xl bg-gradient-to-br from-[#071B34] to-[#0E2647] p-8 lg:p-12 max-w-3xl">
-              <h2 className="text-white text-xl font-semibold mb-4">
-                Gurme Market Yenileme Projesinde %28 Enerji Tasarrufu
-              </h2>
-              <p className="text-[#E9EEF3]/70 text-sm leading-relaxed mb-6">
-                İstanbul&apos;da 1.200 m² gurme market, eski soğutma altyapısını yeni nesil
-                enerji verimli ekipmanlarla yeniledi. EC fan motorlu kompresör sistemi ve
-                enerji verimli reyonlar sayesinde ilk yıl elektrik tüketimi %28 azaldı.
-              </p>
-              <Button variant="primary" size="sm" href="/referanslar/gurme-market-dikey-reyon">
-                Projeyi İncele
-              </Button>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden">
+              <div className="bg-gradient-to-br from-[#071B34] to-[#0E2647] p-8 lg:p-12 flex flex-col justify-center">
+                <p className="eyebrow text-[#11B5FF] mb-4">VAKA ÇALIŞMASI</p>
+                <h2 className="text-white text-xl font-semibold mb-4">
+                  Gurme Market Yenileme Projesinde %28 Enerji Tasarrufu
+                </h2>
+                <p className="text-[#E9EEF3]/70 text-sm leading-relaxed mb-6">
+                  İstanbul&apos;da 1.200 m² gurme market, eski soğutma altyapısını yeni nesil
+                  enerji verimli ekipmanlarla yeniledi. EC fan motorlu kompresör sistemi ve
+                  enerji verimli reyonlar sayesinde ilk yıl elektrik tüketimi %28 azaldı.
+                </p>
+                <Button variant="primary" size="sm" href="/iletisim?form=danismanlik">
+                  Enerji Analizi Talep Et
+                </Button>
+              </div>
+              <div className="relative min-h-[280px]">
+                <Image src="/projeler-muhendislik/16.png" alt="Enerji verimli mağaza projesi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+              </div>
             </div>
           </FadeInOnScroll>
         </div>

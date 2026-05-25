@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { CheckCircle2, MapPin } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
@@ -39,9 +39,14 @@ const globalRegions = [
 export default function KurumsalPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
-        <div className="section-container relative z-10">
+      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden min-h-[420px] flex items-end">
+        <div className="absolute inset-0">
+          <Image src="/projeler-muhendislik/11.png" alt="" fill className="object-cover object-center" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071B34]/95 via-[#071B34]/75 to-[#071B34]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/70 via-transparent to-[#071B34]/50" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
+        <div className="section-container relative z-10 pb-4">
           <h1 className="text-white">2003&apos;ten Bu Yana Entegre Mağaza Sistemleri</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
             Nokta Dizayn; soğutma ekipmanları, raf ve reyon sistemleri, kasa üniteleri ve mağaza
@@ -81,12 +86,9 @@ export default function KurumsalPage() {
             </FadeInOnScroll>
 
             <FadeInOnScroll delay={100}>
-              <Placeholder
-                category="factory"
-                aspectRatio="4:3"
-                icon="Building2"
-                label="ÜRETİM TESİSİ"
-              />
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
+                <Image src="/projeler-muhendislik/17.png" alt="Nokta Dizayn mağaza projesi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+              </div>
             </FadeInOnScroll>
           </div>
         </div>
@@ -125,12 +127,9 @@ export default function KurumsalPage() {
               </div>
             </FadeInOnScroll>
             <FadeInOnScroll delay={100}>
-              <Placeholder
-                category="factory"
-                aspectRatio="4:3"
-                icon="Factory"
-                label="ÜRETİM TESİSİ"
-              />
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
+                <Image src="/nokta-dizayn-sirket.png" alt="11.000 m² üretim tesisi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+              </div>
             </FadeInOnScroll>
           </div>
         </div>

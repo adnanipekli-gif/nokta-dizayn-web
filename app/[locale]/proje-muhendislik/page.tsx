@@ -67,10 +67,13 @@ const steps = [
 ];
 
 const galleryImages = [
-  '/projeler-muhendislik/5.png',
-  '/projeler-muhendislik/7.png',
-  '/projeler-muhendislik/8.png',
-  '/projeler-muhendislik/10.png',
+  { src: '/projeler-muhendislik/10.png', cls: 'col-span-2 row-span-1' },
+  { src: '/projeler-muhendislik/11.png', cls: 'col-span-1 row-span-1' },
+  { src: '/projeler-muhendislik/12.png', cls: 'col-span-1 row-span-1' },
+  { src: '/projeler-muhendislik/13.png', cls: 'col-span-1 row-span-1' },
+  { src: '/projeler-muhendislik/14.png', cls: 'col-span-1 row-span-1' },
+  { src: '/projeler-muhendislik/16.png', cls: 'col-span-1 row-span-1' },
+  { src: '/projeler-muhendislik/17.png', cls: 'col-span-2 row-span-1' },
 ];
 
 export default function ProjeMuhendislikPage() {
@@ -162,18 +165,18 @@ export default function ProjeMuhendislikPage() {
             </p>
           </FadeInOnScroll>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {galleryImages.map((src, i) => (
-              <FadeInOnScroll key={src} delay={i * 80}>
-                <div className="rounded-2xl overflow-hidden group">
+          <div className="grid grid-cols-3 auto-rows-[220px] gap-3">
+            {galleryImages.map((img, i) => (
+              <FadeInOnScroll key={img.src} delay={i * 50} className={img.cls}>
+                <div className="relative w-full h-full rounded-2xl overflow-hidden group">
                   <Image
-                    src={src}
+                    src={img.src}
                     alt={`Proje görseli ${i + 1}`}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
-                    sizes="(max-width: 640px) 100vw, 50vw"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </FadeInOnScroll>
             ))}

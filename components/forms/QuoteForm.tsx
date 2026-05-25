@@ -15,58 +15,19 @@ const schema = z.object({
   telefon: z.string().min(10, 'Geçerli telefon numarası girin'),
   eposta: z.string().email('Geçerli e-posta adresi girin'),
   sehirUlke: z.string().optional(),
-  urunGrubu: z.array(z.string()).min(1, 'En az bir ürün grubu seçin'),
-  projiTipi: z.string().min(1, 'Proje tipi seçin'),
   mesaj: z.string().optional(),
   kvkk: z.boolean().refine((v) => v, 'KVKK onayı zorunludur'),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const productGroups = [
-  'Servis Reyonları',
-  'Tam Boy Dikey Reyonlar',
-  'Yarım Boy Dikey Reyonlar',
-  'Cam Kapılı Dolaplar',
-  'Havuz Tipi Dolaplar',
-  'Kombine Tip Dolaplar',
-  'Kondenser Üniteleri',
-  'Merkezi Sistemler',
-  'Chiller Üniteleri',
-  'Soğuk Oda Çözümleri',
-];
-
-const projectTypes = [
-  { value: '', label: 'Seçiniz...' },
-  { value: 'yeni-magaza', label: 'Yeni Mağaza' },
-  { value: 'yenileme', label: 'Yenileme' },
-  { value: 'genisleme', label: 'Genişleme' },
-  { value: 'endustriyel', label: 'Endüstriyel' },
-  { value: 'diger', label: 'Diğer' },
-];
-
 export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: { urunGrubu: [] },
-  });
-
-  const selectedGroups = watch('urunGrubu');
-
-  const toggleGroup = (group: string) => {
-    const current = selectedGroups || [];
-    const next = current.includes(group)
-      ? current.filter((g) => g !== group)
-      : [...current, group];
-    setValue('urunGrubu', next, { shouldValidate: true });
-  };
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FormData) => {
     await fetch('/api/quote', {
@@ -143,40 +104,6 @@ export function QuoteForm() {
           className={inputClasses}
           placeholder="İstanbul, Türkiye"
         />
-      </FormField>
-
-      <FormField label="İlgilenilen Ürün Grubu" required error={errors.urunGrubu?.message}>
-        <div className="flex flex-wrap gap-2">
-          {productGroups.map((group) => (
-            <button
-              key={group}
-              type="button"
-              onClick={() => toggleGroup(group)}
-              className={cn(
-                'px-3 py-1.5 text-xs font-medium rounded-md border transition-colors',
-                selectedGroups?.includes(group)
-                  ? 'bg-[#071B34] text-white border-[#071B34]'
-                  : 'bg-white text-[#475569] border-[#D9E1EA] hover:border-[#071B34]'
-              )}
-            >
-              {group}
-            </button>
-          ))}
-        </div>
-      </FormField>
-
-      <FormField label="Proje Tipi" required error={errors.projiTipi?.message} id="projiTipi">
-        <select
-          id="projiTipi"
-          {...register('projiTipi')}
-          className={cn(inputClasses, 'cursor-pointer', errors.projiTipi && errorInputClasses)}
-        >
-          {projectTypes.map((t) => (
-            <option key={t.value} value={t.value}>
-              {t.label}
-            </option>
-          ))}
-        </select>
       </FormField>
 
       <FormField label="Mesaj" id="mesaj">

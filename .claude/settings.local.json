@@ -36,7 +36,9 @@
       "Bash(git push *)",
       "Bash(git checkout *)",
       "Bash(git add *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npx next *)"
     ],
     "additionalDirectories": [
       "d:\\VS Codes\\Nokta Dizayn Web\\nokta-sizayn-web-3\\app",

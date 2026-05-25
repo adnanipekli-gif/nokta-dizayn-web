@@ -15,26 +15,12 @@ const schema = z.object({
   telefon: z.string().min(10, 'Geçerli telefon numarası girin'),
   eposta: z.string().email('Geçerli e-posta adresi girin'),
   lokasyon: z.string().min(2, 'Şehir bilgisi gerekli'),
-  urunSistemTipi: z.string().min(1, 'Ürün/sistem tipi seçin'),
   servisKonusu: z.string().min(1, 'Servis konusu seçin'),
   aciklama: z.string().min(10, 'En az 10 karakter açıklama girin'),
   kvkk: z.boolean().refine((v) => v, 'KVKK onayı zorunludur'),
 });
 
 type FormData = z.infer<typeof schema>;
-
-const productTypes = [
-  { value: '', label: 'Seçiniz...' },
-  { value: 'servis-reyonu', label: 'Servis Reyonu' },
-  { value: 'dikey-reyon', label: 'Dikey Reyon' },
-  { value: 'cam-kapili-dolap', label: 'Cam Kapılı Dolap' },
-  { value: 'havuz-dolap', label: 'Havuz Tipi Dolap' },
-  { value: 'kondenser', label: 'Kondenser Ünitesi' },
-  { value: 'merkezi-sistem', label: 'Merkezi Sistem' },
-  { value: 'chiller', label: 'Chiller Ünitesi' },
-  { value: 'soguk-oda', label: 'Soğuk Oda' },
-  { value: 'diger', label: 'Diğer' },
-];
 
 const serviceTopics = [
   { value: '', label: 'Seçiniz...' },
@@ -117,18 +103,11 @@ export function ServiceRequestForm() {
         <input id="lokasyon" {...register('lokasyon')} className={cn(inputClasses, errors.lokasyon && errorInputClasses)} placeholder="İstanbul" />
       </FormField>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <FormField label="Ürün / Sistem Tipi" required error={errors.urunSistemTipi?.message} id="urunSistemTipi">
-          <select id="urunSistemTipi" {...register('urunSistemTipi')} className={cn(inputClasses, 'cursor-pointer', errors.urunSistemTipi && errorInputClasses)}>
-            {productTypes.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-          </select>
-        </FormField>
-        <FormField label="Servis Konusu" required error={errors.servisKonusu?.message} id="servisKonusu">
-          <select id="servisKonusu" {...register('servisKonusu')} className={cn(inputClasses, 'cursor-pointer', errors.servisKonusu && errorInputClasses)}>
-            {serviceTopics.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-          </select>
-        </FormField>
-      </div>
+      <FormField label="Servis Konusu" required error={errors.servisKonusu?.message} id="servisKonusu">
+        <select id="servisKonusu" {...register('servisKonusu')} className={cn(inputClasses, 'cursor-pointer', errors.servisKonusu && errorInputClasses)}>
+          {serviceTopics.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+        </select>
+      </FormField>
 
       <FormField label="Açıklama" required error={errors.aciklama?.message} id="aciklama">
         <textarea id="aciklama" {...register('aciklama')} rows={4} className={cn(inputClasses, 'resize-none', errors.aciklama && errorInputClasses)} placeholder="Yaşanan arıza veya ihtiyaç hakkında kısa bilgi..." />

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
 import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { SOLUTIONS } from '@/lib/data/solutions';
@@ -14,12 +14,25 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.noktadizayn.com.tr/magaza-sistemleri' },
 };
 
+const solutionImages = [
+  '/projeler-muhendislik/10.png',
+  '/projeler-muhendislik/11.png',
+  '/projeler-muhendislik/12.png',
+  '/projeler-muhendislik/13.png',
+  '/projeler-muhendislik/14.png',
+];
+
 export default function MagazaSistemleriPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
-        <div className="section-container relative z-10">
+      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden min-h-[420px] flex items-end">
+        <div className="absolute inset-0">
+          <Image src="/projeler-muhendislik/17.png" alt="" fill className="object-cover object-center" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071B34]/95 via-[#071B34]/75 to-[#071B34]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/70 via-transparent to-[#071B34]/50" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
+        <div className="section-container relative z-10 pb-4">
           <h1 className="text-white max-w-2xl text-balance">
             Sektör Bazlı Entegre Mağaza Çözümleri
           </h1>
@@ -39,12 +52,15 @@ export default function MagazaSistemleriPage() {
                 }`}
               >
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
-                  <Placeholder
-                    category={solution.slug}
-                    aspectRatio="4:3"
-                    icon={solution.icon}
-                    label={solution.name}
-                  />
+                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
+                    <Image
+                      src={solutionImages[i % solutionImages.length]}
+                      alt={solution.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </div>
                 </div>
 
                 <div className={i % 2 === 1 ? 'lg:order-1' : ''}>

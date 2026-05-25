@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { DynIcon } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import type { ServiceItem } from '@/lib/types';
@@ -21,7 +19,6 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
       )}
       style={{ boxShadow: '0 1px 2px rgba(7,27,52,0.04), 0 8px 24px rgba(7,27,52,0.06)' }}
     >
-      {/* Cyan top line on hover */}
       <div
         className="absolute top-0 left-0 right-0 h-px bg-[#11B5FF] opacity-0 group-hover:opacity-60 transition-opacity duration-300"
         aria-hidden="true"
@@ -35,17 +32,9 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
         {service.name}
       </h3>
 
-      <p className="text-sm text-[#475569] leading-relaxed flex-1 mb-5">
+      <p className="text-sm text-[#475569] leading-relaxed">
         {service.shortDescription}
       </p>
-
-      <Link
-        href={`/servis-destek#${service.slug}`}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#071B34] group-hover:text-[#11B5FF] transition-colors"
-      >
-        Detaylar
-        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
-      </Link>
     </div>
   );
 }

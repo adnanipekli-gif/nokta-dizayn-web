@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ServiceCard } from '@/components/cards/ServiceCard';
@@ -17,9 +18,14 @@ export const metadata: Metadata = {
 export default function ServisDestekPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
-        <div className="section-container relative z-10">
+      <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden min-h-[420px] flex items-end">
+        <div className="absolute inset-0">
+          <Image src="/projeler-muhendislik/15.png" alt="" fill className="object-cover object-center" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071B34]/95 via-[#071B34]/75 to-[#071B34]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/70 via-transparent to-[#071B34]/50" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
+        <div className="section-container relative z-10 pb-4">
           <h1 className="text-white">Satış Sonrası Teknik Servis ve Bakım Desteği</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
             Kurulum sonrasında da yanınızdayız — teknik servis, bakım, yedek parça ve retrofit çözümleriyle.
