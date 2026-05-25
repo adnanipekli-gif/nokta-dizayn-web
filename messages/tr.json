@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "magaza_sistemleri": "Mağaza Sistemleri",
+    "urunler": "Ürünler",
+    "referanslar": "Referanslar",
+    "kurumsal": "Kurumsal",
+    "iletisim": "İletişim",
+    "teklif_al": "Teklif Al",
+    "servis_destek": "Servis & Destek",
+    "proje_muhendislik": "Proje & Mühendislik"
+  },
+  "common": {
+    "teklif_al": "Teklif Alın",
+    "incele": "İncele",
+    "devami": "Devamı",
+    "bizi_arayin": "Bizi Arayın",
+    "daha_fazla": "Daha Fazla",
+    "hepsini_gor": "Hepsini Gör",
+    "iletisime_gec": "İletişime Geçin"
+  },
+  "hero": {
+    "eyebrow": "// ENTEGRE MAĞAZA SİSTEMLERİ — 2003",
+    "title": "Konseptten Uygulamaya Entegre Mağaza Sistemleri",
+    "subtitle": "Nokta Dizayn; soğutma ekipmanları, raf ve reyon sistemleri, kasa üniteleri ve mağaza mobilyalarıyla perakende mağazanızı baştan sona tasarlar ve donatır. 2003'ten bu yana 60+ ülkede 30.000+ noktaya hizmet veriyoruz.",
+    "cta_primary": "Projeniz İçin Teklif Alın",
+    "cta_secondary": "Ürünleri İnceleyin",
+    "ghost_cta": "Servis Talebi Oluşturun"
+  },
+  "footer": {
+    "brand_desc": "2003'ten bu yana entegre mağaza sistemleri — soğutma, raf, kasa ve mağaza mobilyaları.",
+    "magaza_sistemleri": "Mağaza Sistemleri",
+    "urunler": "Ürünler",
+    "kurumsal": "Kurumsal",
+    "iletisim_baslik": "İletişim",
+    "rights": "Tüm hakları saklıdır.",
+    "kvkk": "KVKK Aydınlatma Metni",
+    "gizlilik": "Gizlilik Politikası"
+  }
+}

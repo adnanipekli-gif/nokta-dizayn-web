@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer, Length)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=no --import-alias=\"@/*\" --yes)",
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir=no --import-alias=\"@/*\" --yes)",
+      "Bash(npm install *)",
+      "Bash(node -e \"const pkg = require\\('./node_modules/next/package.json'\\); console.log\\('Next.js:', pkg.version\\); const r = require\\('./node_modules/react/package.json'\\); console.log\\('React:', r.version\\);\")",
+      "Bash(npm run *)",
+      "Skill(ui-ux-pro-max)",
+      "Skill(ui-ux-pro-max:*)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('dependencies',{}\\), indent=2\\)\\)\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\" 2>&1; echo \"done\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\\\\magaza-sistemleri\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\\\\magaza-sistemleri\\\\[slug]\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\\\\urunler\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\\\\urunler\\\\[slug]\")",
+      "Bash(mkdir \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\app\\\\[locale]\\\\referanslar\")",
+      "Bash(npx tsc *)",
+      "Bash(Remove-Item \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\middleware.ts\")",
+      "PowerShell(Remove-Item \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\middleware.ts\" -Confirm:$false)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(Object.keys\\({...p.dependencies,...p.devDependencies}\\).filter\\(k=>k.includes\\('scroll'\\)\\)\\)\")",
+      "PowerShell(Move-Item \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\references\" \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\public\\\\references\" -Confirm:$false)",
+      "PowerShell(\\(Get-Content \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\lib\\\\data\\\\product-models.ts\" -Raw\\) -replace \"mm'ye\", \"mm’ye\" | Set-Content \"d:\\\\VS Codes\\\\Nokta Dizayn Web\\\\nokta-sizayn-web-3\\\\lib\\\\data\\\\product-models.ts\" -Encoding utf8)",
+      "Bash(rm -rf \"d:/VS Codes/Nokta Dizayn Web/nokta-sizayn-web-3/app/[locale]/urunler/remote\")",
+      "Bash(rm -rf \"d:/VS Codes/Nokta Dizayn Web/nokta-sizayn-web-3/app/[locale]/urunler/plug-in\")",
+      "Bash(mkdir -p \"d:/VS Codes/Nokta Dizayn Web/nokta-sizayn-web-3/app/[locale]/urunler/[group]/[subcategory]/[product]\" && echo \"done\")",
+      "Bash(rm -rf \"d:/VS Codes/Nokta Dizayn Web/nokta-sizayn-web-3/app/[locale]/urunler/[slug]\" && echo \"deleted\")",
+      "Bash(git config *)",
+      "Bash(git remote *)",
+      "Bash(git init *)",
+      "Bash(git fetch *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git rm *)"
+    ],
+    "additionalDirectories": [
+      "d:\\VS Codes\\Nokta Dizayn Web\\nokta-sizayn-web-3\\app",
+      "d:\\VS Codes\\Nokta Dizayn Web\\nokta-sizayn-web-3\\app\\[locale]\\urunler\\[group]\\[subcategory]",
+      "d:\\VS Codes\\Nokta Dizayn Web\\nokta-sizayn-web-3\\app\\[locale]\\urunler\\[slug]"
+    ]
+  }
+}

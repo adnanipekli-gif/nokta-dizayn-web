@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "magaza_sistemleri": "Store Systems",
+    "urunler": "Products",
+    "referanslar": "References",
+    "kurumsal": "About",
+    "iletisim": "Contact",
+    "teklif_al": "Get a Quote",
+    "servis_destek": "Service & Support",
+    "proje_muhendislik": "Project Engineering"
+  },
+  "common": {
+    "teklif_al": "Get a Quote",
+    "incele": "Explore",
+    "devami": "More",
+    "bizi_arayin": "Call Us",
+    "daha_fazla": "More",
+    "hepsini_gor": "View All",
+    "iletisime_gec": "Contact Us"
+  },
+  "hero": {
+    "eyebrow": "// INTEGRATED STORE SYSTEMS — 2003",
+    "title": "Integrated Store Systems From Concept to Completion",
+    "subtitle": "Nokta Dizayn designs and equips retail stores end-to-end — refrigeration equipment, shelving systems, checkout units and store furniture. Serving 30,000+ locations across 60+ countries since 2003.",
+    "cta_primary": "Get a Quote for Your Project",
+    "cta_secondary": "Explore Products",
+    "ghost_cta": "Submit a Service Request"
+  },
+  "footer": {
+    "brand_desc": "Integrated store systems since 2003 — refrigeration, shelving, checkout and store furniture.",
+    "magaza_sistemleri": "Store Systems",
+    "urunler": "Products",
+    "kurumsal": "About",
+    "iletisim_baslik": "Contact",
+    "rights": "All rights reserved.",
+    "kvkk": "Privacy Notice",
+    "gizlilik": "Privacy Policy"
+  }
+}
