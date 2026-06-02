@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 export default function KatalogPage() {
   return (
     <div className="pt-16">
-      <PDFCatalog url="/katalog-pdf/www.noktadizayn.com.tr.pdf" />
+      <PDFCatalog
+        embedUrl="https://drive.google.com/file/d/1nNmTT2MQ3CwT9h3Ny-9va32oSt6h5AGy/preview"
+        downloadUrl="https://drive.google.com/uc?export=download&id=1nNmTT2MQ3CwT9h3Ny-9va32oSt6h5AGy"
+      />
     </div>
   );
 }
