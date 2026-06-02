@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight, ArrowRight, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NAVIGATION } from '@/lib/data/navigation';
 import { Button } from '@/components/ui/Button';
@@ -14,9 +14,10 @@ import type { NavGroup } from '@/lib/types';
 
 // ── Two-panel product dropdown ──────────────────────────────
 function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () => void }) {
-  const [activeSlug, setActiveSlug] = useState(groups[0].slug);
+  const groupsWithChildren = groups.filter((g) => g.children && g.children.length > 0);
+  const [activeSlug, setActiveSlug] = useState(groupsWithChildren[0]?.slug ?? '');
   const router = useRouter();
-  const active = groups.find((g) => g.slug === activeSlug) ?? groups[0];
+  const active = groupsWithChildren.find((g) => g.slug === activeSlug) ?? groupsWithChildren[0];
 
   return (
     <div
@@ -28,11 +29,12 @@ function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () 
       {/* Left — group selector */}
       <div className="w-44 bg-[#F7F9FC] border-r border-[#D9E1EA] py-2 shrink-0">
         {groups.map((group) => {
+          const isDirect = !group.children || group.children.length === 0;
           const isActive = group.slug === activeSlug;
           return (
             <button
               key={group.slug}
-              onMouseEnter={() => setActiveSlug(group.slug)}
+              onMouseEnter={() => !isDirect && setActiveSlug(group.slug)}
               onClick={() => { router.push(group.href); onClose(); }}
               className={cn(
                 'w-full flex items-start gap-3 px-4 py-3.5 text-left transition-colors duration-150',
@@ -61,7 +63,7 @@ function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () 
 
       {/* Right — subcategories */}
       <div className="flex-1 py-2">
-        {active.children.map((child) => (
+        {(active?.children ?? []).map((child) => (
           <Link
             key={child.label}
             href={child.href}
@@ -111,7 +113,9 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   // Product detail pages (/urunler/group/sub/product) have a white top — force solid navbar
   const strippedPath = pathname.replace(/^\/(tr|en)/, '') || '/';
-  const isLightTopPage = /^\/urunler\/[^/]+\/[^/]+\/[^/]+/.test(strippedPath);
+  const isLightTopPage =
+    /^\/urunler\/[^/]+\/[^/]+\/[^/]+/.test(strippedPath) ||
+    strippedPath === '/urunler/katalog';
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -134,8 +138,8 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const isSolid = mobileOpen || isLightTopPage;
-  const isGlass = scrolled && !isSolid;
+  const isSolid = mobileOpen;
+  const isGlass = (scrolled || isLightTopPage) && !isSolid;
 
   const navBg = isSolid
     ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-[#D9E1EA]'
@@ -367,7 +371,7 @@ export function Navbar() {
                                 {/* Group children */}
                                 {mobileGroupExpanded === group.slug && (
                                   <div className="ml-4 space-y-0.5">
-                                    {group.children.map((child) => (
+                                    {(group.children ?? []).map((child) => (
                                       <Link
                                         key={child.label}
                                         href={child.href}

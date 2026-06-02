@@ -134,17 +134,6 @@ export default function SurdurulebilirlikPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#E9EEF3]">
-        <div className="section-container text-center">
-          <h2 className="text-[#071B34] mb-4">Enerji Verimliliği Analizi İsteyin</h2>
-          <p className="text-[#475569] max-w-lg mx-auto mb-8">
-            Mevcut sisteminizin enerji performansını ölçüyoruz, tasarruf potansiyelini raporluyoruz.
-          </p>
-          <Button variant="primary" size="lg" href="/iletisim?form=danismanlik">
-            Enerji Verimliliği Kontrolü Talep Et
-          </Button>
-        </div>
-      </section>
     </>
   );
 }

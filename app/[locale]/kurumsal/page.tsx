@@ -87,7 +87,7 @@ export default function KurumsalPage() {
 
             <FadeInOnScroll delay={100}>
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image src="/projeler-muhendislik/17.png" alt="Nokta Dizayn mağaza projesi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image src="/nokta-dizayn-sirket.png" alt="Nokta Dizayn mağaza projesi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
             </FadeInOnScroll>
           </div>
@@ -128,7 +128,7 @@ export default function KurumsalPage() {
             </FadeInOnScroll>
             <FadeInOnScroll delay={100}>
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image src="/nokta-dizayn-sirket.png" alt="11.000 m² üretim tesisi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image src="/dolap-üretim-4.png" alt="11.000 m² üretim tesisi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
             </FadeInOnScroll>
           </div>

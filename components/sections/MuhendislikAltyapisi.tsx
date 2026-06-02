@@ -39,9 +39,20 @@ const disciplines = [
 export function MuhendislikAltyapisi() {
   return (
     <section
-      className="py-24 bg-white relative overflow-hidden"
+      className="py-24 relative overflow-hidden"
       aria-label="Mühendislik altyapısı ve disiplinler"
     >
+      {/* Background image */}
+      <Image
+        src="/dolap-üretim-5.png"
+        alt=""
+        fill
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-[#D9E1EA]/80" aria-hidden="true" />
+
       <div className="section-container relative z-10">
         <FadeInOnScroll className="mb-14">
           <SectionHeading
@@ -72,19 +83,6 @@ export function MuhendislikAltyapisi() {
           })}
         </div>
 
-        {/* Small accent strip — 9.png */}
-        <FadeInOnScroll delay={200} className="mt-16">
-          <div className="relative h-48 rounded-2xl overflow-hidden">
-            <Image
-              src="/projeler-muhendislik/9.png"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-[#071B34]/20" />
-          </div>
-        </FadeInOnScroll>
 
       </div>
     </section>

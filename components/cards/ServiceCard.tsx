@@ -11,7 +11,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
   return (
     <div
       className={cn(
-        'group flex flex-col p-6 lg:p-8 bg-white rounded-2xl border border-[#D9E1EA]',
+        'group flex flex-col h-full p-6 lg:p-8 bg-white rounded-2xl border border-[#D9E1EA]',
         'transition-all duration-300',
         'hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(7,27,52,0.06),0_16px_40px_rgba(10,109,184,0.12)]',
         'relative',

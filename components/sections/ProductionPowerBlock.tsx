@@ -1,5 +1,5 @@
-﻿import { Building2, Users, CheckSquare, Globe } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
+﻿import Image from 'next/image';
+import { Building2, Users, CheckSquare, Globe } from 'lucide-react';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
@@ -36,11 +36,13 @@ export function ProductionPowerBlock() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left visual */}
           <FadeInOnScroll>
-            <Placeholder
-              category="production-facility"
-              aspectRatio="4:3"
-              icon="Factory"
-              label="ÜRETİM TESİSİ"
+            <Image
+              src="/dolap-üretim.png"
+              alt="Nokta Dizayn üretim tesisi"
+              width={960}
+              height={720}
+              className="w-full h-auto rounded-3xl"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </FadeInOnScroll>
 

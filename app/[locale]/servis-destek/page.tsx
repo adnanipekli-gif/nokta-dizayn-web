@@ -56,12 +56,65 @@ export default function ServisDestekPage() {
             />
           </FadeInOnScroll>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch">
             {SERVICES.map((service, i) => (
-              <FadeInOnScroll key={service.slug} delay={i * 60}>
+              <FadeInOnScroll key={service.slug} delay={i * 60} className="h-full">
                 <ServiceCard service={service} />
               </FadeInOnScroll>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Görsel bölüm ─────────────────────────────── */}
+      <section className="py-20 bg-[#071B34] relative overflow-hidden">
+        <div className="absolute inset-0 blueprint-grid opacity-[0.04]" aria-hidden="true" />
+        <div className="section-container relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 h-[520px] lg:h-[600px]">
+
+            {/* Sol — büyük görsel */}
+            <FadeInOnScroll className="col-span-2 lg:col-span-2 h-full">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden group">
+                <Image
+                  src="/dolap-üretim.png"
+                  alt="Servis ve bakım"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/50 via-transparent to-transparent" />
+              </div>
+            </FadeInOnScroll>
+
+            {/* Sağ — iki küçük görsel */}
+            <div className="col-span-2 lg:col-span-1 grid grid-rows-2 gap-3 h-full">
+              <FadeInOnScroll delay={80} className="h-full">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden group">
+                  <Image
+                    src="/dolap-üretim-2.png"
+                    alt="Teknik servis ekibi"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/40 via-transparent to-transparent" />
+                </div>
+              </FadeInOnScroll>
+
+              <FadeInOnScroll delay={140} className="h-full">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden group">
+                  <Image
+                    src="/dolap-üretim-3.png"
+                    alt="Bakım ve yedek parça"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#071B34]/40 via-transparent to-transparent" />
+                </div>
+              </FadeInOnScroll>
+            </div>
+
           </div>
         </div>
       </section>

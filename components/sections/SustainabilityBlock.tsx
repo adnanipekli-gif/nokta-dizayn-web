@@ -1,6 +1,6 @@
 ﻿import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Zap, Timer, Settings2 } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { GradientGlow } from '@/components/ui/GradientGlow';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
@@ -39,7 +39,7 @@ export function SustainabilityBlock() {
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left content */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <FadeInOnScroll>
               <SectionHeading
                 eyebrow="ENERJİ VERİMLİLİĞİ"
@@ -80,13 +80,15 @@ export function SustainabilityBlock() {
           </div>
 
           {/* Right visual */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-8">
             <FadeInOnScroll delay={100}>
-              <Placeholder
-                category="sustainability"
-                aspectRatio="16:9"
-                icon="Zap"
-                label="ENERJİ VERİMLİLİĞİ"
+              <Image
+                src="/gatria-fg-dgd-render.png"
+                alt="Gatria FG-DGD — Enerji verimli plug-in sütlük reyonu"
+                width={960}
+                height={720}
+                className="w-full h-auto rounded-3xl"
+                sizes="(max-width: 1024px) 100vw, 58vw"
               />
             </FadeInOnScroll>
           </div>

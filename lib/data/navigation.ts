@@ -3,38 +3,7 @@ import type { NavItem } from '@/lib/types';
 export const NAVIGATION: NavItem[] = [
   {
     label: 'Mağaza Sistemleri',
-    children: [
-      {
-        label: 'Süpermarket & Hipermarket',
-        href: '/magaza-sistemleri/supermarket-hipermarket',
-        description: 'Büyük ölçekli market formatları için entegre mağaza çözümleri',
-        icon: 'ShoppingCart',
-      },
-      {
-        label: 'Mini Market & Convenience',
-        href: '/magaza-sistemleri/mini-market-convenience',
-        description: 'Kompakt ve verimli mağaza sistemleri',
-        icon: 'Store',
-      },
-      {
-        label: 'Kasap, Balık & Premium Gıda',
-        href: '/magaza-sistemleri/kasap-balik-premium',
-        description: 'Et, balık ve premium gıda bölümleri için özel çözümler',
-        icon: 'Fish',
-      },
-      {
-        label: 'Pastane, Kafe & Gurme',
-        href: '/magaza-sistemleri/pastane-kafe-gurme',
-        description: 'Estetik sunum ve mağaza tasarımı',
-        icon: 'Coffee',
-      },
-      {
-        label: 'Petrol İstasyonu Market',
-        href: '/magaza-sistemleri/petrol-istasyonu',
-        description: 'İstasyon marketleri için kompakt mağaza sistemleri',
-        icon: 'Fuel',
-      },
-    ],
+    href: '/magaza-sistemleri',
   },
   {
     label: 'Ürünler',
@@ -65,6 +34,13 @@ export const NAVIGATION: NavItem[] = [
           { label: 'Plug-In Promosyon', href: '/urunler/plug-in/plug-in-promosyon', icon: 'ShoppingBag', description: 'PROPUS ve BRISBANE promosyon dolapları' },
         ],
       },
+      {
+        slug: 'katalog',
+        label: 'Ürün Kataloğu',
+        href: '/urunler/katalog',
+        tagline: 'Tüm ürünleri PDF olarak görüntüle',
+        icon: 'BookOpen',
+      },
     ],
   },
   {
@@ -91,6 +67,10 @@ export const NAVIGATION: NavItem[] = [
         icon: 'Leaf',
       },
     ],
+  },
+  {
+    label: 'Referanslar',
+    href: '/referanslar',
   },
   {
     label: 'İletişim',

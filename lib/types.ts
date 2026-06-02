@@ -77,7 +77,7 @@ export type NavGroup = {
   href: string;
   tagline: string;
   icon: string;
-  children: NavChild[];
+  children?: NavChild[];
 };
 
 export type NavItem = {
