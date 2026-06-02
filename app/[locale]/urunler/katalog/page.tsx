@@ -11,8 +11,8 @@ export default function KatalogPage() {
   return (
     <div className="pt-16">
       <PDFCatalog
-        embedUrl="https://drive.google.com/file/d/1nNmTT2MQ3CwT9h3Ny-9va32oSt6h5AGy/preview"
-        downloadUrl="https://drive.google.com/uc?export=download&id=1nNmTT2MQ3CwT9h3Ny-9va32oSt6h5AGy"
+        embedUrl="https://drive.google.com/file/d/1SCss5_-ADJSqFeYHd4M8y0uSGYmhObVl/preview"
+        downloadUrl="https://drive.google.com/uc?export=download&id=1SCss5_-ADJSqFeYHd4M8y0uSGYmhObVl"
       />
     </div>
   );
