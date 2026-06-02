@@ -1,7 +1,54 @@
-﻿import { SectionHeading } from '@/components/ui/SectionHeading';
-import { SolutionCard } from '@/components/cards/SolutionCard';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
-import { SOLUTIONS } from '@/lib/data/solutions';
+import { DynIcon } from '@/lib/icons';
+
+const categories = [
+  {
+    number: '01',
+    title: 'Market Raf Sistemleri',
+    description: 'Her ölçekte market için modüler gondol raflar, kasa önü stantlar ve mağaza içi düzenleme çözümleri.',
+    icon: 'ShoppingCart',
+    image: '/magaza-sistemleri/market-raf-sistemleri/1.png',
+  },
+  {
+    number: '02',
+    title: 'Kasap, Balık & Dondurulmuş Gıda',
+    description: 'Soğuk zinciri koruyarak profesyonel teşhir sunan kasap tezgahları, balık reyonları ve derin dondurucu sistemleri.',
+    icon: 'Beef',
+    image: '/magaza-sistemleri/kasap-balik-dondurulmus-gida/1.png',
+  },
+  {
+    number: '03',
+    title: 'Fast Food',
+    description: 'Franchise zincirleri için paslanmaz servis tezgahları, sıcak-soğuk vitrinler ve marka standardlarına uygun ekipmanlar.',
+    icon: 'Pizza',
+    image: '/magaza-sistemleri/fast-food/1.png',
+  },
+  {
+    number: '04',
+    title: 'Coffee Shops',
+    description: 'Barista tezgah düzenlemesi, under-counter soğutma ve marka kimliğine uygun özelleştirilebilir kafe ekipmanları.',
+    icon: 'Coffee',
+    image: '/magaza-sistemleri/coffe-shops/1.jpg',
+  },
+  {
+    number: '05',
+    title: 'Manav Reyon Sistemleri',
+    description: 'Taze meyve ve sebzenin görsel çekiciliğini artıran eğimli raf yapıları ve renk kontrast reyon düzenlemeleri.',
+    icon: 'Apple',
+    image: '/magaza-sistemleri/manav-reyonu/1.png',
+  },
+  {
+    number: '06',
+    title: 'Fırın Reyon Sistemleri',
+    description: 'Tel raflı ekmek standları, ısı korumalı pasta vitrinleri ve buhar dirençli yüzeylerle fırın reyonu çözümleri.',
+    icon: 'Croissant',
+    image: '/magaza-sistemleri/firin-reyon-sistemleri/1.png',
+  },
+];
 
 export function StoreSystemsBlock() {
   return (
@@ -10,16 +57,52 @@ export function StoreSystemsBlock() {
         <FadeInOnScroll>
           <SectionHeading
             eyebrow="MAĞAZA SİSTEMLERİ"
-            title="Her Mağaza Formatına Özel Entegre Çözümler"
-            subtitle="Süpermarketten franchise zincirine, kasap bölümünden gurme markete — soğutmadan rafa, kasadan mobilyaya bütünleşik mağaza kurulumu."
+            title="Her Sektöre Özel Mağaza Çözümleri"
+            subtitle="Marketten eczaneye, nalburdan kafeye — 9 farklı sektörde ihtiyaca özel raf, reyon ve ekipman sistemleri."
             id="store-systems-heading"
           />
         </FadeInOnScroll>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {SOLUTIONS.map((solution, i) => (
-            <FadeInOnScroll key={solution.slug} delay={i * 60}>
-              <SolutionCard solution={solution} />
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+          {categories.map((cat, i) => (
+            <FadeInOnScroll key={cat.number} delay={i * 50} className="h-full">
+              <Link
+                href={`/magaza-sistemleri#bolum-${cat.number}`}
+                className="group h-full flex flex-col bg-white rounded-2xl border border-[#D9E1EA] hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(7,27,52,0.06),0_16px_40px_rgba(10,109,184,0.10)] hover:border-t-[#11B5FF] transition-all duration-300 overflow-hidden"
+                style={{ borderTopWidth: '1px' }}
+              >
+                {/* Görsel alanı */}
+                <div className="relative w-full aspect-[4/3] bg-[#F0F4F8] overflow-hidden shrink-0">
+                  <Image
+                    src={cat.image}
+                    alt={cat.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+
+                {/* İçerik */}
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="mb-3">
+                    <span className="w-9 h-9 rounded-lg bg-[#071B34] flex items-center justify-center shrink-0 group-hover:bg-[#0A6DB8] transition-colors duration-300">
+                      <DynIcon name={cat.icon} size={16} className="text-[#11B5FF]" strokeWidth={1.5} />
+                    </span>
+                  </div>
+
+                  <h3 className="font-sora font-semibold text-[#071B34] text-base mb-1.5 group-hover:text-[#0A6DB8] transition-colors duration-200">
+                    {cat.title}
+                  </h3>
+
+                  <p className="text-sm text-[#475569] leading-relaxed flex-1 mb-4 line-clamp-3">
+                    {cat.description}
+                  </p>
+
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A6DB8] opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+                    İncele <ArrowRight size={12} />
+                  </span>
+                </div>
+              </Link>
             </FadeInOnScroll>
           ))}
         </div>

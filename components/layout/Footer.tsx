@@ -3,13 +3,12 @@ import { Linkedin, Youtube, Instagram, MapPin, Phone, Mail, Clock } from 'lucide
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 
 const solutions = [
-  { label: 'Süpermarket & Hipermarket', href: '/magaza-sistemleri/supermarket-hipermarket' },
-  { label: 'Mini Market & Convenience', href: '/magaza-sistemleri/mini-market-convenience' },
-  { label: 'Kasap, Balık & Premium', href: '/magaza-sistemleri/kasap-balik-premium' },
-  { label: 'Pastane & Kafe', href: '/magaza-sistemleri/pastane-kafe-gurme' },
-  { label: 'Petrol İstasyonu', href: '/magaza-sistemleri/petrol-istasyonu' },
-  { label: 'Multi-Lokasyon Roll-Out', href: '/magaza-sistemleri/multi-lokasyon-rollout' },
-  { label: 'Özel Konsept Mağaza', href: '/magaza-sistemleri/ozel-konsept-magaza' },
+  { label: 'Market Raf Sistemleri', href: '/magaza-sistemleri#bolum-01' },
+  { label: 'Kasap, Balık & Dondurulmuş Gıda', href: '/magaza-sistemleri#bolum-02' },
+  { label: 'Fast Food', href: '/magaza-sistemleri#bolum-03' },
+  { label: 'Coffee Shops', href: '/magaza-sistemleri#bolum-04' },
+  { label: 'Manav Reyon Sistemleri', href: '/magaza-sistemleri#bolum-05' },
+  { label: 'Fırın Reyon Sistemleri', href: '/magaza-sistemleri#bolum-06' },
 ];
 
 const products = [
@@ -171,8 +170,8 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <Clock size={14} className="text-[#11B5FF] mt-0.5 shrink-0" />
                 <span className="text-sm text-[#E9EEF3]/65 leading-snug">
-                  Pzt – Cum: 08:30 – 18:00<br />
-                  Cmt: 09:00 – 14:00
+                  Pzt – Cum: 09:00 – 18:00<br />
+                  Hafta sonu: Kapalı
                 </span>
               </li>
             </ul>

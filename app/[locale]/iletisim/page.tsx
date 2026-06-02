@@ -2,8 +2,8 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { MapPin, Phone, Mail, Clock, Users } from 'lucide-react';
-import { Placeholder } from '@/components/ui/Placeholder';
+import Image from 'next/image';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { ServiceRequestForm } from '@/components/forms/ServiceRequestForm';
 import { GeneralContactForm } from '@/components/forms/GeneralContactForm';
@@ -17,11 +17,6 @@ const tabs: { id: FormType; label: string }[] = [
   { id: 'genel', label: 'Genel İletişim' },
 ];
 
-const departments = [
-  { name: 'Satış', email: 'satis@noktadizayn.com.tr', phone: '+90 (212) 123 45 67' },
-  { name: 'Teknik Servis', email: 'servis@noktadizayn.com.tr', phone: '+90 (212) 123 45 68' },
-  { name: 'İhracat', email: 'export@noktadizayn.com.tr', phone: '+90 (212) 123 45 69' },
-];
 
 function IletisimContent() {
   const searchParams = useSearchParams();
@@ -37,7 +32,11 @@ function IletisimContent() {
   return (
     <>
       <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
-        <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
+        <div className="absolute inset-0">
+          <Image src="/iletisim.png" alt="" fill className="object-cover object-center" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-[#071B34]/65" />
+        </div>
+        <div className="absolute inset-0 blueprint-grid opacity-10" aria-hidden="true" />
         <div className="section-container relative z-10">
           <h1 className="text-white">Projenizi Birlikte Planlayalım</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
@@ -86,8 +85,6 @@ function IletisimContent() {
 
             <aside className="lg:col-span-1 space-y-5">
               <div className="rounded-2xl border border-[#D9E1EA] overflow-hidden bg-white">
-                <div className="px-5 py-4 bg-[#071B34]">
-                </div>
                 <div className="p-5 space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPin size={16} className="text-[#0A6DB8] mt-0.5 shrink-0" />
@@ -118,23 +115,7 @@ function IletisimContent() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#D9E1EA] overflow-hidden bg-white">
-                <div className="px-5 py-4 bg-[#F7F9FC] border-b border-[#D9E1EA]">
-                  <div className="flex items-center gap-2">
-                    <Users size={14} className="text-[#0A6DB8]" />
-                    <p className="text-sm font-semibold text-[#071B34]">Departmanlar</p>
-                  </div>
-                </div>
-                {departments.map((dept, i) => (
-                  <div key={dept.name} className={`p-5 ${i < departments.length - 1 ? 'border-b border-[#D9E1EA]' : ''}`}>
-                    <p className="font-semibold text-[#071B34] text-sm mb-1">{dept.name}</p>
-                    <a href={`mailto:${dept.email}`} className="text-xs text-[#8D99A8] hover:text-[#0A6DB8] block transition-colors">{dept.email}</a>
-                    <a href={`tel:${dept.phone.replace(/\s/g, '')}`} className="text-xs text-[#8D99A8] hover:text-[#0A6DB8] transition-colors">{dept.phone}</a>
-                  </div>
-                ))}
-              </div>
 
-              <Placeholder category="map" aspectRatio="4:3" icon="MapPin" label="HARİTA" className="rounded-2xl" />
             </aside>
           </div>
         </div>

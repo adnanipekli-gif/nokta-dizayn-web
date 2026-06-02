@@ -38,6 +38,8 @@ import {
   Settings2,
   Apple,
   Wheat,
+  Pizza,
+  Croissant,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -81,6 +83,8 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   Settings2,
   Apple,
   Wheat,
+  Pizza,
+  Croissant,
 };
 
 interface DynIconProps extends LucideProps {
