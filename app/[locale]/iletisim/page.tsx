@@ -3,31 +3,32 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Printer } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { ServiceRequestForm } from '@/components/forms/ServiceRequestForm';
 import { GeneralContactForm } from '@/components/forms/GeneralContactForm';
 
 type FormType = 'teklif' | 'servis' | 'danismanlik' | 'genel';
 
-const tabs: { id: FormType; label: string }[] = [
-  { id: 'teklif', label: 'Teklif Al' },
-  { id: 'servis', label: 'Servis Talebi' },
-  { id: 'danismanlik', label: 'Proje Danışmanlığı' },
-  { id: 'genel', label: 'Genel İletişim' },
-];
-
-
 function IletisimContent() {
+  const t = useTranslations('iletisim_page');
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<FormType>('teklif');
 
+  const tabs: { id: FormType; label: string }[] = [
+    { id: 'teklif', label: t('tab_teklif') },
+    { id: 'servis', label: t('tab_servis') },
+    { id: 'danismanlik', label: t('tab_danismanlik') },
+    { id: 'genel', label: t('tab_genel') },
+  ];
+
   useEffect(() => {
     const formParam = searchParams.get('form') as FormType;
-    if (formParam && tabs.find((t) => t.id === formParam)) {
+    if (formParam && tabs.find((tab) => tab.id === formParam)) {
       setActiveTab(formParam);
     }
-  }, [searchParams]);
+  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -38,9 +39,9 @@ function IletisimContent() {
         </div>
         <div className="absolute inset-0 blueprint-grid opacity-10" aria-hidden="true" />
         <div className="section-container relative z-10">
-          <h1 className="text-white">Projenizi Birlikte Planlayalım</h1>
+          <h1 className="text-white">{t('hero_title')}</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
-            Teklif, servis talebi, proje danışmanlığı veya genel sorularınız için bizimle iletişime geçin.
+            {t('hero_subtitle')}
           </p>
         </div>
       </section>
@@ -49,7 +50,7 @@ function IletisimContent() {
         <div className="section-container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
             <div className="lg:col-span-2">
-              <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Form tipi seçin">
+              <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label={t('tab_aria')}>
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -70,10 +71,10 @@ function IletisimContent() {
               <div
                 role="tabpanel"
                 className="p-6 lg:p-8 rounded-2xl border border-[#D9E1EA] bg-white"
-                aria-label={tabs.find((t) => t.id === activeTab)?.label}
+                aria-label={tabs.find((tab) => tab.id === activeTab)?.label}
               >
                 <h2 className="font-sora font-semibold text-[#071B34] text-xl mb-6">
-                  {tabs.find((t) => t.id === activeTab)?.label}
+                  {tabs.find((tab) => tab.id === activeTab)?.label}
                 </h2>
 
                 {activeTab === 'teklif' && <QuoteForm />}
@@ -89,33 +90,43 @@ function IletisimContent() {
                   <div className="flex items-start gap-3">
                     <MapPin size={16} className="text-[#0A6DB8] mt-0.5 shrink-0" />
                     <p className="text-sm text-[#475569] leading-relaxed">
-                      Merkez Mah. Sanayi Cad. No:1<br />
-                      Bağcılar, İstanbul, 34200 Türkiye
+                      {t('address_line1')}<br />
+                      {t('address_line2')}
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone size={16} className="text-[#0A6DB8] shrink-0" />
-                    <a href="tel:+902121234567" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
-                      +90 (212) 123 45 67
+                    <a href="tel:+902163136767" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
+                      +90 (216) 313 67 67
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Printer size={16} className="text-[#0A6DB8] shrink-0" />
+                    <span className="text-sm text-[#475569]">
+                      +90 (216) 314 06 24
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Mail size={16} className="text-[#0A6DB8] shrink-0" />
+                    <a href="mailto:bilgi@noktadizayn.com.tr" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
+                      bilgi@noktadizayn.com.tr
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail size={16} className="text-[#0A6DB8] shrink-0" />
-                    <a href="mailto:info@noktadizayn.com.tr" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
-                      info@noktadizayn.com.tr
+                    <a href="mailto:musterihizmetleri@noktadizayn.com.tr" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
+                      musterihizmetleri@noktadizayn.com.tr
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
                     <Clock size={16} className="text-[#0A6DB8] mt-0.5 shrink-0" />
                     <p className="text-sm text-[#475569] leading-snug">
-                      Pzt – Cum: 08:30 – 18:00<br />
-                      Cmt: 09:00 – 14:00
+                      {t('hours_weekday')}<br />
+                      {t('hours_saturday')}
                     </p>
                   </div>
                 </div>
               </div>
-
-
             </aside>
           </div>
         </div>

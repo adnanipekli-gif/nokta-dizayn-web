@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CheckCircle2 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { Placeholder } from '@/components/ui/Placeholder';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { Button } from '@/components/ui/Button';
@@ -36,6 +37,8 @@ export default async function MagazaSistemiDetailPage({
   const solution = SOLUTIONS.find((s) => s.slug === slug);
   if (!solution) notFound();
 
+  const t = await getTranslations('magaza_detay');
+
   return (
     <>
       <section className="pt-32 pb-12 bg-[#071B34] relative overflow-hidden">
@@ -43,7 +46,7 @@ export default async function MagazaSistemiDetailPage({
         <div className="section-container relative z-10">
           <Breadcrumb
             items={[
-              { label: 'Mağaza Sistemleri', href: '/magaza-sistemleri' },
+              { label: t('breadcrumb'), href: '/magaza-sistemleri' },
               { label: solution.name },
             ]}
           />
@@ -82,7 +85,7 @@ export default async function MagazaSistemiDetailPage({
               <FadeInOnScroll delay={80}>
                 <div>
                   <h2 className="text-xl font-semibold text-[#071B34] mb-5">
-                    Bu Çözümün Avantajları
+                    {t('advantages_title')}
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {solution.benefits.map((benefit) => (
@@ -100,27 +103,25 @@ export default async function MagazaSistemiDetailPage({
                   </div>
                 </div>
               </FadeInOnScroll>
-
             </div>
 
             <aside className="lg:col-span-1">
               <div className="sticky top-24 space-y-5">
                 <div className="rounded-2xl border border-[#D9E1EA] overflow-hidden bg-white">
-                  <div className="px-5 py-4 bg-[#071B34]">
-                  </div>
+                  <div className="px-5 py-4 bg-[#071B34]" />
                   <div className="p-5">
                     <h3 className="font-sora font-semibold text-[#071B34] text-base mb-2">
-                      Bu çözüm hakkında teklif alın
+                      {t('quote_sidebar_title')}
                     </h3>
                     <p className="text-sm text-[#475569] mb-5 leading-relaxed">
-                      Mühendislik ekibimiz ihtiyacınızı analiz eder, size özel fiyat ve teknik plan hazırlar.
+                      {t('quote_sidebar_desc')}
                     </p>
                     <div className="space-y-2.5">
                       <Button variant="primary" size="md" href="/iletisim?form=teklif" fullWidth>
-                        Teklif Talep Et
+                        {t('quote_btn')}
                       </Button>
                       <Button variant="secondary" size="md" href="/iletisim?form=danismanlik" fullWidth>
-                        Proje Danışmanlığı
+                        {t('consulting_btn')}
                       </Button>
                     </div>
                   </div>
@@ -131,16 +132,15 @@ export default async function MagazaSistemiDetailPage({
         </div>
       </div>
 
-
       <section className="py-16 bg-[#071B34]">
         <div className="section-container text-center">
-          <h2 className="text-white mb-4">{solution.name} için teklif alın</h2>
+          <h2 className="text-white mb-4">{t('cta_title_template', { name: solution.name })}</h2>
           <p className="text-[#E9EEF3]/65 max-w-lg mx-auto mb-8">
-            Projenizin detaylarını paylaşın, size özel bir mağaza çözümü hazırlayalım.
+            {t('cta_subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="primary" size="lg" href="/iletisim?form=teklif">
-              Teklif Al
+              {t('cta_primary')}
             </Button>
             <Button
               variant="secondary"
@@ -148,7 +148,7 @@ export default async function MagazaSistemiDetailPage({
               href="/iletisim?form=genel"
               className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
             >
-              Bize Ulaşın
+              {t('cta_secondary')}
             </Button>
           </div>
         </div>

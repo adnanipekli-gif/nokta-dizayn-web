@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
@@ -19,47 +20,24 @@ const derinDondurucu = remote.subCategories.find((s) => s.slug === 'remote-derin
 const yatayFreezer = remote.subCategories.find((s) => s.slug === 'remote-yatay-freezer')!;
 const promosyon = plugIn.subCategories.find((s) => s.slug === 'plug-in-promosyon')!;
 
-const categories = [
-  {
-    label: 'Sütlük',
-    tagline: 'Remote & Plug-In',
-    count: sutlukCount,
-    href: '/urunler/sutluk',
-  },
-  {
-    label: 'Şarküteri',
-    tagline: 'Remote & Plug-In',
-    count: sarkuteriCount,
-    href: '/urunler/sarkuteri',
-  },
-  {
-    label: 'Derin Dondurucu',
-    tagline: 'Remote',
-    count: derinDondurucu.products.length,
-    href: `/urunler/remote/${derinDondurucu.slug}`,
-  },
-  {
-    label: 'Yatay Freezer',
-    tagline: 'Remote',
-    count: yatayFreezer.products.length,
-    href: `/urunler/remote/${yatayFreezer.slug}`,
-  },
-  {
-    label: 'Promosyon',
-    tagline: 'Plug-In',
-    count: promosyon.products.length,
-    href: `/urunler/plug-in/${promosyon.slug}`,
-  },
-];
+export async function ProductCategoryGrid() {
+  const t = await getTranslations('products');
 
-export function ProductCategoryGrid() {
+  const categories = [
+    { labelKey: 'sutluk',         tagline: 'Remote & Plug-In', count: sutlukCount,                   href: '/urunler/sutluk' },
+    { labelKey: 'sarkuteri',      tagline: 'Remote & Plug-In', count: sarkuteriCount,                href: '/urunler/sarkuteri' },
+    { labelKey: 'derin_dondurucu',tagline: 'Remote',           count: derinDondurucu.products.length, href: `/urunler/remote/${derinDondurucu.slug}` },
+    { labelKey: 'yatay_freezer',  tagline: 'Remote',           count: yatayFreezer.products.length,   href: `/urunler/remote/${yatayFreezer.slug}` },
+    { labelKey: 'promosyon',      tagline: 'Plug-In',          count: promosyon.products.length,      href: `/urunler/plug-in/${promosyon.slug}` },
+  ] as const;
+
   return (
     <section className="py-24 lg:py-32 bg-[#E9EEF3]" aria-labelledby="products-heading">
       <div className="section-container">
         <FadeInOnScroll>
           <SectionHeading
-            title="Ürün Gruplarımız"
-            subtitle="Remote ve Plug-In sistemlerde soğutma ekipmanları."
+            title={t('title')}
+            subtitle={t('subtitle')}
             id="products-heading"
           />
         </FadeInOnScroll>
@@ -76,11 +54,11 @@ export function ProductCategoryGrid() {
                     {cat.tagline}
                   </span>
                   <h3 className="font-sora font-semibold text-base text-[#071B34] mt-1 group-hover:text-[#0A6DB8] transition-colors leading-snug">
-                    {cat.label}
+                    {t(cat.labelKey)}
                   </h3>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-[#8D99A8] mt-auto">
-                  {cat.count} ürün
+                  {t('count', { n: cat.count })}
                   <ArrowRight size={11} className="ml-auto text-[#0A6DB8] opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </Link>

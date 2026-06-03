@@ -74,7 +74,7 @@ export default function CozumlerPage() {
                         <CheckCircle2 size={16} className="text-[#0A6DB8] mt-0.5 shrink-0" />
                         <span>
                           <span className="font-medium text-[#071B34]">{b.title}</span>
-                          <span className="text-[#475569] text-sm"> — {b.description}</span>
+                          <span className="text-[#475569] text-sm">: {b.description}</span>
                         </span>
                       </li>
                     ))}

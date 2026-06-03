@@ -1,31 +1,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
-const blocks = [
-  {
-    number: '01',
-    title: 'Tek Sorumluluk',
-    text: 'Konsept, tasarım, mühendislik, üretim, lojistik, kurulum ve devreye alma; tümü aynı proje sözleşmesi kapsamındadır. Tedarikçiler arası koordinasyon karmaşası yoktur.',
-  },
-  {
-    number: '02',
-    title: 'Öngörülebilir Takvim',
-    text: 'Proje takvimi başlangıçta belirlenir ve aynı mühendislik ekibi tarafından uçtan uca yönetilir. Farklı firmaların bağımsız iş programlarından doğan gecikmeler ortadan kalkar.',
-  },
-  {
-    number: '03',
-    title: 'Net Maliyet',
-    text: 'Anahtar teslim model, bütçe belirsizliğini minimize eder. Ek tedarikçi, koordinasyon maliyeti veya sürpriz kalemler olmadan, net proje maliyetiyle çalışırsınız.',
-  },
-];
+export async function AnahtarTeslimHero() {
+  const t = await getTranslations('anahtar_teslim');
 
-export function AnahtarTeslimHero() {
+  const blocks = [
+    { number: '01', title: t('b1_title'), text: t('b1_text') },
+    { number: '02', title: t('b2_title'), text: t('b2_text') },
+    { number: '03', title: t('b3_title'), text: t('b3_text') },
+  ];
+
   return (
     <section
       className="py-24 bg-[#04101F] relative overflow-hidden"
-      aria-label="Anahtar teslim proje yaklaşımı"
+      aria-label={t('eyebrow')}
     >
       {/* Blueprint grid */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.04]" aria-hidden="true" />
@@ -41,24 +32,22 @@ export function AnahtarTeslimHero() {
           {/* Left — 5 cols: text + numbered blocks */}
           <div className="lg:col-span-5">
             <FadeInOnScroll>
-              <p className="eyebrow text-[#11B5FF] mb-5">ANAHTAR TESLİM PROJE</p>
+              <p className="eyebrow text-[#11B5FF] mb-5">{t('eyebrow')}</p>
               <h2 className="text-white mb-6 text-balance">
-                Tek Sözleşme, Tek Sorumluluk, Tam Teslimat.
+                {t('title')}
               </h2>
               <p className="text-[#E9EEF3]/80 text-lg leading-relaxed mb-4">
-                Geleneksel mağaza projelerinde müşteri; tasarımcı, ekipman tedarikçisi, montaj firması
-                ve bakım sağlayıcısı arasında koordinasyon yükü üstlenir.
+                {t('body_1')}
               </p>
               <p className="text-[#E9EEF3]/80 leading-relaxed mb-8">
-                Nokta Dizayn bu yükü sıfırlar. Konsept kararından son devreye almaya kadar tek
-                sözleşme, tek iletişim noktası, tek sorumluluk.{' '}
-                <strong className="text-white font-semibold">Siz yalnızca anahtarı alırsınız.</strong>
+                {t('body_2')}{' '}
+                <strong className="text-white font-semibold">{t('body_2_highlight')}</strong>
               </p>
               <Link
                 href="/iletisim?form=danismanlik"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/30 text-white text-sm font-medium hover:border-[#11B5FF] hover:text-[#11B5FF] transition-colors duration-200"
               >
-                Proje Danışmanlığı Talep Edin
+                {t('cta_link')}
                 <ArrowRight size={15} />
               </Link>
             </FadeInOnScroll>
@@ -71,7 +60,7 @@ export function AnahtarTeslimHero() {
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden">
                 <Image
                   src="/projeler-muhendislik/2.png"
-                  alt="Tamamlanan mağaza projesi"
+                  alt={t('photo_caption')}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 58vw"
@@ -79,7 +68,7 @@ export function AnahtarTeslimHero() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#04101F]/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                   <span className="text-xs font-mono text-white/60 tracking-widest uppercase">
-                    Tamamlanan Projeden
+                    {t('photo_caption')}
                   </span>
                   <span className="text-xs font-mono text-[#11B5FF] tracking-widest uppercase">
                     Nokta Dizayn

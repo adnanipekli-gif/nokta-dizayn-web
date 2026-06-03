@@ -1,44 +1,27 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import { Building2, Users, CheckSquare, Globe } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
-const items = [
-  {
-    icon: Building2,
-    title: '11.000 m² kapalı alan',
-    description: 'Mühendislik, üretim, depo ve teknik servis tek çatı altında.',
-  },
-  {
-    icon: Users,
-    title: 'Mühendislik ekibi',
-    description: 'Mekanik, soğutma ve elektronik mühendisliği bir arada.',
-  },
-  {
-    icon: CheckSquare,
-    title: 'Kalite kontrol süreci',
-    description: 'Üretim hattının her aşamasında test ve doğrulama.',
-  },
-  {
-    icon: Globe,
-    title: 'Global ihracat',
-    description: '60+ ülkeye ihracat ve lojistik altyapısı.',
-  },
-];
+export async function ProductionPowerBlock() {
+  const t = await getTranslations('production');
 
-export function ProductionPowerBlock() {
+  const items = [
+    { icon: Building2,   title: t('item_1_title'), description: t('item_1_desc') },
+    { icon: Users,       title: t('item_2_title'), description: t('item_2_desc') },
+    { icon: CheckSquare, title: t('item_3_title'), description: t('item_3_desc') },
+    { icon: Globe,       title: t('item_4_title'), description: t('item_4_desc') },
+  ];
+
   return (
-    <section
-      className="py-24 lg:py-32 bg-[#F7F9FC]"
-      aria-labelledby="production-heading"
-    >
+    <section className="py-24 lg:py-32 bg-[#F7F9FC]" aria-labelledby="production-heading">
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left visual */}
           <FadeInOnScroll>
             <Image
               src="/dolap-üretim.png"
-              alt="Nokta Dizayn üretim tesisi"
+              alt="Nokta Dizayn"
               width={960}
               height={720}
               className="w-full h-auto rounded-3xl"
@@ -46,15 +29,13 @@ export function ProductionPowerBlock() {
             />
           </FadeInOnScroll>
 
-          {/* Right content */}
           <FadeInOnScroll delay={100}>
             <SectionHeading
-              eyebrow="ÜRETİM GÜCÜ"
-              title="Türkiye'den Global Pazarlara Mühendislik ve Üretim Altyapısı"
+              eyebrow={t('eyebrow')}
+              title={t('title')}
               className="mb-10"
               id="production-heading"
             />
-
             <div className="space-y-6">
               {items.map((item) => (
                 <div key={item.title} className="flex items-start gap-4 group">

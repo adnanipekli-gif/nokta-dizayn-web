@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { groupTaglineKey } from '@/lib/product-i18n';
 
 export const metadata: Metadata = {
   title: 'Sütlük Reyonları — Remote & Plug-In',
@@ -16,17 +18,40 @@ const remoteSutluk = PRODUCT_CATALOG.find((g) => g.slug === 'remote')!
 const plugInSutluk = PRODUCT_CATALOG.find((g) => g.slug === 'plug-in')!
   .subCategories.find((s) => s.slug === 'plug-in-sutluk')!;
 
-const groups = [
-  { label: 'Remote Sütlük', tagline: 'Merkezi soğutma sistemine bağlı', groupSlug: 'remote', sub: remoteSutluk },
-  { label: 'Plug-In Sütlük', tagline: 'Bağımsız kompresörlü, kolay kurulum', groupSlug: 'plug-in', sub: plugInSutluk },
-];
+export default async function SutlukPage() {
+  const t = await getTranslations('urunler_page');
+  const tn = await getTranslations('nav');
+  const tc = await getTranslations('product_catalog');
 
-export default function SutlukPage() {
+  function getTagline(slug: string): string {
+    try { return tc(groupTaglineKey(slug)); } catch { return ''; }
+  }
+
+  const groups = [
+    {
+      label: `Remote ${t('sutluk_label')}`,
+      tagline: getTagline('remote'),
+      groupSlug: 'remote',
+      sub: remoteSutluk,
+    },
+    {
+      label: `Plug-In ${t('sutluk_label')}`,
+      tagline: getTagline('plug-in'),
+      groupSlug: 'plug-in',
+      sub: plugInSutluk,
+    },
+  ];
+
   return (
     <>
       <div className="pt-24 pb-4 bg-white border-b border-[#E9EEF3]">
         <div className="section-container">
-          <Breadcrumb items={[{ label: 'Ürünler', href: '/urunler' }, { label: 'Sütlük' }]} />
+          <Breadcrumb
+            items={[
+              { label: tn('urunler'), href: '/urunler' },
+              { label: t('breadcrumb_sutluk') },
+            ]}
+          />
         </div>
       </div>
 

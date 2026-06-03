@@ -4,20 +4,68 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, ChevronRight, ArrowRight, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { NAVIGATION } from '@/lib/data/navigation';
 import { Button } from '@/components/ui/Button';
 import { DynIcon } from '@/lib/icons';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
-import type { NavGroup } from '@/lib/types';
+import type { NavGroup, NavChild, NavItem } from '@/lib/types';
 
-// ── Two-panel product dropdown ──────────────────────────────
+// ── Translation key maps ─────────────────────────────────────
+
+const TOP_KEYS: Record<string, string> = {
+  '/magaza-sistemleri': 'magaza_sistemleri',
+  '/urunler': 'urunler',
+  '/proje-muhendislik': 'proje_muhendislik',
+  '/servis-destek': 'servis_destek',
+  '/referanslar': 'referanslar',
+  '/iletisim': 'iletisim',
+};
+
+const GROUP_LABEL_KEYS: Record<string, string> = {
+  katalog: 'katalog_label',
+};
+
+const GROUP_TAGLINE_KEYS: Record<string, string> = {
+  remote: 'remote_tagline',
+  'plug-in': 'plugin_tagline',
+  katalog: 'katalog_tagline',
+};
+
+const CHILD_KEYS: Record<string, { label: string; desc: string }> = {
+  '/urunler/remote/remote-sutluk':          { label: 'remote_sutluk',          desc: 'remote_sutluk_desc' },
+  '/urunler/remote/remote-sarkuteri':       { label: 'remote_sarkuteri',       desc: 'remote_sarkuteri_desc' },
+  '/urunler/remote/remote-derin-dondurucu': { label: 'remote_derin_dondurucu', desc: 'remote_derin_dondurucu_desc' },
+  '/urunler/remote/remote-yatay-freezer':   { label: 'remote_yatay_freezer',   desc: 'remote_yatay_freezer_desc' },
+  '/urunler/plug-in/plug-in-sutluk':        { label: 'plugin_sutluk',          desc: 'plugin_sutluk_desc' },
+  '/urunler/plug-in/plug-in-sarkuteri':     { label: 'plugin_sarkuteri',       desc: 'plugin_sarkuteri_desc' },
+  '/urunler/plug-in/plug-in-promosyon':     { label: 'plugin_promosyon',       desc: 'plugin_promosyon_desc' },
+  '/kurumsal':                              { label: 'hakkimizda',             desc: 'hakkimizda_desc' },
+  '/surdurulebilirlik':                     { label: 'surdurulebilirlik',       desc: 'surdurulebilirlik_desc' },
+};
+
+// ── Two-panel product dropdown ───────────────────────────────
 function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () => void }) {
+  const t = useTranslations('nav');
   const groupsWithChildren = groups.filter((g) => g.children && g.children.length > 0);
   const [activeSlug, setActiveSlug] = useState(groupsWithChildren[0]?.slug ?? '');
   const router = useRouter();
   const active = groupsWithChildren.find((g) => g.slug === activeSlug) ?? groupsWithChildren[0];
+
+  function grpLabel(g: NavGroup) {
+    return GROUP_LABEL_KEYS[g.slug] ? t(GROUP_LABEL_KEYS[g.slug]) : g.label;
+  }
+  function grpTagline(g: NavGroup) {
+    return GROUP_TAGLINE_KEYS[g.slug] ? t(GROUP_TAGLINE_KEYS[g.slug]) : g.tagline;
+  }
+  function childLabel(c: NavChild) {
+    return CHILD_KEYS[c.href] ? t(CHILD_KEYS[c.href].label) : c.label;
+  }
+  function childDesc(c: NavChild) {
+    return CHILD_KEYS[c.href] ? t(CHILD_KEYS[c.href].desc) : c.description;
+  }
 
   return (
     <div
@@ -46,16 +94,13 @@ function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () 
               </span>
               <span>
                 <span className={cn('block text-sm font-semibold leading-tight', isActive ? 'text-white' : 'text-[#071B34]')}>
-                  {group.label}
+                  {grpLabel(group)}
                 </span>
                 <span className={cn('block text-[0.68rem] leading-snug mt-0.5', isActive ? 'text-white/55' : 'text-[#8D99A8]')}>
-                  {group.tagline}
+                  {grpTagline(group)}
                 </span>
               </span>
-              <ChevronRight
-                size={12}
-                className={cn('ml-auto mt-1 shrink-0', isActive ? 'text-white/50' : 'text-[#C0CBDA]')}
-              />
+              <ChevronRight size={12} className={cn('ml-auto mt-1 shrink-0', isActive ? 'text-white/50' : 'text-[#C0CBDA]')} />
             </button>
           );
         })}
@@ -76,23 +121,22 @@ function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () 
             </span>
             <span>
               <span className="block text-sm font-medium text-[#071B34] group-hover:text-[#0A6DB8] transition-colors">
-                {child.label}
+                {childLabel(child)}
               </span>
               <span className="block text-xs text-[#8D99A8] mt-0.5 leading-snug">
-                {child.description}
+                {childDesc(child)}
               </span>
             </span>
           </Link>
         ))}
 
-        {/* View all link */}
         <div className="mx-4 mt-1 pt-2 border-t border-[#E9EEF3]">
           <Link
             href={active.href}
             onClick={onClose}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A6DB8] hover:text-[#071B34] transition-colors"
           >
-            {active.label} ürünlerinin tümü
+            {t('tum_urunleri_goster', { label: active.label })}
             <ArrowRight size={11} />
           </Link>
         </div>
@@ -101,8 +145,9 @@ function ProductDropdown({ groups, onClose }: { groups: NavGroup[]; onClose: () 
   );
 }
 
-// ── Main Navbar ─────────────────────────────────────────────
+// ── Main Navbar ──────────────────────────────────────────────
 export function Navbar() {
+  const t = useTranslations('nav');
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -111,11 +156,25 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
-  // Product detail pages (/urunler/group/sub/product) have a white top — force solid navbar
-  const strippedPath = pathname.replace(/^\/(tr|en)/, '') || '/';
+
+  const strippedPath = pathname.replace(/^\/(tr|en|de|fr|es)/, '') || '/';
   const isLightTopPage =
     /^\/urunler\/[^/]+\/[^/]+\/[^/]+/.test(strippedPath) ||
     strippedPath === '/urunler/katalog';
+
+  function itemLabel(item: NavItem): string {
+    if (item.href && TOP_KEYS[item.href]) return t(TOP_KEYS[item.href]);
+    if (item.label === 'Kurumsal') return t('kurumsal');
+    return item.label;
+  }
+
+  function childLabel(child: NavChild): string {
+    return CHILD_KEYS[child.href] ? t(CHILD_KEYS[child.href].label) : child.label;
+  }
+
+  function childDesc(child: NavChild): string {
+    return CHILD_KEYS[child.href] ? t(CHILD_KEYS[child.href].desc) : child.description;
+  }
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -130,9 +189,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpenMenu(null);
-      }
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setOpenMenu(null);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -159,10 +216,10 @@ export function Navbar() {
         <nav
           ref={menuRef}
           className="w-full max-w-[1440px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16"
-          aria-label="Ana navigasyon"
+          aria-label={t('ana_nav')}
         >
           {/* Logo */}
-          <Link href="/" aria-label="Nokta Dizayn - Ana sayfa">
+          <Link href="/" aria-label="Nokta Dizayn">
             <Image
               src="/nokta-dizayn-logo.png"
               alt="Nokta Dizayn"
@@ -177,7 +234,6 @@ export function Navbar() {
           <ul className="hidden lg:flex items-center gap-0.5" role="list">
             {NAVIGATION.map((item) => (
               <li key={item.label} className="relative">
-                {/* Two-level (groups) dropdown */}
                 {item.groups ? (
                   <>
                     <button
@@ -185,29 +241,19 @@ export function Navbar() {
                       onMouseEnter={() => setOpenMenu(item.label)}
                       className={cn(
                         'flex items-center gap-1 whitespace-nowrap px-2.5 py-2 rounded-md text-sm font-medium transition-colors duration-200',
-                        linkColor,
-                        'hover:text-[#0A6DB8]',
+                        linkColor, 'hover:text-[#0A6DB8]',
                         openMenu === item.label && 'text-[#0A6DB8]'
                       )}
                       aria-expanded={openMenu === item.label}
                       aria-haspopup="true"
                     >
-                      {item.label}
-                      <ChevronDown
-                        size={14}
-                        className={cn(
-                          'transition-transform duration-200',
-                          openMenu === item.label && 'rotate-180'
-                        )}
-                      />
+                      {itemLabel(item)}
+                      <ChevronDown size={14} className={cn('transition-transform duration-200', openMenu === item.label && 'rotate-180')} />
                     </button>
 
                     {openMenu === item.label && (
                       <div className="absolute top-full left-0 mt-1 z-50">
-                        <ProductDropdown
-                          groups={item.groups}
-                          onClose={() => setOpenMenu(null)}
-                        />
+                        <ProductDropdown groups={item.groups} onClose={() => setOpenMenu(null)} />
                       </div>
                     )}
                   </>
@@ -218,21 +264,14 @@ export function Navbar() {
                       onMouseEnter={() => setOpenMenu(item.label)}
                       className={cn(
                         'flex items-center gap-1 whitespace-nowrap px-2.5 py-2 rounded-md text-sm font-medium transition-colors duration-200',
-                        linkColor,
-                        'hover:text-[#0A6DB8]',
+                        linkColor, 'hover:text-[#0A6DB8]',
                         openMenu === item.label && 'text-[#0A6DB8]'
                       )}
                       aria-expanded={openMenu === item.label}
                       aria-haspopup="true"
                     >
-                      {item.label}
-                      <ChevronDown
-                        size={14}
-                        className={cn(
-                          'transition-transform duration-200',
-                          openMenu === item.label && 'rotate-180'
-                        )}
-                      />
+                      {itemLabel(item)}
+                      <ChevronDown size={14} className={cn('transition-transform duration-200', openMenu === item.label && 'rotate-180')} />
                     </button>
 
                     {openMenu === item.label && (
@@ -253,10 +292,10 @@ export function Navbar() {
                             </span>
                             <span>
                               <span className="block text-sm font-medium text-[#071B34] group-hover:text-[#0A6DB8] transition-colors">
-                                {child.label}
+                                {childLabel(child)}
                               </span>
                               <span className="block text-xs text-[#8D99A8] mt-0.5 leading-snug">
-                                {child.description}
+                                {childDesc(child)}
                               </span>
                             </span>
                           </Link>
@@ -269,13 +308,12 @@ export function Navbar() {
                     href={item.href || '/'}
                     className={cn(
                       'whitespace-nowrap px-2.5 py-2 rounded-md text-sm font-medium transition-colors duration-200',
-                      linkColor,
-                      'hover:text-[#0A6DB8]',
+                      linkColor, 'hover:text-[#0A6DB8]',
                       pathname === item.href && 'text-[#0A6DB8]'
                     )}
                     aria-current={pathname === item.href ? 'page' : undefined}
                   >
-                    {item.label}
+                    {itemLabel(item)}
                   </Link>
                 )}
               </li>
@@ -286,7 +324,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="navbar" className={cn(linkColor)} />
             <Button variant="primary" size="sm" href="/iletisim?form=teklif">
-              Teklif Al
+              {t('teklif_al')}
             </Button>
           </div>
 
@@ -294,7 +332,7 @@ export function Navbar() {
           <button
             className={cn('lg:hidden p-2 rounded-md', linkColor)}
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+            aria-label={mobileOpen ? t('menu_kapat') : t('menu_ac')}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -306,69 +344,42 @@ export function Navbar() {
           <div
             className="lg:hidden bg-white border-t border-[#D9E1EA] max-h-[calc(100vh-64px)] overflow-y-auto"
             role="dialog"
-            aria-label="Mobil menü"
+            aria-label={t('mobil_menu')}
           >
             <div className="section-container py-4">
-              <Button
-                variant="primary"
-                size="md"
-                href="/iletisim?form=teklif"
-                fullWidth
-                className="mb-4"
-              >
-                Teklif Al
+              <Button variant="primary" size="md" href="/iletisim?form=teklif" fullWidth className="mb-4">
+                {t('teklif_al')}
               </Button>
 
               <ul className="space-y-1" role="list">
                 {NAVIGATION.map((item) => (
                   <li key={item.label}>
-                    {/* Two-level mobile accordion */}
                     {item.groups ? (
                       <>
                         <button
-                          onClick={() =>
-                            setMobileExpanded(mobileExpanded === item.label ? null : item.label)
-                          }
+                          onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
                           className="w-full flex items-center justify-between px-3 py-3 rounded-md text-sm font-medium text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                           aria-expanded={mobileExpanded === item.label}
                         >
-                          {item.label}
-                          <ChevronDown
-                            size={14}
-                            className={cn(
-                              'transition-transform duration-200',
-                              mobileExpanded === item.label && 'rotate-180'
-                            )}
-                          />
+                          {itemLabel(item)}
+                          <ChevronDown size={14} className={cn('transition-transform duration-200', mobileExpanded === item.label && 'rotate-180')} />
                         </button>
 
                         {mobileExpanded === item.label && (
                           <div className="ml-3 mt-1 space-y-1">
                             {item.groups.map((group) => (
                               <div key={group.slug}>
-                                {/* Group header */}
                                 <button
-                                  onClick={() =>
-                                    setMobileGroupExpanded(
-                                      mobileGroupExpanded === group.slug ? null : group.slug
-                                    )
-                                  }
+                                  onClick={() => setMobileGroupExpanded(mobileGroupExpanded === group.slug ? null : group.slug)}
                                   className="w-full flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-semibold text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                                 >
                                   <span className="p-1 rounded bg-[#E9EEF3]">
                                     <DynIcon name={group.icon} size={13} className="text-[#475569]" />
                                   </span>
-                                  {group.label}
-                                  <ChevronDown
-                                    size={12}
-                                    className={cn(
-                                      'ml-auto transition-transform duration-200',
-                                      mobileGroupExpanded === group.slug && 'rotate-180'
-                                    )}
-                                  />
+                                  {GROUP_LABEL_KEYS[group.slug] ? t(GROUP_LABEL_KEYS[group.slug]) : group.label}
+                                  <ChevronDown size={12} className={cn('ml-auto transition-transform duration-200', mobileGroupExpanded === group.slug && 'rotate-180')} />
                                 </button>
 
-                                {/* Group children */}
                                 {mobileGroupExpanded === group.slug && (
                                   <div className="ml-4 space-y-0.5">
                                     {(group.children ?? []).map((child) => (
@@ -378,14 +389,14 @@ export function Navbar() {
                                         className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-[#475569] hover:text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                                       >
                                         <DynIcon name={child.icon} size={14} className="shrink-0" />
-                                        {child.label}
+                                        {childLabel(child)}
                                       </Link>
                                     ))}
                                     <Link
                                       href={group.href}
                                       className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#0A6DB8] hover:text-[#071B34] transition-colors"
                                     >
-                                      Tümünü gör <ArrowRight size={11} />
+                                      {t('tumunu_gor')} <ArrowRight size={11} />
                                     </Link>
                                   </div>
                                 )}
@@ -397,20 +408,12 @@ export function Navbar() {
                     ) : item.children ? (
                       <>
                         <button
-                          onClick={() =>
-                            setMobileExpanded(mobileExpanded === item.label ? null : item.label)
-                          }
+                          onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
                           className="w-full flex items-center justify-between px-3 py-3 rounded-md text-sm font-medium text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                           aria-expanded={mobileExpanded === item.label}
                         >
-                          {item.label}
-                          <ChevronDown
-                            size={14}
-                            className={cn(
-                              'transition-transform duration-200',
-                              mobileExpanded === item.label && 'rotate-180'
-                            )}
-                          />
+                          {itemLabel(item)}
+                          <ChevronDown size={14} className={cn('transition-transform duration-200', mobileExpanded === item.label && 'rotate-180')} />
                         </button>
                         {mobileExpanded === item.label && (
                           <div className="ml-4 mt-1 space-y-1">
@@ -421,7 +424,7 @@ export function Navbar() {
                                 className="flex items-center gap-2 px-3 py-2.5 rounded-md text-sm text-[#475569] hover:text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                               >
                                 <DynIcon name={child.icon} size={16} className="shrink-0" />
-                                {child.label}
+                                {childLabel(child)}
                               </Link>
                             ))}
                           </div>
@@ -432,7 +435,7 @@ export function Navbar() {
                         href={item.href || '/'}
                         className="block px-3 py-3 rounded-md text-sm font-medium text-[#071B34] hover:bg-[#F7F9FC] transition-colors"
                       >
-                        {item.label}
+                        {itemLabel(item)}
                       </Link>
                     )}
                   </li>

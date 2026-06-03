@@ -1,38 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
-const metrics = [
-  {
-    value: 11000,
-    suffix: ' m²',
-    label: 'Üretim Tesisi',
-    eyebrow: 'KAPASİTE',
-    description: 'Kendi üretim altyapımızla proje teslim süreleri kontrol altında.',
-  },
-  {
-    value: 6,
-    suffix: '',
-    label: 'Mühendislik Disiplini',
-    eyebrow: 'ENTEGRASYON',
-    description: 'Soğutma, mekanik, elektrik, mimari, proje yönetimi ve kalite tek çatıda.',
-  },
-  {
-    value: 8,
-    suffix: '',
-    label: 'Adım Proje Süreci',
-    eyebrow: 'SÜREÇ',
-    description: 'Analizden devreye almaya her aşama tanımlı, ölçülebilir ve teslim garantili.',
-  },
-  {
-    value: 360,
-    suffix: '°',
-    label: 'Proje Sahipliği',
-    eyebrow: 'SORUMLULUK',
-    description: 'Konseptten satış sonrası servise — kesintisiz tam döngü proje ortaklığı.',
-  },
-];
+const METRIC_DATA = [
+  { value: 11000, suffix: ' m²',  mKey: 'm1' },
+  { value: 6,     suffix: '',      mKey: 'm2' },
+  { value: 8,     suffix: '',      mKey: 'm3' },
+  { value: 360,   suffix: '°',    mKey: 'm4' },
+] as const;
 
 function CountUp({
   target,
@@ -76,6 +53,7 @@ function CountUp({
 }
 
 export function MuhendislikKapasiteMetrikleri() {
+  const t = useTranslations('muhendislik_metrikleri');
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
 
@@ -99,31 +77,29 @@ export function MuhendislikKapasiteMetrikleri() {
     <section
       ref={ref}
       className="py-20 bg-[#0E2647] relative overflow-hidden"
-      aria-label="Mühendislik kapasite metrikleri"
+      aria-label={t('title')}
     >
       <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
 
       <div className="section-container relative z-10">
         <FadeInOnScroll className="text-center mb-14">
-          <p className="eyebrow text-[#11B5FF] mb-3">RAKAMLARLA NOKTA DİZAYN</p>
-          <h2 className="text-white max-w-2xl mx-auto">
-            Kapasitemiz, Taahhüdümüzün Altyapısıdır
-          </h2>
+          <p className="eyebrow text-[#11B5FF] mb-3">{t('eyebrow')}</p>
+          <h2 className="text-white max-w-2xl mx-auto">{t('title')}</h2>
         </FadeInOnScroll>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#11B5FF]/20">
-          {metrics.map((m, i) => (
-            <FadeInOnScroll key={m.label} delay={i * 80}>
+          {METRIC_DATA.map((m, i) => (
+            <FadeInOnScroll key={m.mKey} delay={i * 80}>
               <div className="px-8 py-8 lg:py-4 text-center flex flex-col items-center gap-3">
                 <p className="font-mono text-[0.6rem] font-bold tracking-widest text-[#11B5FF]/60 uppercase">
-                  {m.eyebrow}
+                  {t(`${m.mKey}_eyebrow`)}
                 </p>
                 <p className="font-sora font-bold text-4xl lg:text-5xl text-white tabular-nums">
                   <CountUp target={m.value} suffix={m.suffix} active={active} />
                 </p>
-                <p className="font-sora font-semibold text-sm text-[#E9EEF3]/80">{m.label}</p>
+                <p className="font-sora font-semibold text-sm text-[#E9EEF3]/80">{t(`${m.mKey}_label`)}</p>
                 <p className="text-xs text-[#E9EEF3]/45 leading-relaxed max-w-[180px]">
-                  {m.description}
+                  {t(`${m.mKey}_desc`)}
                 </p>
               </div>
             </FadeInOnScroll>

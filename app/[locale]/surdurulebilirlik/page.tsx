@@ -1,61 +1,32 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import { DynIcon } from '@/lib/icons';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
 export const metadata: Metadata = {
-  title: 'Sürdürülebilirlik — Enerji Verimliliği',
-  description:
-    'Nokta Dizayn sürdürülebilirlik yaklaşımı: enerji verimli soğutma sistemleri, uzun ömürlü ekipman ve akıllı sistem optimizasyonu.',
+  title: 'Sürdürülebilirlik',
+  description: 'Nokta Dizayn sürdürülebilirlik yaklaşımı: enerji verimli soğutma sistemleri, uzun ömürlü ekipman ve akıllı sistem optimizasyonu.',
   alternates: { canonical: 'https://www.noktadizayn.com.tr/surdurulebilirlik' },
 };
 
-const topics = [
-  {
-    icon: 'Zap',
-    title: 'Düşük enerji tüketimi',
-    description: 'Enerji verimli kompresörler, EC fan motorları ve LED aydınlatma sistemleriyle toplam enerji tüketimini minimize eden ekipmanlar tasarlıyoruz.',
-  },
-  {
-    icon: 'Settings2',
-    title: 'Doğru kapasite seçimi',
-    description: 'Fazla kapasiteli ekipman gereksiz enerji tüketir. Mühendislik hesabıyla belirlenen doğru kapasite hem verimliliği hem de ömrü artırır.',
-  },
-  {
-    icon: 'Snowflake',
-    title: 'Soğuk zincir güvenliği',
-    description: 'Güvenilir soğutma performansı, gıda güvenliğini ve ürün kalitesini koruyarak fire kayıplarını azaltır.',
-  },
-  {
-    icon: 'Package',
-    title: 'İşletme maliyetlerini azaltma',
-    description: 'Düşük enerji tüketimi ve uzun bakım aralıklarıyla işletmelerin toplam sahip olma maliyeti optimize edilir.',
-  },
-  {
-    icon: 'Timer',
-    title: 'Uzun ömürlü ekipman',
-    description: 'Endüstriyel sınıf malzeme ve kapsamlı kalite kontrol süreciyle üretilen ekipmanlar, uzun yıllar güvenilir performans sağlar.',
-  },
-  {
-    icon: 'Network',
-    title: 'Sistem optimizasyonu',
-    description: 'Akıllı kontrol platformlarıyla enerji yönetimi ve bakım verimliliği bir arada sağlanır.',
-  },
-  {
-    icon: 'Wrench',
-    title: 'Bakım ile verimliliği koruma',
-    description: 'Periyodik bakım planları, ekipmanın tasarım verimliliğini korur ve beklenmedik arızaları önler.',
-  },
-  {
-    icon: 'RefreshCw',
-    title: 'Geleceğe uyumlu sistemler',
-    description: 'Yeni nesil düşük GWP soğutucu akışkanlarına uyumlu ekipman tasarımı ve retrofit seçenekleriyle mevcut sisteminizi geleceğe hazırlayın.',
-  },
-];
+const TOPIC_ICONS = ['Zap','Settings2','Snowflake','Package','Timer','Network','Wrench','RefreshCw'];
 
-export default function SurdurulebilirlikPage() {
+export default async function SurdurulebilirlikPage() {
+  const t = await getTranslations('surdurulebilirlik_page');
+
+  const topics = [
+    { icon: TOPIC_ICONS[0], title: t('t01_title'), description: t('t01_desc') },
+    { icon: TOPIC_ICONS[1], title: t('t02_title'), description: t('t02_desc') },
+    { icon: TOPIC_ICONS[2], title: t('t03_title'), description: t('t03_desc') },
+    { icon: TOPIC_ICONS[3], title: t('t04_title'), description: t('t04_desc') },
+    { icon: TOPIC_ICONS[4], title: t('t05_title'), description: t('t05_desc') },
+    { icon: TOPIC_ICONS[5], title: t('t06_title'), description: t('t06_desc') },
+    { icon: TOPIC_ICONS[6], title: t('t07_title'), description: t('t07_desc') },
+    { icon: TOPIC_ICONS[7], title: t('t08_title'), description: t('t08_desc') },
+  ];
+
   return (
     <>
       <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden min-h-[420px] flex items-end">
@@ -66,23 +37,15 @@ export default function SurdurulebilirlikPage() {
         </div>
         <div className="absolute inset-0 blueprint-grid opacity-[0.05]" aria-hidden="true" />
         <div className="section-container relative z-10 pb-4">
-          <h1 className="text-white">Verimli ve Sorumlu Mağaza Sistemleri</h1>
-          <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
-            Nokta Dizayn, enerji verimliliğini yalnızca teknik bir gereklilik değil, iş ortaklarına ve çevreye karşı bir sorumluluk olarak benimsiyor.
-          </p>
+          <h1 className="text-white">{t('hero_title')}</h1>
+          <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">{t('hero_subtitle')}</p>
         </div>
       </section>
 
       <section className="py-16 bg-white">
         <div className="section-container max-w-3xl">
           <FadeInOnScroll>
-            <p className="text-[#475569] text-lg leading-relaxed">
-              Ticari soğutma sistemleri, bir perakende mağazasının toplam enerji tüketiminin
-              %40-60&apos;ından sorumludur. Bu tüketimi azaltmak; hem işletme maliyetini düşürür,
-              hem de karbon ayak izini minimize eder. Nokta Dizayn olarak her projeyi bu bilinçle
-              ele alıyor; doğru ekipman seçimi, mühendislik optimizasyonu ve uzun vadeli servis
-              anlayışıyla gerçek tasarruf sağlıyoruz.
-            </p>
+            <p className="text-[#475569] text-lg leading-relaxed">{t('body_text')}</p>
           </FadeInOnScroll>
         </div>
       </section>
@@ -90,7 +53,7 @@ export default function SurdurulebilirlikPage() {
       <section className="py-16 bg-[#F7F9FC]">
         <div className="section-container">
           <FadeInOnScroll>
-            <SectionHeading eyebrow="YAKLAŞIMIMIZ" title="Verimlilik Odaklı 8 Alan" />
+            <SectionHeading eyebrow={t('topics_eyebrow')} title={t('topics_title')} />
           </FadeInOnScroll>
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {topics.map((topic, i) => (
@@ -113,27 +76,17 @@ export default function SurdurulebilirlikPage() {
           <FadeInOnScroll>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden">
               <div className="bg-gradient-to-br from-[#071B34] to-[#0E2647] p-8 lg:p-12 flex flex-col justify-center">
-                <p className="eyebrow text-[#11B5FF] mb-4">VAKA ÇALIŞMASI</p>
-                <h2 className="text-white text-xl font-semibold mb-4">
-                  Gurme Market Yenileme Projesinde %28 Enerji Tasarrufu
-                </h2>
-                <p className="text-[#E9EEF3]/70 text-sm leading-relaxed mb-6">
-                  İstanbul&apos;da 1.200 m² gurme market, eski soğutma altyapısını yeni nesil
-                  enerji verimli ekipmanlarla yeniledi. EC fan motorlu kompresör sistemi ve
-                  enerji verimli reyonlar sayesinde ilk yıl elektrik tüketimi %28 azaldı.
-                </p>
-                <Button variant="primary" size="sm" href="/iletisim?form=danismanlik">
-                  Enerji Analizi Talep Et
-                </Button>
+                <p className="eyebrow text-[#11B5FF] mb-4">{t('case_eyebrow')}</p>
+                <h2 className="text-white text-xl font-semibold mb-4">{t('case_title')}</h2>
+                <p className="text-[#E9EEF3]/70 text-sm leading-relaxed">{t('case_desc')}</p>
               </div>
               <div className="relative min-h-[280px]">
-                <Image src="/projeler-muhendislik/16.png" alt="Enerji verimli mağaza projesi" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image src="/projeler-muhendislik/16.png" alt="" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
             </div>
           </FadeInOnScroll>
         </div>
       </section>
-
     </>
   );
 }

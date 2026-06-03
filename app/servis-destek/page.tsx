@@ -21,10 +21,10 @@ export default function ServisDestekPage() {
       <section className="pt-32 pb-16 bg-[#071B34] relative overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
         <div className="section-container relative z-10">
-          <p className="eyebrow text-[#11B5FF] mb-4">// SERVİS & DESTEK</p>
+          <p className="eyebrow text-[#11B5FF] mb-4">SERVİS & DESTEK</p>
           <h1 className="text-white">Satış Sonrası Teknik Servis ve Bakım Desteği</h1>
           <p className="text-[#E9EEF3]/70 mt-4 max-w-xl text-lg">
-            Kurulum sonrasında da yanınızdayız — teknik servis, bakım, yedek parça ve retrofit çözümleriyle.
+            Kurulum sonrasında da yanınızdayız: teknik servis, bakım, yedek parça ve retrofit çözümleriyle.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <Button variant="primary" size="md" href="/iletisim?form=servis">
@@ -33,7 +33,7 @@ export default function ServisDestekPage() {
             <Button
               variant="secondary"
               size="md"
-              href="tel:+902121234567"
+              href="tel:+902163136767"
               className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
             >
               Teknik Destek Hattı

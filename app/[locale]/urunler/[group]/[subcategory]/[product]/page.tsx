@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone, Mail } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { VARIANT_LABEL_KEYS, productDescKey, subcatNameKey } from '@/lib/product-i18n';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { ProductImageViewer } from '@/components/ui/ProductImageViewer';
 import { Button } from '@/components/ui/Button';
@@ -47,8 +49,27 @@ export default async function ProductPage({ params }: Props) {
   const product = sub?.products.find((p) => p.slug === productSlug);
   if (!group || !sub || !product) notFound();
 
+  const t = await getTranslations('product_page');
+  const tn = await getTranslations('nav');
+  const tc = await getTranslations('product_catalog');
+
   const relatedProducts = sub.products.filter((p) => p.slug !== product.slug);
   const primaryName = product.variants.map((v) => v.code).join(' / ');
+
+  const subName = (() => {
+    try { return tc(subcatNameKey(sub.slug)); } catch { return sub.name; }
+  })();
+
+  const productDescription = (() => {
+    try { return tc(productDescKey(product.slug)); } catch { return product.description; }
+  })();
+
+  function getLabel(label: string): string {
+    if (!label) return label;
+    const key = VARIANT_LABEL_KEYS[label];
+    if (!key) return label;
+    try { return tc(key); } catch { return label; }
+  }
 
   return (
     <>
@@ -57,9 +78,9 @@ export default async function ProductPage({ params }: Props) {
         <div className="section-container">
           <Breadcrumb
             items={[
-              { label: 'Ürünler', href: '/urunler' },
+              { label: tn('urunler'), href: '/urunler' },
               { label: group.name, href: `/urunler/${group.slug}` },
-              { label: sub.name, href: `/urunler/${group.slug}/${sub.slug}` },
+              { label: subName, href: `/urunler/${group.slug}/${sub.slug}` },
               { label: primaryName },
             ]}
           />
@@ -82,7 +103,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="lg:col-span-5 lg:sticky lg:top-24 flex flex-col gap-6">
               {/* Group badge */}
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A6DB8] bg-[#EAF4FD] px-3 py-1.5 rounded-full w-fit">
-                {group.name} · {sub.name}
+                {group.name} · {subName}
               </span>
 
               {/* Variant names */}
@@ -93,7 +114,7 @@ export default async function ProductPage({ params }: Props) {
                       {v.code}
                     </h1>
                     {v.label && (
-                      <p className="text-base text-[#475569] mt-0.5">{v.label}</p>
+                      <p className="text-base text-[#475569] mt-0.5">{getLabel(v.label)}</p>
                     )}
                   </div>
                 ))}
@@ -103,7 +124,7 @@ export default async function ProductPage({ params }: Props) {
               <div className="h-px bg-[#E9EEF3]" />
 
               {/* Description */}
-              <p className="text-[#475569] leading-relaxed">{product.description}</p>
+              <p className="text-[#475569] leading-relaxed">{productDescription}</p>
 
               {/* Divider */}
               <div className="h-px bg-[#E9EEF3]" />
@@ -111,22 +132,22 @@ export default async function ProductPage({ params }: Props) {
               {/* CTAs */}
               <div className="flex flex-col gap-3">
                 <Button variant="primary" size="lg" href="/iletisim?form=teklif" className="w-full justify-center">
-                  Bu Ürün İçin Teklif Al
+                  {t('get_quote')}
                 </Button>
                 <div className="grid grid-cols-2 gap-3">
                   <a
-                    href="tel:+902121234567"
+                    href="tel:+902163136767"
                     className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg border border-[#D9E1EA] text-sm font-medium text-[#475569] hover:bg-[#F7F9FC] hover:border-[#B0C4D8] transition-colors"
                   >
                     <Phone size={14} className="text-[#0A6DB8]" />
-                    Ara
+                    {t('call')}
                   </a>
                   <a
-                    href="mailto:info@noktadizayn.com.tr"
+                    href="mailto:bilgi@noktadizayn.com.tr"
                     className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg border border-[#D9E1EA] text-sm font-medium text-[#475569] hover:bg-[#F7F9FC] hover:border-[#B0C4D8] transition-colors"
                   >
                     <Mail size={14} className="text-[#0A6DB8]" />
-                    E-posta
+                    {t('email')}
                   </a>
                 </div>
               </div>
@@ -141,48 +162,54 @@ export default async function ProductPage({ params }: Props) {
           <div className="section-container">
             <div className="flex items-center justify-between mb-8">
               <h2 className="font-sora font-bold text-xl text-[#071B34]">
-                {sub.name} — Diğer Ürünler
+                {t('other_products', { name: subName })}
               </h2>
               <Link
                 href={`/urunler/${group.slug}/${sub.slug}`}
                 className="flex items-center gap-1.5 text-sm font-semibold text-[#0A6DB8] hover:text-[#071B34] transition-colors"
               >
-                Tümünü Gör <ArrowRight size={14} />
+                {t('view_all')} <ArrowRight size={14} />
               </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {relatedProducts.map((rel) => (
-                <Link
-                  key={rel.slug}
-                  href={`/urunler/${group.slug}/${sub.slug}/${rel.slug}`}
-                  className="group bg-white border border-[#D9E1EA] rounded-xl overflow-hidden hover:shadow-[0_4px_20px_rgba(7,27,52,0.08)] hover:border-[#0A6DB8]/30 transition-all duration-300"
-                >
-                  <div className="relative aspect-[4/3] bg-[#F0F4F8] overflow-hidden">
-                    {rel.images[0] && (
-                      <Image
-                        src={rel.images[0]}
-                        alt={rel.variants[0].code}
-                        fill
-                        className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
-                        sizes="(max-width: 640px) 100vw, 25vw"
-                      />
-                    )}
-                  </div>
-                  <div className="p-4">
-                    {rel.variants.map((v) => (
-                      <div key={v.code} className="flex items-baseline gap-1.5 flex-wrap">
-                        <span className="font-sora font-bold text-sm text-[#071B34] group-hover:text-[#0A6DB8] transition-colors">
-                          {v.code}
-                        </span>
-                        {v.label && (
-                          <span className="text-[0.65rem] text-[#8D99A8]">{v.label}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </Link>
-              ))}
+              {relatedProducts.map((rel) => {
+                const relDesc = (() => {
+                  try { return tc(productDescKey(rel.slug)); } catch { return rel.description; }
+                })();
+                return (
+                  <Link
+                    key={rel.slug}
+                    href={`/urunler/${group.slug}/${sub.slug}/${rel.slug}`}
+                    className="group bg-white border border-[#D9E1EA] rounded-xl overflow-hidden hover:shadow-[0_4px_20px_rgba(7,27,52,0.08)] hover:border-[#0A6DB8]/30 transition-all duration-300"
+                  >
+                    <div className="relative aspect-[4/3] bg-[#F0F4F8] overflow-hidden">
+                      {rel.images[0] && (
+                        <Image
+                          src={rel.images[0]}
+                          alt={rel.variants[0].code}
+                          fill
+                          className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
+                          sizes="(max-width: 640px) 100vw, 25vw"
+                        />
+                      )}
+                    </div>
+                    <div className="p-4">
+                      {rel.variants.map((v) => (
+                        <div key={v.code} className="flex items-baseline gap-1.5 flex-wrap">
+                          <span className="font-sora font-bold text-sm text-[#071B34] group-hover:text-[#0A6DB8] transition-colors">
+                            {v.code}
+                          </span>
+                          {v.label && (
+                            <span className="text-[0.65rem] text-[#8D99A8]">{getLabel(v.label)}</span>
+                          )}
+                        </div>
+                      ))}
+                      <p className="text-xs text-[#475569] mt-1.5 line-clamp-2 leading-relaxed">{relDesc}</p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

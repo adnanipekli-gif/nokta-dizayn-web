@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { VARIANT_LABEL_KEYS, productDescKey, subcatNameKey } from '@/lib/product-i18n';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 
 interface Props {
@@ -36,6 +38,25 @@ export default async function SubcategoryPage({ params }: Props) {
   const sub = group?.subCategories.find((s) => s.slug === subSlug);
   if (!group || !sub) notFound();
 
+  const t = await getTranslations('urunler_page');
+  const tn = await getTranslations('nav');
+  const tc = await getTranslations('product_catalog');
+
+  function getSubName(slug: string): string {
+    try { return tc(subcatNameKey(slug)); } catch { return sub!.name; }
+  }
+  function getLabel(label: string): string {
+    if (!label) return label;
+    const key = VARIANT_LABEL_KEYS[label];
+    if (!key) return label;
+    try { return tc(key); } catch { return label; }
+  }
+  function getDesc(slug: string, fallback: string): string {
+    try { return tc(productDescKey(slug)); } catch { return fallback; }
+  }
+
+  const subName = getSubName(sub.slug);
+
   return (
     <>
       {/* Hero */}
@@ -49,14 +70,16 @@ export default async function SubcategoryPage({ params }: Props) {
           <div className="mb-6">
             <Breadcrumb
               items={[
-                { label: 'Ürünler', href: '/urunler' },
+                { label: tn('urunler'), href: '/urunler' },
                 { label: group.name, href: `/urunler/${group.slug}` },
-                { label: sub.name },
+                { label: subName },
               ]}
             />
           </div>
-          <h1 className="text-white mb-3">{sub.name}</h1>
-          <p className="text-xs font-mono text-[#E9EEF3]/45 mt-2">{sub.products.length} ürün</p>
+          <h1 className="text-white mb-3">{subName}</h1>
+          <p className="text-xs font-mono text-[#E9EEF3]/45 mt-2">
+            {t('products_count', { n: sub.products.length })}
+          </p>
         </div>
       </section>
 
@@ -84,7 +107,7 @@ export default async function SubcategoryPage({ params }: Props) {
                   )}
                   {product.images.length > 1 && (
                     <span className="absolute top-3 right-3 bg-[#071B34]/70 text-white text-[0.6rem] font-mono px-2 py-0.5 rounded-full">
-                      +{product.images.length - 1} görsel
+                      {t('more_images', { n: product.images.length - 1 })}
                     </span>
                   )}
                 </div>
@@ -98,18 +121,18 @@ export default async function SubcategoryPage({ params }: Props) {
                           {v.code}
                         </span>
                         {v.label && (
-                          <span className="text-xs text-[#8D99A8]">{v.label}</span>
+                          <span className="text-xs text-[#8D99A8]">{getLabel(v.label)}</span>
                         )}
                       </div>
                     ))}
                   </div>
 
                   <p className="text-xs text-[#475569] leading-relaxed line-clamp-2 flex-1">
-                    {product.description}
+                    {getDesc(product.slug, product.description)}
                   </p>
 
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0A6DB8] group-hover:gap-2.5 transition-all pt-1">
-                    Detayları Gör <ArrowRight size={12} />
+                    {t('view_details')} <ArrowRight size={12} />
                   </div>
                 </div>
               </Link>

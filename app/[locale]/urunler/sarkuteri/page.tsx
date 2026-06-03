@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { groupTaglineKey } from '@/lib/product-i18n';
 
 export const metadata: Metadata = {
   title: 'Şarküteri Reyonları — Remote & Plug-In',
@@ -16,17 +18,40 @@ const remoteSarkuteri = PRODUCT_CATALOG.find((g) => g.slug === 'remote')!
 const plugInSarkuteri = PRODUCT_CATALOG.find((g) => g.slug === 'plug-in')!
   .subCategories.find((s) => s.slug === 'plug-in-sarkuteri')!;
 
-const groups = [
-  { label: 'Remote Şarküteri', tagline: 'Merkezi soğutma sistemine bağlı', groupSlug: 'remote', sub: remoteSarkuteri },
-  { label: 'Plug-In Şarküteri', tagline: 'Bağımsız kompresörlü, kolay kurulum', groupSlug: 'plug-in', sub: plugInSarkuteri },
-];
+export default async function SarkuteriPage() {
+  const t = await getTranslations('urunler_page');
+  const tn = await getTranslations('nav');
+  const tc = await getTranslations('product_catalog');
 
-export default function SarkuteriPage() {
+  function getTagline(slug: string): string {
+    try { return tc(groupTaglineKey(slug)); } catch { return ''; }
+  }
+
+  const groups = [
+    {
+      label: `Remote ${t('sarkuteri_label')}`,
+      tagline: getTagline('remote'),
+      groupSlug: 'remote',
+      sub: remoteSarkuteri,
+    },
+    {
+      label: `Plug-In ${t('sarkuteri_label')}`,
+      tagline: getTagline('plug-in'),
+      groupSlug: 'plug-in',
+      sub: plugInSarkuteri,
+    },
+  ];
+
   return (
     <>
       <div className="pt-24 pb-4 bg-white border-b border-[#E9EEF3]">
         <div className="section-container">
-          <Breadcrumb items={[{ label: 'Ürünler', href: '/urunler' }, { label: 'Şarküteri' }]} />
+          <Breadcrumb
+            items={[
+              { label: tn('urunler'), href: '/urunler' },
+              { label: t('breadcrumb_sarkuteri') },
+            ]}
+          />
         </div>
       </div>
 

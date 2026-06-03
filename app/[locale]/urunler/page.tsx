@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Network, Zap } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { subcatNameKey, groupTaglineKey } from '@/lib/product-i18n';
 
 export const metadata: Metadata = {
   title: 'Ürünler — Soğutma Ekipmanları',
@@ -21,7 +23,17 @@ const groupImages: Record<string, string> = {
   'plug-in': '/nokta-dizayn-urunler-gorselleri/plug-in-sistem-temsili.png',
 };
 
-export default function UrunlerPage() {
+export default async function UrunlerPage() {
+  const t = await getTranslations('urunler_page');
+  const tc = await getTranslations('product_catalog');
+
+  function getTagline(slug: string): string {
+    try { return tc(groupTaglineKey(slug)); } catch { return ''; }
+  }
+  function getSubName(slug: string, fallback: string): string {
+    try { return tc(subcatNameKey(slug)); } catch { return fallback; }
+  }
+
   return (
     <>
       {/* Hero */}
@@ -32,11 +44,9 @@ export default function UrunlerPage() {
           aria-hidden="true"
         />
         <div className="section-container relative z-10">
-          <h1 className="text-white mb-4">Ürünlerimiz</h1>
+          <h1 className="text-white mb-4">{t('hero_title')}</h1>
           <p className="text-[#E9EEF3]/65 max-w-2xl text-lg leading-relaxed">
-            <span className="text-white font-medium">Remote</span> ve{' '}
-            <span className="text-white font-medium">Plug-In</span> olmak üzere iki ana sistem
-            grubunda soğutma çözümleri.
+            {t('hero_subtitle')}
           </p>
         </div>
       </section>
@@ -52,6 +62,7 @@ export default function UrunlerPage() {
                 0
               );
               const image = groupImages[group.slug];
+              const tagline = getTagline(group.slug);
               return (
                 <Link
                   key={group.slug}
@@ -77,33 +88,38 @@ export default function UrunlerPage() {
 
                   {/* Content */}
                   <div className="p-7 flex flex-col gap-4 flex-1">
-                  {/* Title */}
-                  <div>
-                    <h2 className="font-sora font-bold text-2xl text-[#071B34] mb-1">
-                      {group.name}
-                    </h2>
-                    <p className="text-sm text-[#475569]">{group.tagline}</p>
-                  </div>
+                    {/* Title */}
+                    <div>
+                      <h2 className="font-sora font-bold text-2xl text-[#071B34] mb-1">
+                        {group.name}
+                      </h2>
+                      <p className="text-sm text-[#475569]">{tagline}</p>
+                    </div>
 
-                  {/* Sub-categories list */}
-                  <ul className="space-y-1.5 flex-1">
-                    {group.subCategories.map((sub) => (
-                      <li key={sub.slug} className="flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-[#11B5FF] shrink-0" />
-                        <span className="text-sm text-[#475569]">{sub.name}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    {/* Sub-categories list */}
+                    <ul className="space-y-1.5 flex-1">
+                      {group.subCategories.map((sub) => (
+                        <li key={sub.slug} className="flex items-center gap-2">
+                          <span className="w-1 h-1 rounded-full bg-[#11B5FF] shrink-0" />
+                          <span className="text-sm text-[#475569]">
+                            {getSubName(sub.slug, sub.name)}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
 
-                  {/* Stats + CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-[#E9EEF3]">
-                    <span className="text-xs text-[#8D99A8]">
-                      {group.subCategories.length} alt kategori · {totalProducts} ürün
-                    </span>
-                    <span className="flex items-center gap-1 text-sm font-semibold text-[#0A6DB8] group-hover:gap-2 transition-all">
-                      İncele <ArrowRight size={14} />
-                    </span>
-                  </div>
+                    {/* Stats + CTA */}
+                    <div className="flex items-center justify-between pt-4 border-t border-[#E9EEF3]">
+                      <span className="text-xs text-[#8D99A8]">
+                        {t('stats_label', {
+                          categories: group.subCategories.length,
+                          products: totalProducts,
+                        })}
+                      </span>
+                      <span className="flex items-center gap-1 text-sm font-semibold text-[#0A6DB8] group-hover:gap-2 transition-all">
+                        {t('explore')} <ArrowRight size={14} />
+                      </span>
+                    </div>
                   </div>
                 </Link>
               );

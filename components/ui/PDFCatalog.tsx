@@ -6,6 +6,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import HTMLFlipBook from 'react-pageflip';
 import { ChevronLeft, ChevronRight, Download, ZoomIn, ZoomOut } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 // CDN worker — Turbopack uyumlu
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -26,6 +27,7 @@ const FlipPage = forwardRef<HTMLDivElement, { pageNum: number; width: number; he
 FlipPage.displayName = 'FlipPage';
 
 export function PDFCatalog({ url = '/api/pdf-proxy' }: { url?: string }) {
+  const t = useTranslations('pdf_catalog');
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [scale, setScale] = useState(1);
@@ -61,16 +63,18 @@ export function PDFCatalog({ url = '/api/pdf-proxy' }: { url?: string }) {
       {/* Toolbar */}
       <div className="flex items-center justify-between px-6 py-3 bg-[#16161f] border-b border-white/8 shrink-0">
         <span className="text-xs text-white/40 font-mono">
-          {numPages > 0 ? `Sayfa ${currentPage + 1} / ${numPages}` : 'Yükleniyor…'}
+          {numPages > 0
+            ? t('page_indicator', { current: currentPage + 1, total: numPages })
+            : t('loading')}
         </span>
         <div className="flex items-center gap-1">
-          <Tbtn onClick={() => setScale(s => Math.max(0.5, +(s - 0.1).toFixed(1)))} title="Küçült">
+          <Tbtn onClick={() => setScale(s => Math.max(0.5, +(s - 0.1).toFixed(1)))} title={t('zoom_out')}>
             <ZoomOut size={15} />
           </Tbtn>
           <span className="text-[0.7rem] text-white/35 w-10 text-center font-mono">
             {Math.round(scale * 100)}%
           </span>
-          <Tbtn onClick={() => setScale(s => Math.min(1.8, +(s + 0.1).toFixed(1)))} title="Büyüt">
+          <Tbtn onClick={() => setScale(s => Math.min(1.8, +(s + 0.1).toFixed(1)))} title={t('zoom_in')}>
             <ZoomIn size={15} />
           </Tbtn>
           <div className="w-px h-4 bg-white/10 mx-1" />
@@ -78,7 +82,7 @@ export function PDFCatalog({ url = '/api/pdf-proxy' }: { url?: string }) {
             href={url}
             download="nokta-dizayn-katalog.pdf"
             className="p-2 rounded-md text-white/40 hover:text-white hover:bg-white/8 transition-colors"
-            title="İndir"
+            title={t('download')}
           >
             <Download size={15} />
           </a>

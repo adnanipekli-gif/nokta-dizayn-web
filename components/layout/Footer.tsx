@@ -1,97 +1,64 @@
 import Link from 'next/link';
-import { Linkedin, Youtube, Instagram, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Printer } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 
-const solutions = [
-  { label: 'Market Raf Sistemleri', href: '/magaza-sistemleri#bolum-01' },
-  { label: 'Kasap, Balık & Dondurulmuş Gıda', href: '/magaza-sistemleri#bolum-02' },
-  { label: 'Fast Food', href: '/magaza-sistemleri#bolum-03' },
-  { label: 'Coffee Shops', href: '/magaza-sistemleri#bolum-04' },
-  { label: 'Manav Reyon Sistemleri', href: '/magaza-sistemleri#bolum-05' },
-  { label: 'Fırın Reyon Sistemleri', href: '/magaza-sistemleri#bolum-06' },
-];
+export async function Footer() {
+  const t = await getTranslations('footer');
 
-const products = [
-  { label: 'Remote Sütlük', href: '/urunler' },
-  { label: 'Remote Şarküteri', href: '/urunler' },
-  { label: 'Remote Derin Dondurucu', href: '/urunler' },
-  { label: 'Remote Yatay Freezer', href: '/urunler' },
-  { label: 'Plug-In Sütlük', href: '/urunler' },
-  { label: 'Plug-In Şarküteri', href: '/urunler' },
-  { label: 'Plug-In Promosyon', href: '/urunler' },
-];
+  const solutions = [
+    { labelKey: 'market_raf',   href: '/magaza-sistemleri#bolum-01' },
+    { labelKey: 'kasap_balik',  href: '/magaza-sistemleri#bolum-02' },
+    { label: 'Fast Food',       href: '/magaza-sistemleri#bolum-03' },
+    { label: 'Coffee Shops',    href: '/magaza-sistemleri#bolum-04' },
+    { labelKey: 'manav_reyonu', href: '/magaza-sistemleri#bolum-05' },
+    { labelKey: 'firin_reyon',  href: '/magaza-sistemleri#bolum-06' },
+  ] as const;
 
-const corporate = [
-  { label: 'Hakkımızda', href: '/kurumsal' },
-  { label: 'Proje & Mühendislik', href: '/proje-muhendislik' },
-  { label: 'Sürdürülebilirlik', href: '/surdurulebilirlik' },
-  { label: 'Referanslar', href: '/referanslar' },
-  { label: 'Servis & Destek', href: '/servis-destek' },
-  { label: 'İletişim', href: '/iletisim' },
-];
+  const products = [
+    { labelKey: 'remote_sutluk',   href: '/urunler/remote/remote-sutluk' },
+    { labelKey: 'remote_sarkuteri',href: '/urunler/remote/remote-sarkuteri' },
+    { labelKey: 'remote_derin',    href: '/urunler/remote/remote-derin-dondurucu' },
+    { labelKey: 'remote_freezer',  href: '/urunler/remote/remote-yatay-freezer' },
+    { labelKey: 'plugin_sutluk',   href: '/urunler/plug-in/plug-in-sutluk' },
+    { labelKey: 'plugin_sarkuteri',href: '/urunler/plug-in/plug-in-sarkuteri' },
+    { labelKey: 'plugin_promosyon',href: '/urunler/plug-in/plug-in-promosyon' },
+  ] as const;
 
-export function Footer() {
+  const corporate = [
+    { labelKey: 'hakkimizda',       href: '/kurumsal' },
+    { labelKey: 'proje_muhendislik',href: '/proje-muhendislik' },
+    { labelKey: 'surdurulebilirlik',href: '/surdurulebilirlik' },
+    { labelKey: 'referanslar',      href: '/referanslar' },
+    { labelKey: 'servis_destek',    href: '/servis-destek' },
+    { labelKey: 'iletisim_baslik',  href: '/iletisim' },
+  ] as const;
+
   return (
     <footer className="bg-[#071B34] text-[#E9EEF3]" role="contentinfo">
       <div className="section-container py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1 font-sora font-bold text-lg text-white tracking-tight mb-4"
-            >
+            <Link href="/" className="inline-flex items-center gap-1 font-sora font-bold text-lg text-white tracking-tight mb-4">
               NOKTA DİZAYN
               <span className="w-2 h-2 rounded-full bg-[#11B5FF] mt-0.5" aria-hidden="true" />
             </Link>
             <p className="text-sm text-[#E9EEF3]/65 leading-relaxed mb-6">
-              2003&apos;ten bu yana entegre mağaza sistemleri — soğutma ekipmanları, raf ve reyon
-              sistemleri, kasa üniteleri ve mağaza mobilyaları. 60+ ülkede 30.000+ nokta.
+              {t('brand_desc')}
             </p>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white/8 hover:bg-[#11B5FF]/20 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={16} />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white/8 hover:bg-[#11B5FF]/20 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube size={16} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-white/8 hover:bg-[#11B5FF]/20 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={16} />
-              </a>
-            </div>
           </div>
 
           {/* Store Systems */}
           <div>
             <h3 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">
-              Mağaza Sistemleri
+              {t('magaza_sistemleri')}
             </h3>
             <ul className="space-y-2.5">
               {solutions.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors"
-                  >
-                    {item.label}
+                  <Link href={item.href} className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                    {'labelKey' in item ? t(item.labelKey) : item.label}
                   </Link>
                 </li>
               ))}
@@ -101,16 +68,13 @@ export function Footer() {
           {/* Products */}
           <div>
             <h3 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">
-              Ürünler
+              {t('urunler')}
             </h3>
             <ul className="space-y-2.5">
               {products.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors"
-                  >
-                    {item.label}
+                  <Link href={item.href} className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                    {t(item.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -120,16 +84,13 @@ export function Footer() {
           {/* Corporate */}
           <div>
             <h3 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">
-              Kurumsal
+              {t('kurumsal')}
             </h3>
             <ul className="space-y-2.5">
               {corporate.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors"
-                  >
-                    {item.label}
+                  <Link href={item.href} className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                    {t(item.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -139,40 +100,43 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h3 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">
-              İletişim
+              {t('iletisim_baslik')}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-[#11B5FF] mt-0.5 shrink-0" />
                 <span className="text-sm text-[#E9EEF3]/65 leading-snug">
-                  Merkez Mah. Sanayi Cad. No:1<br />
-                  İstanbul, Türkiye
+                  Emek Mahallesi, Şems Caddesi No:7<br />
+                  Sancaktepe, İstanbul, Türkiye
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone size={14} className="text-[#11B5FF] shrink-0" />
-                <a
-                  href="tel:+902121234567"
-                  className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors"
-                >
-                  +90 (212) 123 45 67
+                <a href="tel:+902163136767" className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                  +90 (216) 313 67 67
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Printer size={14} className="text-[#11B5FF] shrink-0" />
+                <span className="text-sm text-[#E9EEF3]/65">
+                  +90 (216) 314 06 24
+                </span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Mail size={14} className="text-[#11B5FF] shrink-0" />
+                <a href="mailto:bilgi@noktadizayn.com.tr" className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                  bilgi@noktadizayn.com.tr
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail size={14} className="text-[#11B5FF] shrink-0" />
-                <a
-                  href="mailto:info@noktadizayn.com.tr"
-                  className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors"
-                >
-                  info@noktadizayn.com.tr
+                <a href="mailto:musterihizmetleri@noktadizayn.com.tr" className="text-sm text-[#E9EEF3]/65 hover:text-[#11B5FF] transition-colors">
+                  musterihizmetleri@noktadizayn.com.tr
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock size={14} className="text-[#11B5FF] mt-0.5 shrink-0" />
-                <span className="text-sm text-[#E9EEF3]/65 leading-snug">
-                  Pzt – Cum: 09:00 – 18:00<br />
-                  Hafta sonu: Kapalı
-                </span>
+                <span className="text-sm text-[#E9EEF3]/65 leading-snug">{t('hours')}</span>
               </li>
             </ul>
           </div>
@@ -183,12 +147,12 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="section-container py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[#E9EEF3]/45">
-            © 2025 Nokta Dizayn. Tüm hakları saklıdır.
+            © 2026 Nokta Dizayn. {t('rights')}
           </p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
-            <Link href="/kvkk" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">KVKK</Link>
-            <Link href="/gizlilik" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">Gizlilik</Link>
-            <Link href="/cerez-politikasi" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">Çerez Politikası</Link>
+            <Link href="/kvkk" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">{t('kvkk')}</Link>
+            <Link href="/gizlilik" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">{t('gizlilik')}</Link>
+            <Link href="/cerez-politikasi" className="text-xs text-[#E9EEF3]/45 hover:text-[#E9EEF3]/75 transition-colors">{t('cerez')}</Link>
             <span className="text-xs text-[#E9EEF3]/45">|</span>
             <LanguageSwitcher variant="footer" />
           </div>

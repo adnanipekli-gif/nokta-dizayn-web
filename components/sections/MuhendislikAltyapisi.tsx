@@ -1,46 +1,27 @@
 import Image from 'next/image';
 import { Thermometer, Cog, Zap, LayoutDashboard, ClipboardList, BadgeCheck } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
-const disciplines = [
-  {
-    icon: Thermometer,
-    title: 'Soğutma Mühendisliği',
-    text: 'Soğutma yükü hesabı, ürün bazlı sıcaklık yönetimi ve enerji performansı analizi şirket bünyesindeki soğutma mühendisleri tarafından yürütülür. Her proje, gerçek kullanım koşullarına göre modellenir; standart katsayılara değil, sahaya özgü verilere dayanır.',
-  },
-  {
-    icon: Cog,
-    title: 'Mekanik ve Yapısal Mühendislik',
-    text: 'Ekipman montajı, yapısal taşıyıcı çözümler ve mağaza içi teknik altyapı, mekanik mühendislik disipliniyle projelendirilir. Taşıma kapasitesi, titreşim ve yük dağılımı başlangıçta hesaplanır.',
-  },
-  {
-    icon: Zap,
-    title: 'Elektrik ve Enerji Mühendisliği',
-    text: 'Panel, kablo güzergahı, yük hesabı ve enerji izleme sistemi aynı proje kapsamında elektrik mühendisliği altyapısıyla tasarlanır. Enerji verimliliği raporlaması proje teslim dokümanlarına dahildir.',
-  },
-  {
-    icon: LayoutDashboard,
-    title: 'Mağaza Mimarisi ve İç Mekan Planlama',
-    text: 'Müşteri akışı, reyon yerleşimi, görsel sunum ve mağaza kimliği; soğutmalı teşhir sistemleri ve mağaza ekipmanlarıyla birlikte tek çizim setinde birleştirilir. Tasarım ve mühendislik aynı anda ilerlediği için revizyonlar minimum maliyetle çözülür.',
-  },
-  {
-    icon: ClipboardList,
-    title: 'Proje Yönetimi',
-    text: 'Her proje, atanmış bir proje yöneticisi tarafından başlangıçtan teslimata yönetilir. Müşteri için tek temas noktası, sahada tek koordinatör. Proje durumu, takvim ve açık kalemlerin şeffaf raporlanması standart sürecin parçasıdır.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Kalite Kontrol ve Devreye Alma',
-    text: 'Üretim hattından sahaya her aşamada kalite kontrol protokolleri uygulanır. Saha kurulumunun ardından sistematik devreye alma testi yapılır; müşteriye teslim belgesi ve operasyon eğitimi sağlanır.',
-  },
-];
+const disciplineIcons = [Thermometer, Cog, Zap, LayoutDashboard, ClipboardList, BadgeCheck];
 
-export function MuhendislikAltyapisi() {
+export async function MuhendislikAltyapisi() {
+  const t = await getTranslations('muhendislik_altyapisi');
+
+  const disciplines = [
+    { icon: disciplineIcons[0], title: t('d1_title'), text: t('d1_text') },
+    { icon: disciplineIcons[1], title: t('d2_title'), text: t('d2_text') },
+    { icon: disciplineIcons[2], title: t('d3_title'), text: t('d3_text') },
+    { icon: disciplineIcons[3], title: t('d4_title'), text: t('d4_text') },
+    { icon: disciplineIcons[4], title: t('d5_title'), text: t('d5_text') },
+    { icon: disciplineIcons[5], title: t('d6_title'), text: t('d6_text') },
+  ];
+
   return (
     <section
       className="py-24 relative overflow-hidden"
-      aria-label="Mühendislik altyapısı ve disiplinler"
+      aria-label={t('title')}
     >
       {/* Background image */}
       <Image
@@ -56,9 +37,9 @@ export function MuhendislikAltyapisi() {
       <div className="section-container relative z-10">
         <FadeInOnScroll className="mb-14">
           <SectionHeading
-            eyebrow="MÜHENDİSLİK ALTYAPISI"
-            title="Tek Çatı Altında Çok Disiplinli Mühendislik"
-            subtitle="Nokta Dizayn'ın proje yönetimi, dış kaynaklara değil; şirket bünyesindeki mühendislik ekiplerine dayanır. Bu yapı, projenin her aşamasında teknik kararların aynı masa etrafında, gerçek zamanlı alınmasını sağlar."
+            eyebrow={t('eyebrow')}
+            title={t('title')}
+            subtitle={t('subtitle')}
           />
         </FadeInOnScroll>
 
@@ -67,7 +48,8 @@ export function MuhendislikAltyapisi() {
             const Icon = d.icon;
             return (
               <FadeInOnScroll key={d.title} delay={i * 60}>
-                <div className="group bg-white border border-[#D9E1EA] rounded-2xl p-6 flex flex-col gap-4 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(7,27,52,0.06),0_16px_40px_rgba(10,109,184,0.12)] hover:border-t-[#11B5FF] transition-all duration-300"
+                <div
+                  className="group bg-white border border-[#D9E1EA] rounded-2xl p-6 flex flex-col gap-4 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(7,27,52,0.06),0_16px_40px_rgba(10,109,184,0.12)] hover:border-t-[#11B5FF] transition-all duration-300"
                   style={{ borderTopWidth: '1px' }}
                 >
                   <span className="w-12 h-12 rounded-xl bg-[#071B34] flex items-center justify-center shrink-0 group-hover:bg-[#0A6DB8] transition-colors duration-300">
@@ -82,8 +64,6 @@ export function MuhendislikAltyapisi() {
             );
           })}
         </div>
-
-
       </div>
     </section>
   );

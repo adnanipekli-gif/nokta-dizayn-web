@@ -1,29 +1,20 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Zap, Timer, Settings2 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { GradientGlow } from '@/components/ui/GradientGlow';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 
-const metrics = [
-  {
-    icon: Zap,
-    title: 'Düşük tüketim',
-    description: 'Enerji verimli kompresör ve LED aydınlatma',
-  },
-  {
-    icon: Timer,
-    title: 'Uzun ömür',
-    description: 'Endüstriyel sınıf malzeme ve kalite kontrol',
-  },
-  {
-    icon: Settings2,
-    title: 'Akıllı kontrol',
-    description: 'Merkezi izleme ve enerji optimizasyonu',
-  },
-];
+export async function SustainabilityBlock() {
+  const t = await getTranslations('sustainability');
 
-export function SustainabilityBlock() {
+  const metrics = [
+    { icon: Zap,      title: t('metric_1_title'), description: t('metric_1_desc') },
+    { icon: Timer,    title: t('metric_2_title'), description: t('metric_2_desc') },
+    { icon: Settings2,title: t('metric_3_title'), description: t('metric_3_desc') },
+  ];
+
   return (
     <section
       className="relative pt-36 pb-36 overflow-hidden bg-gradient-to-br from-[#071B34] via-[#0E2647] to-[#071B34]"
@@ -31,30 +22,20 @@ export function SustainabilityBlock() {
     >
       <div className="section-fade-from-white" aria-hidden="true" />
       <GradientGlow position="top-right" intensity="soft" />
-      <div
-        className="absolute inset-0 blueprint-grid opacity-20"
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
 
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left content */}
           <div className="lg:col-span-4">
             <FadeInOnScroll>
               <SectionHeading
-                eyebrow="ENERJİ VERİMLİLİĞİ"
-                title="Enerji Verimliliğiyle Güçlenen Soğutma Performansı"
-                subtitle="Nokta Dizayn, işletmelerin enerji tüketimini, operasyon maliyetlerini ve servis risklerini azaltmaya yönelik verimli soğutma çözümleri geliştirir."
+                eyebrow={t('eyebrow')}
+                title={t('title')}
+                subtitle={t('subtitle')}
                 dark
                 id="sustainability-heading"
               />
-
-              <p className="text-[#E9EEF3]/70 text-sm leading-relaxed mt-4 mb-8">
-                Doğru kapasite seçimi, merkezi sistem optimizasyonu ve uzun ömürlü ekipman
-                yaklaşımıyla soğuk zincir güvenliğini ekonomik biçimde sağlıyoruz.
-              </p>
-
-              {/* 3 metrics */}
+              <p className="text-[#E9EEF3]/70 text-sm leading-relaxed mt-4 mb-8">{t('body')}</p>
               <div className="space-y-4 mb-8">
                 {metrics.map((m) => (
                   <div key={m.title} className="flex items-start gap-4">
@@ -68,23 +49,18 @@ export function SustainabilityBlock() {
                   </div>
                 ))}
               </div>
-
-              <Link
-                href="/surdurulebilirlik"
-                className="inline-flex items-center gap-2 text-sm font-medium text-[#11B5FF] hover:text-white transition-colors group"
-              >
-                Sürdürülebilirlik Yaklaşımımız
+              <Link href="/surdurulebilirlik" className="inline-flex items-center gap-2 text-sm font-medium text-[#11B5FF] hover:text-white transition-colors group">
+                {t('link')}
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </FadeInOnScroll>
           </div>
 
-          {/* Right visual */}
           <div className="lg:col-span-8">
             <FadeInOnScroll delay={100}>
               <Image
                 src="/gatria-fg-dgd-render.png"
-                alt="Gatria FG-DGD — Enerji verimli plug-in sütlük reyonu"
+                alt="GATRIA FG-DGD"
                 width={960}
                 height={720}
                 className="w-full h-auto rounded-3xl"

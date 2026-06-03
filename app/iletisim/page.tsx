@@ -18,9 +18,9 @@ const tabs: { id: FormType; label: string }[] = [
 ];
 
 const departments = [
-  { name: 'Satış', email: 'satis@noktadizayn.com.tr', phone: '+90 (212) 123 45 67' },
-  { name: 'Teknik Servis', email: 'servis@noktadizayn.com.tr', phone: '+90 (212) 123 45 68' },
-  { name: 'İhracat', email: 'export@noktadizayn.com.tr', phone: '+90 (212) 123 45 69' },
+  { name: 'Satış', email: 'satis@noktadizayn.com.tr', phone: '+90 (216) 313 67 67' },
+  { name: 'Teknik Servis', email: 'servis@noktadizayn.com.tr', phone: '+90 (216) 313 67 67' },
+  { name: 'İhracat', email: 'export@noktadizayn.com.tr', phone: '+90 (216) 313 67 67' },
 ];
 
 function IletisimContent() {
@@ -102,20 +102,20 @@ function IletisimContent() {
                   <div className="flex items-start gap-3">
                     <MapPin size={16} className="text-[#0A6DB8] mt-0.5 shrink-0" />
                     <p className="text-sm text-[#475569] leading-relaxed">
-                      Merkez Mah. Sanayi Cad. No:1<br />
-                      Bağcılar, İstanbul, 34200 Türkiye
+                      Emek Mahallesi, Şems Caddesi No:7<br />
+                      Sancaktepe, İstanbul, Türkiye
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone size={16} className="text-[#0A6DB8] shrink-0" />
-                    <a href="tel:+902121234567" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
-                      +90 (212) 123 45 67
+                    <a href="tel:+902163136767" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
+                      +90 (216) 313 67 67
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail size={16} className="text-[#0A6DB8] shrink-0" />
-                    <a href="mailto:info@noktadizayn.com.tr" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
-                      info@noktadizayn.com.tr
+                    <a href="mailto:bilgi@noktadizayn.com.tr" className="text-sm text-[#475569] hover:text-[#0A6DB8] transition-colors">
+                      bilgi@noktadizayn.com.tr
                     </a>
                   </div>
                   <div className="flex items-start gap-3">

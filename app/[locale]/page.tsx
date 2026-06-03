@@ -38,7 +38,7 @@ export default function HomePage() {
           'Entegre mağaza sistemleri — soğutma ekipmanları, raf ve reyon sistemleri, kasa üniteleri ve mağaza mobilyaları.',
         contactPoint: {
           '@type': 'ContactPoint',
-          telephone: '+90-212-123-4567',
+          telephone: '+90-216-313-6767',
           contactType: 'customer service',
           availableLanguage: ['Turkish', 'English', 'Arabic'],
         },

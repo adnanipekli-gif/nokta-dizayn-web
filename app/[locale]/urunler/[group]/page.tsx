@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
+import { subcatNameKey, groupTaglineKey } from '@/lib/product-i18n';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 
 const groupHeroImages: Record<string, string> = {
@@ -24,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   if (!group) return {};
   return {
-    title: `${group.name} Ürünler — Nokta Dizayn`,
+    title: `${group.name} — Nokta Dizayn`,
     description: group.tagline,
     alternates: { canonical: `https://www.noktadizayn.com.tr/urunler/${group.slug}` },
   };
@@ -35,7 +37,19 @@ export default async function GroupPage({ params }: Props) {
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   if (!group) notFound();
 
+  const t = await getTranslations('urunler_page');
+  const tn = await getTranslations('nav');
+  const tc = await getTranslations('product_catalog');
+
+  function getTagline(): string {
+    try { return tc(groupTaglineKey(group!.slug)); } catch { return group!.tagline; }
+  }
+  function getSubName(slug: string): string {
+    try { return tc(subcatNameKey(slug)); } catch { return slug; }
+  }
+
   const heroImage = groupHeroImages[group.slug];
+  const tagline = getTagline();
 
   return (
     <>
@@ -56,14 +70,14 @@ export default async function GroupPage({ params }: Props) {
           <div className="mb-6">
             <Breadcrumb
               items={[
-                { label: 'Ürünler', href: '/urunler' },
+                { label: tn('urunler'), href: '/urunler' },
                 { label: group.name },
               ]}
             />
           </div>
-          <h1 className="text-white mb-3">{group.name} Ürünler</h1>
+          <h1 className="text-white mb-3">{group.name} {t('products_suffix')}</h1>
           <p className="text-[#E9EEF3]/65 max-w-xl text-lg leading-relaxed">
-            {group.tagline}
+            {tagline}
           </p>
         </div>
       </section>
@@ -74,6 +88,7 @@ export default async function GroupPage({ params }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
             {group.subCategories.map((sub) => {
               const previewImage = sub.products[0]?.images[0];
+              const subName = getSubName(sub.slug);
               return (
                 <Link
                   key={sub.slug}
@@ -85,17 +100,16 @@ export default async function GroupPage({ params }: Props) {
                     {previewImage ? (
                       <Image
                         src={previewImage}
-                        alt={sub.name}
+                        alt={subName}
                         fill
                         className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-[#C0CBDA] text-sm font-mono">Görsel</span>
+                        <span className="text-[#C0CBDA] text-sm font-mono">{t('no_image')}</span>
                       </div>
                     )}
-                    {/* Overlay on hover */}
                     <div className="absolute inset-0 bg-[#071B34]/0 group-hover:bg-[#071B34]/5 transition-colors duration-300" />
                   </div>
 
@@ -103,10 +117,10 @@ export default async function GroupPage({ params }: Props) {
                   <div className="p-6 flex items-center justify-between">
                     <div>
                       <h2 className="font-sora font-bold text-lg text-[#071B34] mb-1 group-hover:text-[#0A6DB8] transition-colors">
-                        {sub.name}
+                        {subName}
                       </h2>
                       <p className="text-sm text-[#8D99A8]">
-                        {sub.products.length} ürün
+                        {t('products_count', { n: sub.products.length })}
                       </p>
                     </div>
                     <span className="w-10 h-10 rounded-full bg-[#F7F9FC] border border-[#D9E1EA] flex items-center justify-center group-hover:bg-[#071B34] group-hover:border-[#071B34] transition-all duration-200 shrink-0">

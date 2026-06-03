@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductImageViewerProps {
@@ -13,8 +13,24 @@ interface ProductImageViewerProps {
 
 export function ProductImageViewer({ images, alt, className }: ProductImageViewerProps) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [origin, setOrigin] = useState('50% 50%');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setOrigin(`${x.toFixed(1)}% ${y.toFixed(1)}%`);
+  }
+
+  function openLightbox(idx: number) {
+    setLightboxIdx(idx);
+    setLightboxOpen(true);
+  }
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -31,17 +47,17 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
     };
   }, [lightboxOpen, images.length]);
 
-  function openLightbox(idx: number) {
-    setLightboxIdx(idx);
-    setLightboxOpen(true);
-  }
-
   return (
     <>
       <div className={cn('flex flex-col gap-2.5', className)}>
-        {/* Primary image */}
+        {/* Primary image — lens zoom */}
         <div
-          className="relative group cursor-zoom-in overflow-hidden rounded-xl bg-white border border-[#D9E1EA] hover:border-[#11B5FF]/40 hover:shadow-[0_0_0_3px_rgba(17,181,255,0.08)] transition-all duration-300"
+          ref={containerRef}
+          className="relative overflow-hidden rounded-xl bg-white border border-[#D9E1EA] hover:border-[#11B5FF]/40 transition-colors duration-300"
+          style={{ cursor: isZoomed ? 'zoom-in' : 'zoom-in' }}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsZoomed(true)}
+          onMouseLeave={() => { setIsZoomed(false); setOrigin('50% 50%'); }}
           onClick={() => openLightbox(activeIdx)}
         >
           <div className="aspect-[4/3] relative">
@@ -49,13 +65,19 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
               src={images[activeIdx]}
               alt={alt}
               fill
-              className="object-contain p-6 transition-transform duration-400 group-hover:scale-[1.04]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+              className="object-contain p-6 select-none"
+              style={{
+                transform: isZoomed ? 'scale(2.2)' : 'scale(1)',
+                transformOrigin: origin,
+                transition: isZoomed
+                  ? 'transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                  : 'transform 0.2s ease, transform-origin 0s',
+                willChange: 'transform',
+              }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 900px"
+              unoptimized
+              draggable={false}
             />
-          </div>
-          {/* Zoom overlay badge */}
-          <div className="absolute top-3 right-3 w-9 h-9 rounded-lg bg-white/0 group-hover:bg-white/95 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-md border border-[#D9E1EA]/0 group-hover:border-[#D9E1EA]">
-            <ZoomIn size={16} className="text-[#071B34]" />
           </div>
         </div>
 
@@ -80,6 +102,7 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
                   fill
                   className="object-contain p-1.5"
                   sizes="80px"
+                  quality={85}
                 />
               </button>
             ))}
@@ -102,7 +125,6 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
             <X size={20} />
           </button>
 
-          {/* Prev arrow */}
           {images.length > 1 && lightboxIdx > 0 && (
             <button
               className="absolute left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
@@ -113,7 +135,6 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
             </button>
           )}
 
-          {/* Next arrow */}
           {images.length > 1 && lightboxIdx < images.length - 1 && (
             <button
               className="absolute right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
@@ -124,7 +145,6 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
             </button>
           )}
 
-          {/* Image */}
           <div
             className="relative max-w-5xl w-full"
             style={{ maxHeight: '88vh' }}
@@ -141,7 +161,6 @@ export function ProductImageViewer({ images, alt, className }: ProductImageViewe
             />
           </div>
 
-          {/* Dot indicators */}
           {images.length > 1 && (
             <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
               {images.map((_, i) => (

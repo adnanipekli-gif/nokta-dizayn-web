@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Sora, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n.routing';
 import { notFound } from 'next/navigation';
 import '../globals.css';
@@ -31,6 +31,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.noktadizayn.com.tr'),
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
   title: {
     default: 'Nokta Dizayn — Entegre Mağaza Sistemleri',
     template: '%s | Nokta Dizayn',
@@ -79,12 +84,13 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
-  const dir = locale === 'ar' ? 'rtl' : 'ltr';
+  const tc = await getTranslations('common');
+  const skipLabel = tc('ana_icerige_gec');
 
   return (
     <html
       lang={locale}
-      dir={dir}
+      dir="ltr"
       className={`${sora.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-inter antialiased">
@@ -93,7 +99,7 @@ export default async function LocaleLayout({
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-[#071B34] focus:rounded"
           >
-            {locale === 'ar' ? 'انتقل إلى المحتوى الرئيسي' : locale === 'en' ? 'Skip to main content' : 'Ana içeriğe geç'}
+            {skipLabel}
           </a>
           <Navbar />
           <main id="main-content" tabIndex={-1}>

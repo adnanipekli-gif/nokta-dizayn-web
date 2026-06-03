@@ -8,9 +8,11 @@ interface CaseStudyCardProps {
   project: ReferenceProject;
   large?: boolean;
   className?: string;
+  exportLabel?: string;
+  viewLabel?: string;
 }
 
-export function CaseStudyCard({ project, large = false, className }: CaseStudyCardProps) {
+export function CaseStudyCard({ project, large = false, className, exportLabel = 'İHRACAT', viewLabel = 'Projeyi İncele' }: CaseStudyCardProps) {
   return (
     <Link
       href={`/referanslar/${project.slug}`}
@@ -40,7 +42,7 @@ export function CaseStudyCard({ project, large = false, className }: CaseStudyCa
         {/* Sector badge */}
         <span className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#11B5FF] mb-3">
           {project.sector}
-          {project.isExport && ' · İHRACAT'}
+          {project.isExport && ` · ${exportLabel}`}
         </span>
 
         <h3 className={cn(
@@ -65,7 +67,7 @@ export function CaseStudyCard({ project, large = false, className }: CaseStudyCa
         </div>
 
         <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#071B34] group-hover:text-[#11B5FF] transition-colors mt-auto">
-          Projeyi İncele
+          {viewLabel}
           <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
         </span>
       </div>
