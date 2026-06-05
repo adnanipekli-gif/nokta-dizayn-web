@@ -34,13 +34,6 @@ export const NAVIGATION: NavItem[] = [
           { label: 'Plug-In Promosyon', href: '/urunler/plug-in/plug-in-promosyon', icon: 'ShoppingBag', description: 'PROPUS ve BRISBANE promosyon dolapları' },
         ],
       },
-      {
-        slug: 'katalog',
-        label: 'Ürün Kataloğu',
-        href: '/urunler/katalog',
-        tagline: 'Tüm ürünleri PDF olarak görüntüle',
-        icon: 'BookOpen',
-      },
     ],
   },
   {

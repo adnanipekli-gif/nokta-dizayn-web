@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight, ArrowRight, BookOpen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { NAVIGATION } from '@/lib/data/navigation';
@@ -24,14 +24,11 @@ const TOP_KEYS: Record<string, string> = {
   '/iletisim': 'iletisim',
 };
 
-const GROUP_LABEL_KEYS: Record<string, string> = {
-  katalog: 'katalog_label',
-};
+const GROUP_LABEL_KEYS: Record<string, string> = {};
 
 const GROUP_TAGLINE_KEYS: Record<string, string> = {
   remote: 'remote_tagline',
   'plug-in': 'plugin_tagline',
-  katalog: 'katalog_tagline',
 };
 
 const CHILD_KEYS: Record<string, { label: string; desc: string }> = {
@@ -323,6 +320,18 @@ export function Navbar() {
           {/* Desktop right */}
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="navbar" className={cn(linkColor)} />
+            <Link
+              href="/urunler/katalog"
+              className={cn(
+                'inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold border transition-all duration-200',
+                isSolid
+                  ? 'border-[#D9E1EA] text-[#071B34] hover:border-[#071B34] hover:bg-[#F7F9FC]'
+                  : 'border-white/30 text-white/90 hover:border-white/60 hover:text-white hover:bg-white/5'
+              )}
+            >
+              <BookOpen size={14} />
+              {t('katalog_btn')}
+            </Link>
             <Button variant="primary" size="sm" href="/iletisim?form=teklif">
               {t('teklif_al')}
             </Button>
@@ -347,8 +356,12 @@ export function Navbar() {
             aria-label={t('mobil_menu')}
           >
             <div className="section-container py-4">
-              <Button variant="primary" size="md" href="/iletisim?form=teklif" fullWidth className="mb-4">
+              <Button variant="primary" size="md" href="/iletisim?form=teklif" fullWidth className="mb-2">
                 {t('teklif_al')}
+              </Button>
+              <Button variant="secondary" size="md" href="/urunler/katalog" fullWidth className="mb-4">
+                <BookOpen size={15} />
+                {t('katalog_btn')}
               </Button>
 
               <ul className="space-y-1" role="list">

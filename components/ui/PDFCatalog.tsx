@@ -8,12 +8,18 @@ import HTMLFlipBook from 'react-pageflip';
 import { ChevronLeft, ChevronRight, Download, ZoomIn, ZoomOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-// CDN worker — Turbopack uyumlu
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Worker yerel /public klasöründen servis edilir — harici CDN bağımlılığı yok
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
-const FlipPage = forwardRef<HTMLDivElement, { pageNum: number; width: number; height: number }>(
-  ({ pageNum, width, height }, ref) => (
-    <div ref={ref} className="overflow-hidden bg-white shadow-inner" style={{ width, height }}>
+// Render eşiği: mevcut spread'e ±bu kadar sayfa mesafedekiler gerçek render alır
+const RENDER_RADIUS = 4;
+
+const FlipPage = forwardRef<
+  HTMLDivElement,
+  { pageNum: number; width: number; height: number; shouldRender: boolean }
+>(({ pageNum, width, height, shouldRender }, ref) => (
+  <div ref={ref} className="overflow-hidden bg-white shadow-inner" style={{ width, height }}>
+    {shouldRender ? (
       <Page
         pageNumber={pageNum}
         width={width}
@@ -21,12 +27,14 @@ const FlipPage = forwardRef<HTMLDivElement, { pageNum: number; width: number; he
         renderTextLayer={false}
         loading={<div className="bg-[#f0ede8] animate-pulse" style={{ width, height }} />}
       />
-    </div>
-  )
-);
+    ) : (
+      <div className="bg-[#f0ede8]" style={{ width, height }} />
+    )}
+  </div>
+));
 FlipPage.displayName = 'FlipPage';
 
-export function PDFCatalog({ url = '/api/pdf-proxy' }: { url?: string }) {
+export function PDFCatalog({ url = '/katalog-pdf/nokta-dizayn-katalog.pdf' }: { url?: string }) {
   const t = useTranslations('pdf_catalog');
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -140,6 +148,7 @@ export function PDFCatalog({ url = '/api/pdf-proxy' }: { url?: string }) {
                     pageNum={i + 1}
                     width={pageSize.width}
                     height={pageSize.height}
+                    shouldRender={Math.abs(i - currentPage) <= RENDER_RADIUS}
                   />
                 ))}
               </HTMLFlipBook>
