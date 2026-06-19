@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/i18n-navigation';
 import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';

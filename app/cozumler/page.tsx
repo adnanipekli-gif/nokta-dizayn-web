@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from 'next';
-import Link from 'next/link';
+import { Link } from '@/lib/i18n-navigation';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Placeholder } from '@/components/ui/Placeholder';
 import { Button } from '@/components/ui/Button';

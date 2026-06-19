@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { Link } from '@/lib/i18n-navigation';
+import Image from 'next/image';
 import { MapPin, Phone, Mail, Clock, Printer } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
@@ -40,11 +41,34 @@ export async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-1 font-sora font-bold text-lg text-white tracking-tight mb-4">
-              NOKTA DİZAYN
-              <span className="w-2 h-2 rounded-full bg-[#11B5FF] mt-0.5" aria-hidden="true" />
-            </Link>
-            <p className="text-sm text-[#E9EEF3]/65 leading-relaxed mb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <a
+                href="https://www.ndgrouptr.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="ND Group Companies"
+                className="flex items-center shrink-0"
+              >
+                <Image
+                  src="/nd-group-logo.png"
+                  alt="ND Group Companies"
+                  width={56}
+                  height={56}
+                  className="h-14 w-auto object-contain"
+                />
+              </a>
+              <div className="w-px h-6 bg-white/20 shrink-0" />
+              <Link href="/" aria-label="Nokta Dizayn">
+                <Image
+                  src="/nokta-dizayn-logo.png"
+                  alt="Nokta Dizayn"
+                  width={120}
+                  height={36}
+                  className="h-8 w-auto object-contain"
+                />
+              </Link>
+            </div>
+            <p className="text-sm text-[#E9EEF3]/65 leading-relaxed">
               {t('brand_desc')}
             </p>
           </div>

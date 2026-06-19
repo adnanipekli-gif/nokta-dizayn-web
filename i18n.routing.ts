@@ -1,7 +1,7 @@
 import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-  locales: ['tr', 'en', 'de', 'fr', 'es'],
+  locales: ['tr', 'en', 'de', 'fr', 'es', 'ar', 'it', 'ru', 'zh'],
   defaultLocale: 'tr',
   localePrefix: 'as-needed', // TR has no prefix: /en/, /de/, /fr/, /es/
   localeDetection: false,    // Always open in Turkish, ignore browser language

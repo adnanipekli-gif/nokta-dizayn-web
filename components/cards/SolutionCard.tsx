@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import { Link } from '@/lib/i18n-navigation';
 import { ArrowRight } from 'lucide-react';
 import { DynIcon } from '@/lib/icons';
 import { Placeholder } from '@/components/ui/Placeholder';

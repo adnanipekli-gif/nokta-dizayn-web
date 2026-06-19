@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { Link, usePathname, useRouter } from '@/lib/i18n-navigation';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ChevronDown, ChevronRight, ArrowRight, BookOpen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
@@ -154,7 +153,7 @@ export function Navbar() {
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const strippedPath = pathname.replace(/^\/(tr|en|de|fr|es)/, '') || '/';
+  const strippedPath = pathname.replace(/^\/(tr|en|de|fr|es|ar|it|ru|zh)/, '') || '/';
   const isLightTopPage =
     /^\/urunler\/[^/]+\/[^/]+\/[^/]+/.test(strippedPath) ||
     strippedPath === '/urunler/katalog';
@@ -212,23 +211,48 @@ export function Navbar() {
       >
         <nav
           ref={menuRef}
-          className="w-full max-w-[1440px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16"
+          className="w-full px-4 xl:px-0 flex items-center h-16"
           aria-label={t('ana_nav')}
         >
-          {/* Logo */}
-          <Link href="/" aria-label="Nokta Dizayn">
-            <Image
-              src="/nokta-dizayn-logo.png"
-              alt="Nokta Dizayn"
-              width={160}
-              height={48}
-              className="h-10 w-auto object-contain"
-              priority
-            />
-          </Link>
+          {/* Outer-left elastic spacer — allows logos to shift left symmetrically */}
+          <div className="hidden xl:block grow shrink basis-10 min-w-4 max-w-[100px]" />
 
-          {/* Desktop menu */}
-          <ul className="hidden lg:flex items-center gap-0.5" role="list">
+          {/* Left — logos, never shrink */}
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="https://www.ndgrouptr.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ND Group Companies"
+              className="flex items-center shrink-0"
+            >
+              <Image
+                src="/nd-group-logo.png"
+                alt="ND Group Companies"
+                width={56}
+                height={56}
+                className="h-14 w-auto object-contain"
+                priority
+              />
+            </a>
+            <div className={cn('w-px h-6 shrink-0', isSolid ? 'bg-[#D9E1EA]' : 'bg-white/20')} />
+            <Link href="/" aria-label="Nokta Dizayn">
+              <Image
+                src="/nokta-dizayn-logo.png"
+                alt="Nokta Dizayn"
+                width={160}
+                height={48}
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            </Link>
+          </div>
+
+          {/* Inner-left elastic spacer — gap between logos and nav */}
+          <div className="hidden xl:block grow shrink basis-[60px] min-w-0" />
+
+          {/* Desktop nav links — shrink-0, never compresses */}
+          <ul className="hidden xl:flex items-center gap-0.5 shrink-0" role="list">
             {NAVIGATION.map((item) => (
               <li key={item.label} className="relative">
                 {item.groups ? (
@@ -317,41 +341,47 @@ export function Navbar() {
             ))}
           </ul>
 
-          {/* Desktop right */}
-          <div className="hidden lg:flex items-center gap-3">
-            <LanguageSwitcher variant="navbar" className={cn(linkColor)} />
-            <Link
-              href="/urunler/katalog"
-              className={cn(
-                'inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold border transition-all duration-200',
-                isSolid
-                  ? 'border-[#D9E1EA] text-[#071B34] hover:border-[#071B34] hover:bg-[#F7F9FC]'
-                  : 'border-white/30 text-white/90 hover:border-white/60 hover:text-white hover:bg-white/5'
-              )}
+          {/* Inner-right elastic spacer — gap between nav and buttons */}
+          <div className="hidden xl:block grow shrink basis-[60px] min-w-0" />
+
+          {/* Right — buttons + hamburger, never shrink */}
+          <div className="flex items-center gap-3 shrink-0 ml-auto xl:ml-0">
+            <div className="hidden xl:flex items-center gap-3">
+              <LanguageSwitcher variant="navbar" className={cn(linkColor)} />
+              <Link
+                href="/urunler/katalog"
+                className={cn(
+                  'inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold border transition-all duration-200 whitespace-nowrap shrink-0',
+                  isSolid
+                    ? 'border-[#D9E1EA] text-[#071B34] hover:border-[#071B34] hover:bg-[#F7F9FC]'
+                    : 'border-white/30 text-white/90 hover:border-white/60 hover:text-white hover:bg-white/5'
+                )}
+              >
+                <BookOpen size={14} />
+                {t('katalog_btn')}
+              </Link>
+              <Button variant="primary" size="sm" href="/iletisim?form=teklif" className="whitespace-nowrap shrink-0">
+                {t('teklif_al')}
+              </Button>
+            </div>
+            <button
+              className={cn('xl:hidden p-2 rounded-md', linkColor)}
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? t('menu_kapat') : t('menu_ac')}
+              aria-expanded={mobileOpen}
             >
-              <BookOpen size={14} />
-              {t('katalog_btn')}
-            </Link>
-            <Button variant="primary" size="sm" href="/iletisim?form=teklif">
-              {t('teklif_al')}
-            </Button>
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className={cn('lg:hidden p-2 rounded-md', linkColor)}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? t('menu_kapat') : t('menu_ac')}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Outer-right elastic spacer — allows buttons to shift right symmetrically */}
+          <div className="hidden xl:block grow shrink basis-10 min-w-4 max-w-[100px]" />
         </nav>
 
         {/* Mobile drawer */}
         {mobileOpen && (
           <div
-            className="lg:hidden bg-white border-t border-[#D9E1EA] max-h-[calc(100vh-64px)] overflow-y-auto"
+            className="xl:hidden bg-white border-t border-[#D9E1EA] max-h-[calc(100vh-64px)] overflow-y-auto"
             role="dialog"
             aria-label={t('mobil_menu')}
           >

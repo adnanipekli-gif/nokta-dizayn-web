@@ -5,13 +5,26 @@ import { useLocale } from 'next-intl';
 import { usePathname, Link } from '@/lib/i18n-navigation';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import TR from 'country-flag-icons/react/3x2/TR';
+import GB from 'country-flag-icons/react/3x2/GB';
+import DE from 'country-flag-icons/react/3x2/DE';
+import FR from 'country-flag-icons/react/3x2/FR';
+import ES from 'country-flag-icons/react/3x2/ES';
+import SA from 'country-flag-icons/react/3x2/SA';
+import IT from 'country-flag-icons/react/3x2/IT';
+import RU from 'country-flag-icons/react/3x2/RU';
+import CN from 'country-flag-icons/react/3x2/CN';
 
 const LOCALES = [
-  { code: 'tr', label: 'TR', name: 'Türkçe' },
-  { code: 'en', label: 'EN', name: 'English' },
-  { code: 'de', label: 'DE', name: 'Deutsch' },
-  { code: 'fr', label: 'FR', name: 'Français' },
-  { code: 'es', label: 'ES', name: 'Español' },
+  { code: 'tr', label: 'TR', name: 'Türkçe',  Flag: TR },
+  { code: 'en', label: 'EN', name: 'English',  Flag: GB },
+  { code: 'de', label: 'DE', name: 'Deutsch',  Flag: DE },
+  { code: 'fr', label: 'FR', name: 'Français', Flag: FR },
+  { code: 'es', label: 'ES', name: 'Español',  Flag: ES },
+  { code: 'ar', label: 'AR', name: 'العربية',  Flag: SA },
+  { code: 'it', label: 'IT', name: 'Italiano', Flag: IT },
+  { code: 'ru', label: 'RU', name: 'Русский',  Flag: RU },
+  { code: 'zh', label: 'ZH', name: '中文',     Flag: CN },
 ] as const;
 
 type LocaleCode = (typeof LOCALES)[number]['code'];
@@ -69,12 +82,13 @@ export function LanguageSwitcher({ variant = 'navbar', className }: LanguageSwit
     <div ref={ref} className={cn('relative', className)}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1 text-sm font-medium px-2 py-1.5 rounded-md opacity-75 hover:opacity-100 transition-opacity"
+        className="flex items-center gap-1.5 text-sm font-medium px-2 py-1.5 rounded-md opacity-75 hover:opacity-100 transition-opacity"
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label={current.name}
       >
-        {current.label}
+        <current.Flag className="w-5 h-auto rounded-[2px] shrink-0" />
+        <span>{current.label}</span>
         <ChevronDown
           size={12}
           className={cn('transition-transform duration-200', open && 'rotate-180')}
@@ -101,6 +115,7 @@ export function LanguageSwitcher({ variant = 'navbar', className }: LanguageSwit
                   : 'text-[#475569] hover:bg-[#F7F9FC] hover:text-[#071B34]'
               )}
             >
+              <loc.Flag className="w-5 h-auto rounded-[2px] shrink-0" />
               <span className="font-mono text-xs font-bold w-6 shrink-0">{loc.label}</span>
               <span className="text-xs">{loc.name}</span>
             </Link>

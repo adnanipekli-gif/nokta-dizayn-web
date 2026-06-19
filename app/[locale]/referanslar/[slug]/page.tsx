@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MapPin, Calendar, ArrowRight } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { CaseStudyCard } from '@/components/cards/CaseStudyCard';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { PROJECTS } from '@/lib/data/projects';
-import Link from 'next/link';
+import { Link } from '@/lib/i18n-navigation';
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));

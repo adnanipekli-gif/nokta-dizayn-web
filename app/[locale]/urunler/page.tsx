@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+﻿import type { Metadata } from 'next';
+import { Link } from '@/lib/i18n-navigation';
 import Image from 'next/image';
 import { ArrowRight, Network, Zap } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';

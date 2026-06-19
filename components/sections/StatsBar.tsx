@@ -54,15 +54,12 @@ export function StatsBar() {
       aria-label={t('aria')}
     >
       <div className="section-container">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-px bg-white/10 rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-px bg-[#11B5FF]/20 rounded-2xl overflow-hidden">
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
               className="flex flex-col items-center text-center px-6 py-8 bg-[#071B34] relative"
             >
-              {i < STATS.length - 1 && (
-                <div className="hidden lg:block absolute right-0 top-6 bottom-6 w-px bg-[#11B5FF]/25" aria-hidden="true" />
-              )}
               <p className="eyebrow text-[#11B5FF] mb-3">{t(STAT_KEYS[i].eyebrow)}</p>
               <p className="font-sora font-bold text-white leading-none mb-2" style={{ fontSize: 'clamp(2.25rem, 4vw, 3.25rem)' }}>
                 {stat.numericValue === 2003 ? '2003' :

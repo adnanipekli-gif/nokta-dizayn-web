@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import { Link } from '@/lib/i18n-navigation';
 import { X, Check, ArrowRight } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';

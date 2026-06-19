@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/lib/i18n-navigation';
 import { ArrowRight, Phone, Mail } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
