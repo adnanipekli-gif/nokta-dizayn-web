@@ -1,4 +1,4 @@
-﻿import { Link } from '@/lib/i18n-navigation';
+﻿import { LocaleLink as Link } from '@/components/ui/LocaleLink';
 import { DynIcon } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import type { ProductCategory } from '@/lib/types';

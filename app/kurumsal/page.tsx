@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from 'next';
-import { Link } from '@/lib/i18n-navigation';
+import Link from 'next/link';
 import { CheckCircle2, MapPin } from 'lucide-react';
 import { Placeholder } from '@/components/ui/Placeholder';
 import { SectionHeading } from '@/components/ui/SectionHeading';

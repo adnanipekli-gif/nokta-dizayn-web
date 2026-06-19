@@ -1,4 +1,4 @@
-﻿import { Link } from '@/lib/i18n-navigation';
+﻿import { LocaleLink as Link } from '@/components/ui/LocaleLink';
 import { ArrowRight } from 'lucide-react';
 import { DynIcon } from '@/lib/icons';
 import { Placeholder } from '@/components/ui/Placeholder';

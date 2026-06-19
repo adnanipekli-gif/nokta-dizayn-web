@@ -1,4 +1,4 @@
-﻿import { Link } from '@/lib/i18n-navigation';
+﻿import { LocaleLink as Link } from '@/components/ui/LocaleLink';
 import { ChevronRight } from 'lucide-react';
 
 interface BreadcrumbItem {
