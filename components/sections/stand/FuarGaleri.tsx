@@ -7,9 +7,6 @@ import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
 type Gorsel = { src: string; alt: string; label: string };
-type Aspect = '4/3' | '3/4' | '16/9' | '1/1';
-type LayoutGorsel = { src: string; alt: string; label: string; span: 1 | 2 | 3 | 4; aspect: Aspect };
-
 const EUROSHOP_2023: Gorsel[] = [
   { src: '/stand-sistemleri/fuar2023-1.png', alt: 'EuroShop 2023 fuar alanı', label: 'EuroShop 2023' },
   { src: '/stand-sistemleri/fuar2023-2.png', alt: 'EuroShop 2023 stand detayı', label: 'EuroShop 2023' },
@@ -26,71 +23,66 @@ const EUROSHOP_2026: Gorsel[] = [
   { src: '/stand-sistemleri/fuar2026-3.png', alt: 'EuroShop 2026 sergileme alanı', label: 'EuroShop 2026' },
 ];
 
-type GrupWithLayout = { baslik: string; cols: 3 | 4; id?: string; gorseller: LayoutGorsel[] };
+// cols: 2 → 2×2 grid (4 images, larger); cols: 3 → 3-col grid (5 or 9 images)
+type GrupWithLayout = { baslik: string; cols: 2 | 3; id?: string; gorseller: Gorsel[] };
 
 const DIGER_GRUPLAR: GrupWithLayout[] = [
   {
-    // Wide images (1, 3) at span:2 in 4-col grid — keeps quality, avoids full-width stretch
-    // Row 1: [wide span:2] [portrait] [portrait]
-    // Row 2: [landscape] [wide span:2] — reordered so wide images alternate sides
     baslik: 'Philips Stand',
     id: 'philips-stand',
-    cols: 4,
+    cols: 3,
     gorseller: [
-      { src: '/stand-sistemleri/phillips-stant-1.png', alt: 'Philips stand dış cephe', label: 'Philips', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/phillips-stant-4.png', alt: 'Philips sütun stand', label: 'Philips', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/phillips-stant-5.png', alt: 'Philips mini stand', label: 'Philips', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/phillips-stant-2.png', alt: 'Philips stand yan görünüm', label: 'Philips', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/phillips-stant-3.png', alt: 'Philips stand ön cephe', label: 'Philips', span: 2, aspect: '4/3' },
+      { src: '/stand-sistemleri/phillips-stant-1.png', alt: 'Philips stand dış cephe', label: 'Philips' },
+      { src: '/stand-sistemleri/phillips-stant-2.png', alt: 'Philips stand yan görünüm', label: 'Philips' },
+      { src: '/stand-sistemleri/phillips-stant-3.png', alt: 'Philips stand ön cephe', label: 'Philips' },
+      { src: '/stand-sistemleri/phillips-stant-4.png', alt: 'Philips sütun stand', label: 'Philips' },
+      { src: '/stand-sistemleri/phillips-stant-5.png', alt: 'Philips mini stand', label: 'Philips' },
     ],
   },
   {
     baslik: 'Aytemiz Petrol',
-    cols: 3,
+    cols: 2,
     gorseller: [
-      { src: '/stand-sistemleri/aytemiz-petrol-1.png', alt: 'Aytemiz Petrol ofis görünümü', label: 'Aytemiz Petrol', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/aytemiz-petrol-2.png', alt: 'Aytemiz Petrol stand detayı', label: 'Aytemiz Petrol', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/aytemiz-petrol-3.png', alt: 'Aytemiz Petrol iç mekân', label: 'Aytemiz Petrol', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/aytemiz-petrol-4.png', alt: 'Aytemiz Petrol uygulama', label: 'Aytemiz Petrol', span: 2, aspect: '4/3' },
+      { src: '/stand-sistemleri/aytemiz-petrol-1.png', alt: 'Aytemiz Petrol ofis görünümü', label: 'Aytemiz Petrol' },
+      { src: '/stand-sistemleri/aytemiz-petrol-2.png', alt: 'Aytemiz Petrol stand detayı', label: 'Aytemiz Petrol' },
+      { src: '/stand-sistemleri/aytemiz-petrol-3.png', alt: 'Aytemiz Petrol iç mekân', label: 'Aytemiz Petrol' },
+      { src: '/stand-sistemleri/aytemiz-petrol-4.png', alt: 'Aytemiz Petrol uygulama', label: 'Aytemiz Petrol' },
     ],
   },
   {
     baslik: 'Makbul Uygulama',
     cols: 3,
     gorseller: [
-      { src: '/stand-sistemleri/makbul-uygulama-1.png', alt: 'Makbul mağaza genel bakış', label: 'Makbul', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/makbul-uygulama-2.png', alt: 'Makbul mağaza koridoru', label: 'Makbul', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/makbul-uygulama-3.png', alt: 'Makbul raf sistemi', label: 'Makbul', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/makbul-uygulama-4.png', alt: 'Makbul raf detayı', label: 'Makbul', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/makbul-uygulama-5.png', alt: 'Makbul sergileme adası', label: 'Makbul', span: 1, aspect: '3/4' },
+      { src: '/stand-sistemleri/makbul-uygulama-1.png', alt: 'Makbul mağaza genel bakış', label: 'Makbul' },
+      { src: '/stand-sistemleri/makbul-uygulama-2.png', alt: 'Makbul mağaza koridoru', label: 'Makbul' },
+      { src: '/stand-sistemleri/makbul-uygulama-3.png', alt: 'Makbul raf sistemi', label: 'Makbul' },
+      { src: '/stand-sistemleri/makbul-uygulama-4.png', alt: 'Makbul raf detayı', label: 'Makbul' },
+      { src: '/stand-sistemleri/makbul-uygulama-5.png', alt: 'Makbul sergileme adası', label: 'Makbul' },
     ],
   },
   {
     baslik: 'Kiosk Tasarımı',
-    cols: 4,
+    cols: 2,
     gorseller: [
-      { src: '/stand-sistemleri/kiosk-tasarimi-1.png', alt: 'Kiosk tasarım render 1', label: 'Kiosk Tasarımı', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/kiosk-tasarimi-2.png', alt: 'Kiosk tasarım render 2', label: 'Kiosk Tasarımı', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/kiosk-tasarimi-3.png', alt: 'Kiosk tasarım render 3', label: 'Kiosk Tasarımı', span: 1, aspect: '4/3' },
-      { src: '/stand-sistemleri/kiosk-tasarimi-4.png', alt: 'Kiosk tasarım render 4', label: 'Kiosk Tasarımı', span: 1, aspect: '4/3' },
+      { src: '/stand-sistemleri/kiosk-tasarimi-1.png', alt: 'Kiosk tasarım render 1', label: 'Kiosk Tasarımı' },
+      { src: '/stand-sistemleri/kiosk-tasarimi-2.png', alt: 'Kiosk tasarım render 2', label: 'Kiosk Tasarımı' },
+      { src: '/stand-sistemleri/kiosk-tasarimi-3.png', alt: 'Kiosk tasarım render 3', label: 'Kiosk Tasarımı' },
+      { src: '/stand-sistemleri/kiosk-tasarimi-4.png', alt: 'Kiosk tasarım render 4', label: 'Kiosk Tasarımı' },
     ],
   },
   {
-    // Row 1: portrait pair + landscape (items 1,2,3)
-    // Row 2: landscape + portrait pair (items 4,5,6)
-    // Row 3: portrait pair + landscape (items 7,8,9) — zigzag pattern
     baslik: 'Stand Örnekleri',
-    cols: 4,
+    cols: 3,
     gorseller: [
-      { src: '/stand-sistemleri/stand-ornek-1.png', alt: 'Sorvella Perfume kiosk', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-2.png', alt: 'Sorvella kiosk detay', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-3.png', alt: 'TEKA mağaza iç mekânı', label: 'Stand Örneği', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/stand-ornek-4.png', alt: 'TEKA ürün standı', label: 'Stand Örneği', span: 2, aspect: '4/3' },
-      { src: '/stand-sistemleri/stand-ornek-5.png', alt: 'Permolit LED raf sistemi', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-6.png', alt: 'deli2go kahve kiosk', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-7.png', alt: 'Ahşap merdiven raf', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-8.png', alt: 'Castrol ürün standı', label: 'Stand Örneği', span: 1, aspect: '3/4' },
-      { src: '/stand-sistemleri/stand-ornek-9.png', alt: 'Live Happily kahve arabası', label: 'Stand Örneği', span: 2, aspect: '4/3' },
+      { src: '/stand-sistemleri/stand-ornek-1.png', alt: 'Sorvella Perfume kiosk', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-2.png', alt: 'Sorvella kiosk detay', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-3.png', alt: 'TEKA mağaza iç mekânı', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-4.png', alt: 'TEKA ürün standı', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-5.png', alt: 'Permolit LED raf sistemi', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-6.png', alt: 'deli2go kahve kiosk', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-7.png', alt: 'Ahşap merdiven raf', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-8.png', alt: 'Castrol ürün standı', label: 'Stand Örneği' },
+      { src: '/stand-sistemleri/stand-ornek-9.png', alt: 'Live Happily kahve arabası', label: 'Stand Örneği' },
     ],
   },
 ];
@@ -128,7 +120,7 @@ function GorselKarti({
   onClick,
 }: {
   gorsel: Gorsel;
-  aspect?: Aspect;
+  aspect?: string;
   onClick: () => void;
 }) {
   const aspectClass =
@@ -214,24 +206,34 @@ function DigerGrupSatiri({
   grup: GrupWithLayout;
   onAc: (index: number) => void;
 }) {
-  const gridClass = grup.cols === 4 ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-3';
+  const { cols, gorseller, id, baslik } = grup;
+  const remainder = gorseller.length % cols;
+  const hasTrailing = remainder !== 0;
+  const firstRowCount = gorseller.length - remainder;
+
+  // When images don't divide evenly (e.g. 5 in 3-col):
+  // Use a 6-col grid on desktop: first 3 at lg:col-span-2, last 2 at lg:col-span-3 → no empty cell
+  const gridClass = hasTrailing
+    ? 'grid-cols-2 lg:grid-cols-6'
+    : cols === 2
+      ? 'grid-cols-2'
+      : 'grid-cols-2 lg:grid-cols-3';
 
   return (
-    <div id={grup.id}>
+    <div id={id}>
       <div className="flex items-center gap-4 mb-5">
-        <h3 className="font-sora font-semibold text-[#071B34] text-lg">{grup.baslik}</h3>
+        <h3 className="font-sora font-semibold text-[#071B34] text-lg">{baslik}</h3>
         <div className="flex-1 h-px bg-[#E9EEF3]" />
       </div>
-      <div className={`grid ${gridClass} gap-3 items-start`}>
-        {grup.gorseller.map((g, i) => {
-          const spanClass =
-            g.span === 4 ? 'col-span-1 lg:col-span-4' :
-            g.span === 3 ? 'col-span-1 lg:col-span-3' :
-            g.span === 2 ? 'col-span-1 lg:col-span-2' :
-            'col-span-1';
+      <div className={`grid ${gridClass} gap-3`}>
+        {gorseller.map((g, i) => {
+          if (!hasTrailing) {
+            return <GorselKarti key={g.src} gorsel={g} onClick={() => onAc(i)} />;
+          }
+          const spanClass = i < firstRowCount ? 'col-span-1 lg:col-span-2' : 'col-span-1 lg:col-span-3';
           return (
             <div key={g.src} className={spanClass}>
-              <GorselKarti gorsel={g} aspect={g.aspect} onClick={() => onAc(i)} />
+              <GorselKarti gorsel={g} onClick={() => onAc(i)} />
             </div>
           );
         })}
@@ -272,7 +274,7 @@ export function FuarGaleri() {
             lokasyon="Almanya, Düsseldorf"
             gorseller={EUROSHOP_2026}
             onAc={(i) => setLightbox({ images: EUROSHOP_2026, startIndex: i })}
-            cols={2}
+            cols={3}
           />
         </FadeInOnScroll>
 

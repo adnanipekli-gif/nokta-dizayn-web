@@ -27,9 +27,9 @@ const SLIDES = [
   },
   {
     src: '/stand-sistemleri/imalat-4.png',
-    eyebrow: 'AYDINLATMA ENTEGRASYONU',
-    title: 'Aydınlatma Üretimde Entegre Edilir',
-    body: 'LED profil, spot ve eleman aydınlatmaları stand kasasıyla birlikte üretim aşamasında monte edilir. Sahada elektrik işi minimuma indirilir, fuar kurulum süresi kısalır.',
+    eyebrow: 'CNC İŞLEME TEKNOLOJİSİ',
+    title: 'Kesimden Çıkan Parça Doğrudan Montaja Gider',
+    body: 'CNC freze ve kesim makineleri, her stand elemanını dijital dosyadan mikron hassasiyetinde üretir. Elle düzeltme, ek kesim ya da saha uyarlaması gerekmez; parça geldiği gibi yerine oturur.',
   },
   {
     src: '/stand-sistemleri/imalat-5.png',
