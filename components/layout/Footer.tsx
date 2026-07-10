@@ -14,6 +14,7 @@ export async function Footer() {
     { label: 'Coffee Shops',    href: '/magaza-sistemleri#bolum-04' },
     { labelKey: 'manav_reyonu', href: '/magaza-sistemleri#bolum-05' },
     { labelKey: 'firin_reyon',  href: '/magaza-sistemleri#bolum-06' },
+    { label: 'Fuar ve Tanıtım Standları', href: '/fuar-standlari' },
   ] as const;
 
   const products = [

@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/kurumsal`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/surdurulebilirlik`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/iletisim`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.8 },
+    { url: `${BASE_URL}/fuar-standlari`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
   ];
 
   const solutionRoutes: MetadataRoute.Sitemap = SOLUTIONS.map((s) => ({

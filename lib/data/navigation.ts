@@ -37,6 +37,10 @@ export const NAVIGATION: NavItem[] = [
     ],
   },
   {
+    label: 'Fuar & Stand',
+    href: '/fuar-standlari',
+  },
+  {
     label: 'Proje & Mühendislik',
     href: '/proje-muhendislik',
   },

@@ -40,6 +40,9 @@ import {
   Wheat,
   Pizza,
   Croissant,
+  PenTool,
+  Truck,
+  Presentation,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -85,6 +88,9 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   Wheat,
   Pizza,
   Croissant,
+  PenTool,
+  Truck,
+  Presentation,
 };
 
 interface DynIconProps extends LucideProps {
