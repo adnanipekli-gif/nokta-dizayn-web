@@ -36,10 +36,6 @@ export function ReferansStandCard({ stand, onOpen }: Props) {
         ) : (
           <Placeholder icon="Presentation" aspectRatio="16:9" label={baslik.tr} className="rounded-t-2xl rounded-b-none" />
         )}
-        {/* Image count badge */}
-        <span className="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white font-mono text-[0.6rem] tracking-widest px-2 py-1 rounded-md">
-          {gorseller.length} GÖRSEL
-        </span>
       </div>
 
       {/* Content */}

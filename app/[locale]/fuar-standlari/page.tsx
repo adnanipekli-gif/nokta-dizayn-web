@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
 import { StandHero } from '@/components/sections/stand/StandHero';
 import { StandYetenekler } from '@/components/sections/stand/StandYetenekler';
-import { StandUygulamaAlanlari } from '@/components/sections/stand/StandUygulamaAlanlari';
-import { StandSurec } from '@/components/sections/stand/StandSurec';
-import { ReferansStandlar } from '@/components/sections/stand/ReferansStandlar';
-import { StandGaleri } from '@/components/sections/stand/StandGaleri';
+import { FuarGaleri } from '@/components/sections/stand/FuarGaleri';
 import { CTASection } from '@/components/sections/CTASection';
 
 export const metadata: Metadata = {
@@ -24,10 +21,7 @@ export default function FuarStandlariPage() {
     <>
       <StandHero />
       <StandYetenekler />
-      <StandUygulamaAlanlari />
-      <StandSurec />
-      <ReferansStandlar />
-      <StandGaleri />
+      <FuarGaleri />
       <CTASection />
     </>
   );

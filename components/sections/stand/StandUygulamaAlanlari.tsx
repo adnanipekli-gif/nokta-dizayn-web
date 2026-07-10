@@ -13,7 +13,7 @@ export function StandUygulamaAlanlari() {
       <div className="section-container">
         <FadeInOnScroll>
           <SectionHeading
-            eyebrow="// UYGULAMA ALANLARI"
+            eyebrow="UYGULAMA ALANLARI"
             title="Süreli ve Kalıcı Tanıtım Alanları"
             subtitle="Fuar süresince ayakta kalan bir stand ile yıllarca kullanılacak bir showroom, aynı tasarım ve üretim disiplininden çıkar. Farklı olan yalnızca ömür beklentisi ve montaj kurgusudur."
           />

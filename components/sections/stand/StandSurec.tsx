@@ -8,7 +8,7 @@ export function StandSurec() {
       <div className="section-container">
         <FadeInOnScroll>
           <SectionHeading
-            eyebrow="// PROJE SÜRECİ"
+            eyebrow="PROJE SÜRECİ"
             title="Fuar Takvimi Beklemez"
             subtitle="Stand projelerinde teslim tarihi sabittir. Süreç, bu gerçeğe göre geriye doğru planlanır."
           />

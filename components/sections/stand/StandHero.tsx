@@ -17,7 +17,7 @@ export function StandHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left — 6 cols */}
           <div className="lg:col-span-6">
-            <p className="eyebrow text-[#11B5FF] mb-6">// FUAR VE TANITIM STANDLARI</p>
+            <p className="eyebrow text-[#11B5FF] mb-6">FUAR VE TANITIM STANDLARI</p>
 
             <h1 className="text-white text-balance mb-6">
               Fuar ve Tanıtım Standları
@@ -38,7 +38,7 @@ export function StandHero() {
               <Button
                 variant="secondary"
                 size="lg"
-                href="#ornek-standlar"
+                href="#philips-stand"
                 className="border-white/35 text-white hover:bg-white hover:text-[#071B34]"
               >
                 Örnek Standlarımızı İnceleyin
@@ -50,7 +50,7 @@ export function StandHero() {
           <div className="lg:col-span-6 order-first lg:order-last">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
               <Image
-                src="/stand-sistemleri/20.png"
+                src="/stand-sistemleri/phillips-stant-2.png"
                 alt="Philips Sonicare büyük alan tanıtım standı — teal aydınlatmalı geniş alan"
                 fill
                 className="object-cover"

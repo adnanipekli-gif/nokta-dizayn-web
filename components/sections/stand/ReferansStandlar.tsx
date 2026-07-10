@@ -23,7 +23,7 @@ export function ReferansStandlar() {
       <div className="section-container">
         <FadeInOnScroll>
           <SectionHeading
-            eyebrow="// ÖRNEK STANDLAR"
+            eyebrow="ÖRNEK STANDLAR"
             title="Markalar İçin Tasarladığımız ve Ürettiğimiz Standlar"
             subtitle="Her stand, markanın anlatmak istediği hikâyeye göre yeniden kurgulanır. Aşağıdaki projeler; konsept tasarımdan üretime, kurulumdan söküme kadar tüm süreci Nokta Dizayn'ın yürüttüğü çalışmalardan seçilmiştir."
             align="left"
@@ -56,10 +56,6 @@ export function ReferansStandlar() {
                     ) : (
                       <Placeholder icon="Presentation" aspectRatio="4:3" label={onceCikan.baslik.tr} className="rounded-none h-full" />
                     )}
-                    {/* Image count badge */}
-                    <span className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm text-white font-mono text-[0.6rem] tracking-widest px-2 py-1 rounded-md">
-                      {onceCikan.gorseller.length} GÖRSEL
-                    </span>
                   </div>
 
                   {/* Content — 40% */}
