@@ -8,12 +8,21 @@ import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { SERVICES } from '@/lib/data/services';
 import { DynIcon } from '@/lib/icons';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Servis & Destek',
-  description: 'Teknik servis, bakım anlaşmaları, yedek parça, garanti süreçleri ve retrofit çözümleri. Satış sonrası tam destek.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/servis-destek' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'servis_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/servis-destek'),
+  };
+}
 
 export default async function ServisDestekPage() {
   const t = await getTranslations('servis_page');

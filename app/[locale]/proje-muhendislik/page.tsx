@@ -8,12 +8,21 @@ import { AnahtarTeslimHero } from '@/components/sections/AnahtarTeslimHero';
 import { TekPaydasFark } from '@/components/sections/TekPaydasFark';
 import { MuhendislikAltyapisi } from '@/components/sections/MuhendislikAltyapisi';
 import { MuhendislikKapasiteMetrikleri } from '@/components/sections/MuhendislikKapasiteMetrikleri';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Proje & Mühendislik',
-  description: 'İhtiyaç analizinden devreye almaya: uçtan uca entegre mağaza projesi yönetimi.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/proje-muhendislik' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'proje_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/proje-muhendislik'),
+  };
+}
 
 const galleryImages = [
   { src: '/projeler-muhendislik/10.png', cls: 'col-span-2 row-span-1' },

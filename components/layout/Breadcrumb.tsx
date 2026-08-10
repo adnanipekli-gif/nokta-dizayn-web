@@ -1,5 +1,7 @@
-﻿import { LocaleLink as Link } from '@/components/ui/LocaleLink';
+﻿import { getLocale } from 'next-intl/server';
+import { LocaleLink as Link } from '@/components/ui/LocaleLink';
 import { ChevronRight } from 'lucide-react';
+import { absoluteUrl } from '@/lib/seo';
 
 interface BreadcrumbItem {
   label: string;
@@ -10,7 +12,8 @@ interface BreadcrumbProps {
   items: BreadcrumbItem[];
 }
 
-export function Breadcrumb({ items }: BreadcrumbProps) {
+export async function Breadcrumb({ items }: BreadcrumbProps) {
+  const locale = await getLocale();
   const allItems = [{ label: 'Ana Sayfa', href: '/' }, ...items];
 
   const jsonLd = {
@@ -20,7 +23,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.label,
-      item: item.href ? `https://noktadizayn.com.tr${item.href}` : undefined,
+      item: item.href ? absoluteUrl(locale, item.href) : undefined,
     })),
   };
 

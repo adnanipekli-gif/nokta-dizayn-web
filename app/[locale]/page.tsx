@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { StatsBar } from '@/components/sections/StatsBar';
 import { StoreSystemsBlock } from '@/components/sections/StoreSystemsBlock';
@@ -8,37 +9,58 @@ import { SustainabilityBlock } from '@/components/sections/SustainabilityBlock';
 import { ProductionPowerBlock } from '@/components/sections/ProductionPowerBlock';
 import { ServiceSupportBlock } from '@/components/sections/ServiceSupportBlock';
 import { CTASection } from '@/components/sections/CTASection';
+import { SITE_URL, localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Nokta Dizayn — Entegre Mağaza Sistemleri',
-  description:
-    "2003'ten bu yana soğutma ekipmanları, raf sistemleri, kasa üniteleri ve mağaza mobilyaları. 60+ ülkede 30.000+ noktaya entegre mağaza çözümleri.",
-  openGraph: {
-    title: 'Nokta Dizayn — Entegre Mağaza Sistemleri',
-    description:
-      "2003'ten bu yana soğutma ekipmanları, raf sistemleri, kasa ve mağaza mobilyaları.",
-    url: 'https://www.noktadizayn.com.tr/',
-  },
-  alternates: {
-    canonical: 'https://www.noktadizayn.com.tr/',
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'hero' });
+  const alternates = localizedAlternates(locale, '/');
 
-export default function HomePage() {
+  return {
+    title: t('title'),
+    description: t('subtitle'),
+    openGraph: {
+      title: t('title'),
+      description: t('subtitle'),
+      url: alternates.canonical,
+    },
+    alternates,
+  };
+}
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'Organization',
-        '@id': 'https://www.noktadizayn.com.tr/#organization',
+        '@id': `${SITE_URL}/#organization`,
         name: 'Nokta Dizayn',
-        url: 'https://www.noktadizayn.com.tr',
+        url: SITE_URL,
+        logo: `${SITE_URL}/nokta-dizayn-logo.png`,
         foundingDate: '2003',
         description:
           'Entegre mağaza sistemleri — soğutma ekipmanları, raf ve reyon sistemleri, kasa üniteleri ve mağaza mobilyaları.',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Emek Mahallesi, Şems Caddesi No:7',
+          addressLocality: 'Sancaktepe',
+          addressRegion: 'İstanbul',
+          addressCountry: 'TR',
+        },
         contactPoint: {
           '@type': 'ContactPoint',
           telephone: '+90-216-313-6767',
+          email: 'bilgi@noktadizayn.com.tr',
           contactType: 'customer service',
           availableLanguage: ['Turkish', 'English', 'Arabic'],
         },
@@ -49,13 +71,13 @@ export default function HomePage() {
       },
       {
         '@type': 'WebSite',
-        '@id': 'https://www.noktadizayn.com.tr/#website',
-        url: 'https://www.noktadizayn.com.tr',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
         name: 'Nokta Dizayn',
         publisher: {
-          '@id': 'https://www.noktadizayn.com.tr/#organization',
+          '@id': `${SITE_URL}/#organization`,
         },
-        inLanguage: 'tr-TR',
+        inLanguage: locale,
       },
     ],
   };

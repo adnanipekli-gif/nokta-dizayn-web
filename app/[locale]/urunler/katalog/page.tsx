@@ -1,11 +1,19 @@
 import type { Metadata } from 'next';
 import { PDFCatalog } from '@/components/ui/PDFCatalog';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Ürün Kataloğu — Nokta Dizayn',
-  description: 'Nokta Dizayn soğutma ekipmanları ve mağaza sistemleri ürün kataloğu.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/urunler/katalog' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Ürün Kataloğu — Nokta Dizayn',
+    description: 'Nokta Dizayn soğutma ekipmanları ve mağaza sistemleri ürün kataloğu.',
+    alternates: localizedAlternates(locale, '/urunler/katalog'),
+  };
+}
 
 export default function KatalogPage() {
   return (

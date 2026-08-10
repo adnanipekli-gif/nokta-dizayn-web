@@ -3,12 +3,21 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { CountUpStats } from '@/components/ui/CountUpStats';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Referanslar',
-  description: "Nokta Dizayn'ın Türkiye ve dünya genelinde hayata geçirdiği mağaza projelerinden seçkiler.",
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/referanslar' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'referanslar_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/referanslar'),
+  };
+}
 
 const images = Array.from({ length: 45 }, (_, i) => `/references/${i + 1}.png`);
 

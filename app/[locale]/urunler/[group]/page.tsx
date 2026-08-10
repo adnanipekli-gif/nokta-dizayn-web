@@ -7,6 +7,7 @@ import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
 import { subcatNameKey, groupTaglineKey } from '@/lib/product-i18n';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
+import { localizedAlternates } from '@/lib/seo';
 
 const groupHeroImages: Record<string, string> = {
   remote: '/nokta-dizayn-urunler-gorselleri/remote-sistem-temsili.png',
@@ -14,7 +15,7 @@ const groupHeroImages: Record<string, string> = {
 };
 
 interface Props {
-  params: Promise<{ group: string }>;
+  params: Promise<{ locale: string; group: string }>;
 }
 
 export function generateStaticParams() {
@@ -22,13 +23,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { group: groupSlug } = await params;
+  const { locale, group: groupSlug } = await params;
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   if (!group) return {};
   return {
     title: `${group.name} — Nokta Dizayn`,
     description: group.tagline,
-    alternates: { canonical: `https://www.noktadizayn.com.tr/urunler/${group.slug}` },
+    alternates: localizedAlternates(locale, `/urunler/${group.slug}`),
   };
 }
 

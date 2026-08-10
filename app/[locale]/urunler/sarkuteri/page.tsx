@@ -5,12 +5,20 @@ import { getTranslations } from 'next-intl/server';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
 import { groupTaglineKey } from '@/lib/product-i18n';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Şarküteri Reyonları — Remote & Plug-In',
-  description: 'Merkezi sistemli NAVI ve bağımsız kompresörlü SADIRA serisi şarküteri reyonları.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/urunler/sarkuteri' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Şarküteri Reyonları — Remote & Plug-In',
+    description: 'Merkezi sistemli NAVI ve bağımsız kompresörlü SADIRA serisi şarküteri reyonları.',
+    alternates: localizedAlternates(locale, '/urunler/sarkuteri'),
+  };
+}
 
 const remoteSarkuteri = PRODUCT_CATALOG.find((g) => g.slug === 'remote')!
   .subCategories.find((s) => s.slug === 'remote-sarkuteri')!;

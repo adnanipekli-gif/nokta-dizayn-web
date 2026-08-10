@@ -9,6 +9,7 @@ import { CaseStudyCard } from '@/components/cards/CaseStudyCard';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { PROJECTS } from '@/lib/data/projects';
 import { Link } from '@/lib/i18n-navigation';
+import { absoluteUrl, localizedAlternates } from '@/lib/seo';
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -19,13 +20,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) return {};
   return {
     title: project.title,
     description: project.shortDescription,
-    alternates: { canonical: `https://www.noktadizayn.com.tr/referanslar/${slug}` },
+    alternates: localizedAlternates(locale, `/referanslar/${slug}`),
   };
 }
 
@@ -34,7 +35,7 @@ export default async function ReferansDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) notFound();
 
@@ -52,6 +53,7 @@ export default async function ReferansDetailPage({
     '@type': 'CreativeWork',
     name: project.title,
     description: project.shortDescription,
+    url: absoluteUrl(locale, `/referanslar/${slug}`),
     locationCreated: { '@type': 'Place', name: project.location },
     dateCreated: String(project.year),
   };

@@ -4,12 +4,21 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { SectionSlider } from '@/components/ui/SectionSlider';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Mağaza Sistemleri',
-  description: 'Market rafından kasap tezgahına, eczaneden nalbura her sektör için entegre mağaza raf ve reyon sistemleri.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/magaza-sistemleri' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'magaza_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/magaza-sistemleri'),
+  };
+}
 
 export default async function MagazaSistemleriPage() {
   const t = await getTranslations('magaza_page');

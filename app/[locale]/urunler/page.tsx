@@ -5,13 +5,21 @@ import { ArrowRight, Network, Zap } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
 import { subcatNameKey, groupTaglineKey } from '@/lib/product-i18n';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Ürünler — Soğutma Ekipmanları',
-  description:
-    'Remote ve Plug-In soğutma ekipmanları. Sütlük reyonları, şarküteri reyonları, derin dondurucular ve yatay freezer dolaplar.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/urunler' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'urunler_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/urunler'),
+  };
+}
 
 const groupIcons: Record<string, React.ElementType> = {
   remote: Network,

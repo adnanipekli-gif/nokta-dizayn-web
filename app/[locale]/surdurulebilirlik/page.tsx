@@ -4,12 +4,21 @@ import { getTranslations } from 'next-intl/server';
 import { DynIcon } from '@/lib/icons';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Sürdürülebilirlik',
-  description: 'Nokta Dizayn sürdürülebilirlik yaklaşımı: enerji verimli soğutma sistemleri, uzun ömürlü ekipman ve akıllı sistem optimizasyonu.',
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/surdurulebilirlik' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'surdurulebilirlik_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/surdurulebilirlik'),
+  };
+}
 
 const TOPIC_ICONS = ['Zap','Settings2','Snowflake','Package','Timer','Network','Wrench','RefreshCw'];
 

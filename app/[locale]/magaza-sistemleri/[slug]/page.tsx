@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { SOLUTIONS } from '@/lib/data/solutions';
 import { DynIcon } from '@/lib/icons';
+import { absoluteUrl, localizedAlternates } from '@/lib/seo';
+import { serviceJsonLd } from '@/lib/seo/jsonld';
 
 export function generateStaticParams() {
   return SOLUTIONS.map((s) => ({ slug: s.slug }));
@@ -18,13 +20,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const solution = SOLUTIONS.find((s) => s.slug === slug);
   if (!solution) return {};
   return {
     title: solution.name,
     description: solution.shortDescription,
-    alternates: { canonical: `https://www.noktadizayn.com.tr/magaza-sistemleri/${slug}` },
+    alternates: localizedAlternates(locale, `/magaza-sistemleri/${slug}`),
   };
 }
 
@@ -33,14 +35,23 @@ export default async function MagazaSistemiDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const solution = SOLUTIONS.find((s) => s.slug === slug);
   if (!solution) notFound();
 
   const t = await getTranslations('magaza_detay');
-
+  const url = absoluteUrl(locale, `/magaza-sistemleri/${slug}`);
+  const jsonLd = serviceJsonLd({
+    name: solution.name,
+    description: solution.shortDescription,
+    url,
+  });
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="pt-32 pb-12 bg-[#071B34] relative overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-20" aria-hidden="true" />
         <div className="section-container relative z-10">

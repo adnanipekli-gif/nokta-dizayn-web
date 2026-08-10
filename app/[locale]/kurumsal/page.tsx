@@ -6,13 +6,21 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { FadeInOnScroll } from '@/components/motion/FadeInOnScroll';
 import { STATS } from '@/lib/data/stats';
+import { localizedAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Kurumsal — Hakkımızda',
-  description:
-    "2003'ten bu yana entegre mağaza sistemleri alanında mühendislik, üretim ve satış sonrası hizmet ile faaliyet gösteren Nokta Dizayn hakkında.",
-  alternates: { canonical: 'https://www.noktadizayn.com.tr/kurumsal' },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'kurumsal_page' });
+  return {
+    title: t('hero_title'),
+    description: t('hero_subtitle'),
+    alternates: localizedAlternates(locale, '/kurumsal'),
+  };
+}
 
 const STAT_KEYS = [
   { eyebrow: 'eyebrow_kurulus', label: 'label_kurulus' },

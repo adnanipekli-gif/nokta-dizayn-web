@@ -9,9 +9,11 @@ import { VARIANT_LABEL_KEYS, productDescKey, subcatNameKey } from '@/lib/product
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { ProductImageViewer } from '@/components/ui/ProductImageViewer';
 import { Button } from '@/components/ui/Button';
+import { absoluteUrl, localizedAlternates } from '@/lib/seo';
+import { productJsonLd } from '@/lib/seo/jsonld';
 
 interface Props {
-  params: Promise<{ group: string; subcategory: string; product: string }>;
+  params: Promise<{ locale: string; group: string; subcategory: string; product: string }>;
 }
 
 export function generateStaticParams() {
@@ -27,7 +29,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { group: groupSlug, subcategory: subSlug, product: productSlug } = await params;
+  const { locale, group: groupSlug, subcategory: subSlug, product: productSlug } = await params;
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   const sub = group?.subCategories.find((s) => s.slug === subSlug);
   const product = sub?.products.find((p) => p.slug === productSlug);
@@ -36,14 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${name} — ${sub!.name} — Nokta Dizayn`,
     description: product.description,
-    alternates: {
-      canonical: `https://www.noktadizayn.com.tr/urunler/${group!.slug}/${sub!.slug}/${product.slug}`,
-    },
+    alternates: localizedAlternates(
+      locale,
+      `/urunler/${group!.slug}/${sub!.slug}/${product.slug}`
+    ),
   };
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { group: groupSlug, subcategory: subSlug, product: productSlug } = await params;
+  const { locale, group: groupSlug, subcategory: subSlug, product: productSlug } = await params;
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   const sub = group?.subCategories.find((s) => s.slug === subSlug);
   const product = sub?.products.find((p) => p.slug === productSlug);
@@ -71,8 +74,19 @@ export default async function ProductPage({ params }: Props) {
     try { return tc(key); } catch { return label; }
   }
 
+  const productUrl = absoluteUrl(locale, `/urunler/${group.slug}/${sub.slug}/${product.slug}`);
+  const jsonLd = productJsonLd({
+    name: primaryName,
+    description: productDescription,
+    images: product.images,
+    url: productUrl,
+  });
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb bar */}
       <div className="pt-24 pb-4 bg-white border-b border-[#E9EEF3]">
         <div className="section-container">

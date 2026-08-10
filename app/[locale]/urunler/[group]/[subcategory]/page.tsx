@@ -7,9 +7,10 @@ import { getTranslations } from 'next-intl/server';
 import { PRODUCT_CATALOG } from '@/lib/data/product-catalog';
 import { VARIANT_LABEL_KEYS, productDescKey, subcatNameKey } from '@/lib/product-i18n';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
+import { localizedAlternates } from '@/lib/seo';
 
 interface Props {
-  params: Promise<{ group: string; subcategory: string }>;
+  params: Promise<{ locale: string; group: string; subcategory: string }>;
 }
 
 export function generateStaticParams() {
@@ -19,16 +20,14 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { group: groupSlug, subcategory: subSlug } = await params;
+  const { locale, group: groupSlug, subcategory: subSlug } = await params;
   const group = PRODUCT_CATALOG.find((g) => g.slug === groupSlug);
   const sub = group?.subCategories.find((s) => s.slug === subSlug);
   if (!sub) return {};
   return {
     title: `${sub.name} — ${group!.name} — Nokta Dizayn`,
     description: `${sub.name} ürünleri. ${sub.products.length} model.`,
-    alternates: {
-      canonical: `https://www.noktadizayn.com.tr/urunler/${group!.slug}/${sub.slug}`,
-    },
+    alternates: localizedAlternates(locale, `/urunler/${group!.slug}/${sub.slug}`),
   };
 }
 
